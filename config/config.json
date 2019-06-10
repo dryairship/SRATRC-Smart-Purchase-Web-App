@@ -1,0 +1,14 @@
+{
+    "database": {
+        "dialURL": "mongodb://localhost:27017/",
+        "name": "SRATRC",
+        "username": "AdminSRATRC",
+        "password": "R@nD0mPA55WoRd"
+    },
+    "application": {
+        "name": "SRATRC Smart Purchase App"
+    },
+    "server": {
+        "port": 5000
+    }
+}
