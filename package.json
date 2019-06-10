@@ -1,0 +1,20 @@
+{
+  "name": "sratrc-smart-purchase-web-app",
+  "version": "1.0.0",
+  "description": "A smart purchase app to centralize and streamline the purchases and track inventory status/payment history for the NGO SRATRC, developed as a project for CSE@IITK Summer of Code 2019",
+  "main": "server/server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./server/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dryairship/SRATRC-Smart-Purchase-Web-App.git"
+  },
+  "author": "Priydarshi Singh, Tanvi Nerkar, Jayesh Shaw, Avinandan Bose, Aaryan Srivastava",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dryairship/SRATRC-Smart-Purchase-Web-App/issues"
+  },
+  "homepage": "https://github.com/dryairship/SRATRC-Smart-Purchase-Web-App#readme"
+}
