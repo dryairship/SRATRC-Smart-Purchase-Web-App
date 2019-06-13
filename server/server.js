@@ -1,14 +1,17 @@
 const express = require('express');
-const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
 
 const config = require('../config/config.js');
 const DBConnection = require('../db/database.js');
 
+const productRoutes = require('../routes/product.js')
+
 const app = express();
 
-app.get('/', (req, res) => {
-    res.json("Server running");
-});
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use('/product', productRoutes);
 
 DBConnection.dial();
 
