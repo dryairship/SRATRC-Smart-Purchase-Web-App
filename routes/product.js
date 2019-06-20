@@ -1,10 +1,13 @@
 const express = require('express');
 
-const { handleProductGet, handleProductPost } = require('../controllers/product.js')
+const { handleProductGetById, handleProductGetAll, handleProductPost, handleProductPatch, handleProductDelete } = require('../controllers/product.js')
 
 var router = express.Router();
 
 router.post('/', handleProductPost);
-router.get('/:productID', handleProductGet);
+router.get('/', handleProductGetAll);
+router.get('/:productID', handleProductGetById);
+router.patch('/:productID', handleProductPatch);
+router.delete('/:productID', handleProductDelete);
 
 module.exports = router;

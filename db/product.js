@@ -15,7 +15,7 @@ function insertProduct(name, category, description){
                 });
             else
                 resolve({
-                    status: 202,
+                    status: 201,
                     response: "Product successfully created"
                 });
         });
@@ -24,9 +24,8 @@ function insertProduct(name, category, description){
 
 function findProductById(id){
     return new Promise((resolve, reject) => {
-        Product.findOne({
-            _id: id
-        },
+        Product.findById(
+        id,
         '-__v',
         function(err, product){
             if(err || !product)
@@ -43,4 +42,79 @@ function findProductById(id){
     });
 }
 
-module.exports = { insertProduct, findProductById };
+function findAllProducts(){
+    return new Promise((resolve, reject) => {
+        Product.find(
+        null,
+        '-__v',
+        function(err, products){
+            if(err || !products || products.length ==0)
+                reject({
+                    status: 404,
+                    response: "No products found"
+                });
+            else
+                resolve({
+                    status: 200,
+                    response: products
+                });
+        }
+        );
+    });
+}
+
+function updateProduct(id, newProduct){
+    return new Promise((resolve, reject) => {
+        Product.updateOne({
+            _id: id
+        },
+        newProduct,
+        function(err, result){
+            if(err)
+                reject({
+                    status: 500,
+                    response: "A server error occurred"
+                });
+            else if(result.n == 0)
+                reject({
+                    status: 404,
+                    response: "Product not found"
+                });
+            else if(result.nModified == 0)
+                resolve({
+                    status: 200,
+                    response: "Product was already up-to-date"
+                });
+           else
+                resolve({
+                    status: 202,
+                    response: "Product successfully updated"
+                });
+        });
+    });
+}
+
+function deleteProduct(id){
+    return new Promise((resolve, reject) => {
+        Product.findByIdAndDelete(
+        id,
+        function(err, product){
+            if(err)
+                reject({
+                    status: 500,
+                    response: "A server error occurred"
+                });
+            else if(!product)
+                reject({
+                    status: 404,
+                    response: "Product to be deleted was not found"
+                });
+            else
+                resolve({
+                    status: 202,
+                    response: "Product successfully deleted"
+                });
+        });
+    });
+}
+module.exports = { insertProduct, findProductById, findAllProducts, updateProduct, deleteProduct };
