@@ -4,8 +4,9 @@ const bodyParser = require('body-parser');
 const config = require('../config/config.js');
 const DBConnection = require('../db/database.js');
 
-const productRoutes = require('../routes/product.js')
-const inventoryItemRoutes = require('../routes/inventoryItem.js')
+const productRoutes = require('../routes/product.js');
+const inventoryItemRoutes = require('../routes/inventoryItem.js');
+const vendorRoutes = require('../routes/vendor.js');
 
 const app = express();
 
@@ -14,6 +15,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use('/product', productRoutes);
 app.use('/inventory', inventoryItemRoutes);
+app.use('/vendor',vendorRoutes);
 
 DBConnection.dial();
 
