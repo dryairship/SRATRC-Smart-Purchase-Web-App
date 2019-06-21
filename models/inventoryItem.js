@@ -3,8 +3,8 @@ const mongoose = require('mongoose')
 var InventoryItemSchema = new mongoose.Schema({
     productID: String, 
     departmentID: String,
-    amount: {
-        quantity: Number,
+    quantity: {
+        value: Number,
         unit: String
     }
 })

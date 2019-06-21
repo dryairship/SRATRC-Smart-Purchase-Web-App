@@ -1,11 +1,11 @@
 const InventoryItem = require('../models/inventoryItem.js')
 
-function insertInventoryItem(productID, departmentID, amount){
+function insertInventoryItem(productID, departmentID, quantity){
     return new Promise((resolve, reject) => {
         inventoryItem = new InventoryItem({
             productID: productID, 
             departmentID: departmentID,
-            amount: amount
+            quantity: quantity
         });
         inventoryItem.save(function(err){
             if(err)
@@ -102,4 +102,28 @@ function updateInventoryItem(productID, departmentID, newInventoryItem){
     });
 }
 
-module.exports = { insertInventoryItem, findInventoryItemById, updateInventoryItem, deleteInventoryItem};
+
+function findAllInventoryItemsByProductId(productID){
+    return new Promise((resolve, reject) => {
+        InventoryItem.find({
+                productID: productID
+            },            
+            '-__v', 
+            function(err, inventoryItems){
+                if(err || !inventoryItems || inventoryItems.length == 0 )
+                    reject({
+                        status: 404, 
+                        response: "No item found in inventory"
+                    });
+                else    
+                    resolve({
+                        status: 200, 
+                        response: inventoryItems
+                    });
+            }
+        );
+    });
+}
+
+
+module.exports = { insertInventoryItem, findInventoryItemById, updateInventoryItem, deleteInventoryItem, findAllInventoryItemsByProductId};

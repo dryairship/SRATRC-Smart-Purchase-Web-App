@@ -1,14 +1,14 @@
-const { insertInventoryItem, findInventoryItemById, updateInventoryItem, deleteInventoryItem } = require('../db/inventoryItem.js');
+const { insertInventoryItem, findInventoryItemById, updateInventoryItem, deleteInventoryItem, findAllInventoryItemsByProductId } = require('../db/inventoryItem.js');
 
 function handleInventoryItemPost(req, res) {
     var productID = req.body.productID,
         departmentID = req.body.departmentID, 
-        amount = {
-            quantity : req.body.quantity,
+        quantity = {
+            value : req.body.quantity,
             unit : req.body.unit
         };
     
-    insertInventoryItem(productID, departmentID, amount)
+    insertInventoryItem(productID, departmentID, quantity)
     .then(result => {
         res.status(result.status).json(result.response);
     })
@@ -34,8 +34,8 @@ function handleInventoryItemPatch(req, res) {
     if(req.body.departmentID)
         newInventoryItem['departmentID'] = req.body.departmentID;
     if(req.body.quantity && req.body.unit)
-        newInventoryItem['amount'] = {
-            quantity: req.body.quantity,
+        newInventoryItem['quantity'] = {
+            value: req.body.quantity,
             unit: req.body.unit
         };
 
@@ -59,4 +59,14 @@ function handleInventoryItemDelete(req, res) {
     });
 }
 
-module.exports = { handleInventoryItemPost, handleInventoryItemGetById, handleInventoryItemPatch, handleInventoryItemDelete }
+function handleInventoryItemGetByProductId(req, res) {
+    findAllInventoryItemsByProductId(req.params.productID)
+    .then(result => {
+        res.status(result.status).json(result.response);
+    })
+    .catch(error => {
+        res.status(error.status).json(error.response);
+    });
+}
+
+module.exports = { handleInventoryItemPost, handleInventoryItemGetById, handleInventoryItemPatch, handleInventoryItemDelete, handleInventoryItemGetByProductId }
