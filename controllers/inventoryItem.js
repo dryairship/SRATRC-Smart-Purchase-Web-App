@@ -1,14 +1,14 @@
-const { insertInventoryItem, findInventoryItemById, updateInventoryItem, deleteInventoryItem } = require('../db/inventoryItem.js');
+const { insertInventoryItem, findInventoryItemById, updateInventoryItem, deleteInventoryItem, findAllInventoryItemsByProductId, transferInventoryItem } = require('../db/inventoryItem.js');
 
 function handleInventoryItemPost(req, res) {
     var productID = req.body.productID,
         departmentID = req.body.departmentID, 
-        amount = {
-            quantity : req.body.quantity,
+        quantity = {
+            value : req.body.quantity,
             unit : req.body.unit
         };
     
-    insertInventoryItem(productID, departmentID, amount)
+    insertInventoryItem(productID, departmentID, quantity)
     .then(result => {
         res.status(result.status).json(result.response);
     })
@@ -28,18 +28,12 @@ function handleInventoryItemGetById(req, res) {
 }
 
 function handleInventoryItemPatch(req, res) {
-    var newInventoryItem = {};
-    if(req.body.productID)
-        newInventoryItem['productID'] = req.body.productID;
-    if(req.body.departmentID)
-        newInventoryItem['departmentID'] = req.body.departmentID;
-    if(req.body.quantity && req.body.unit)
-        newInventoryItem['amount'] = {
-            quantity: req.body.quantity,
-            unit: req.body.unit
-        };
-
-    updateInventoryItem(req.params.productID, req.params.departmentID, newInventoryItem)
+    var value;
+    if(req.body.value)
+        value= req.body.value
+    else    
+        res.status(400).json('No Change')
+    updateInventoryItem(req.params.productID, req.params.departmentID, value)
     .then(result => {
         res.status(result.status).json(result.response);
     })
@@ -59,4 +53,29 @@ function handleInventoryItemDelete(req, res) {
     });
 }
 
-module.exports = { handleInventoryItemPost, handleInventoryItemGetById, handleInventoryItemPatch, handleInventoryItemDelete }
+function handleInventoryItemGetByProductId(req, res) {
+    findAllInventoryItemsByProductId(req.params.productID)
+    .then(result => {
+        res.status(result.status).json(result.response);
+    })
+    .catch(error => {
+        res.status(error.status).json(error.response);
+    });
+}
+
+function handleTransferInventoryItem(req, res){
+    var value;
+    if(req.body.value)
+        value= req.body.value;
+    else    
+        res.status(400).json('No Change');
+    transferInventoryItem(req.body.productID, req.body.fromDepartmentID, req.body.toDepartmentID, value)
+    .then(result => {
+        res.status(result.status).json(result.response);
+    })
+    .catch(error => {
+        res.status(error.status).json(error.response);
+    });
+}
+
+module.exports = { handleInventoryItemPost, handleInventoryItemGetById, handleInventoryItemPatch, handleInventoryItemDelete, handleInventoryItemGetByProductId, handleTransferInventoryItem }

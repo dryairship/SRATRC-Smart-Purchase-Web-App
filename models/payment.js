@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 
 var InstallmentSchema = new mongoose.Schema({
 	Time : { 
-		type : Date 
+		type : Date ,
 		default : Date.now 
 	},
 	amount : Number,
