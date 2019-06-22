@@ -70,13 +70,17 @@ function deleteInventoryItem(productID, departmentID){
     });
 }
 
-function updateInventoryItem(productID, departmentID, newInventoryItem){
+function updateInventoryItem(productID, departmentID, value){
     return new Promise((resolve, reject) => {
         InventoryItem.updateOne({
             productID: productID,
             departmentID: departmentID
         },
-        newInventoryItem,
+        {
+            $inc: {
+                'quantity.value' :  value
+            }
+        },
         function(err, result){
             if(err)
                 reject({
@@ -125,5 +129,45 @@ function findAllInventoryItemsByProductId(productID){
     });
 }
 
+function transferInventoryItem(productID, fromDepartmentID, toDepartmentID, value){
 
-module.exports = { insertInventoryItem, findInventoryItemById, updateInventoryItem, deleteInventoryItem, findAllInventoryItemsByProductId};
+    return new Promise((resolve, reject) => {
+        InventoryItem.findOne({
+            productID: productID,
+            departmentID: fromDepartmentID
+        },
+        '-__v',
+        function(err, inventoryItem){
+            if(err || !inventoryItem)
+                reject({
+                    status: 404, 
+                    response: "Item not found in inventory"
+                });
+            else if(inventoryItem.quantity.value < value)
+                reject({
+                    status: 400, 
+                    response: "Not sufficient amount in inventory"
+                });
+        } 
+        )
+        .then(() => {
+            updateInventoryItem(productID, fromDepartmentID, -value),
+            updateInventoryItem(productID, toDepartmentID, value)
+            .then(() => {
+                resolve({
+                    status: 202,
+                    response: "Successful transfer"
+                })
+            })
+            .catch(() => {
+                reject({
+                    status: 500,
+                    response: "Update not successful"
+                })
+            });
+        });
+    });
+}
+
+
+module.exports = { insertInventoryItem, findInventoryItemById, updateInventoryItem, deleteInventoryItem, findAllInventoryItemsByProductId, transferInventoryItem };
