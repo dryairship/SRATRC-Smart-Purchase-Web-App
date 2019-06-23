@@ -56,7 +56,7 @@ function insertPayment(purchaseID, vendorID, totalAmount){
             else
                 resolve({
                     status: 202,
-                    response: "Payment successfully created"
+                    response: "Product purchased and payment created"
                 });
     	});
     });
