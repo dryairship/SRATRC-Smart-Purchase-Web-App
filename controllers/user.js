@@ -1,5 +1,6 @@
 const { insertUser, findUser,  updateUser } = require('../db/user.js');
 const { encryptPassword, checkPassword } = require('../utils/auth.js');
+const { createSessionCookie } = require('../utils/session.js');
 
 function handleUserPost(req, res) {
     var username = req.body.username,
@@ -53,4 +54,22 @@ function handleUserPatch(req, res){
     });
 }
 
-module.exports = { handleUserGet, handleUserPost, handleUserPatch };
+function handleUserLogin(req, res){
+    var user;
+    findUser(req.body.user)
+    .then(result => {
+        user = result.response;
+        return checkPassword(req.body.password, user.password);
+    })
+    .then(result => {
+        return createSessionCookie(user, req.body.remember);
+    })
+    .then(result => {
+        res.cookie('sessionID', result.cookie.value, result.cookie.params).status(result.status).json(result.response);
+    })
+    .catch(error => {
+        res.status(error.status).json(error.response);
+    });
+}
+
+module.exports = { handleUserGet, handleUserPost, handleUserPatch, handleUserLogin };
