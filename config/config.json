@@ -10,5 +10,8 @@
     },
     "server": {
         "port": 5000
+    },
+    "auth": {
+        "saltRounds": 10
     }
 }
