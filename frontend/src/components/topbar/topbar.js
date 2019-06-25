@@ -8,6 +8,8 @@ import MenuIcon from '@material-ui/icons/Menu';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
+import SideDrawer from '../sideDrawer/sideDrawer';
+import { Route, NavLink, HashRouter } from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -19,6 +21,16 @@ const useStyles = makeStyles(theme => ({
   title: {
     flexGrow: 1,
   },
+  list: {
+    width: 250,
+  },
+  fullList: {
+    width: 'auto',
+  },
+  link: {
+    textDecoration: 'none',
+    color: 'inherit',
+  }
 }));
 
 function MenuAppBar() {
@@ -78,7 +90,9 @@ function MenuAppBar() {
             </div>
             
           <Typography variant="h6" className={classes.title}>
-            SRATRC
+            <NavLink to="/" className={classes.link}>
+              SRATRC
+            </NavLink>
           </Typography>          
             <div>
                 <IconButton
