@@ -1,4 +1,5 @@
 const { insertUser, findUser,  updateUser } = require('../db/user.js');
+const { encryptPassword, checkPassword } = require('../utils/auth.js');
 
 function handleUserPost(req, res) {
     var username = req.body.username,
@@ -7,9 +8,15 @@ function handleUserPost(req, res) {
         department = req.body.department,
         phone = req.body.phone;
     
-    insertUser(username, name, password, department, phone)
-    .then(result => {
-        res.status(result.status).json(result.response);
+    encryptPassword(password)
+    .then(passwordHash => {
+        insertUser(username, name, passwordHash, department, phone)
+        .then(result => {
+            res.status(result.status).json(result.response);
+        })
+        .catch(error => {
+            res.status(error.status).json(error.response);
+        });
     })
     .catch(error => {
         res.status(error.status).json(error.response);
@@ -36,7 +43,7 @@ function handleUserPatch(req, res){
         newUser.department = req.body.department;
     if(req.body.phone)
         newUser.phone = req.body.phone;
-
+    
     updateUser(req.params.userID, newUser)
     .then(result => {
         res.status(result.status).json(result.response);
@@ -45,4 +52,5 @@ function handleUserPatch(req, res){
         res.status(error.status).json(error.response);
     });
 }
+
 module.exports = { handleUserGet, handleUserPost, handleUserPatch };
