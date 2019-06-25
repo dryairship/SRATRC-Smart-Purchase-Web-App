@@ -3,6 +3,9 @@ import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import { Route, NavLink, HashRouter, Link as domLink } from "react-router-dom";
+import Link from '@material-ui/core/Link';
+import { MemoryRouter as Router } from 'react-router';
 
 const useStyles = makeStyles(theme => ({
   '@global': {
@@ -20,8 +23,15 @@ const useStyles = makeStyles(theme => ({
     margin: theme.spacing(1),
     height: "70px",
     fontSize: "16px",
+    textDecoration: "none",    
+  },
+  link: {
+    textDecoration: 'none',
+    color: 'inherit',
   }
 }));
+
+const AdapterLink = React.forwardRef((props, ref) => <Link innerRef={ref} {...props} />);
 
 export default function HomePage() {
   const classes = useStyles();
@@ -36,8 +46,9 @@ export default function HomePage() {
             color="primary"
             size="large"
             className={classes.btn}
+            href="#inventory"
         >
-            Inventory
+          Inventory                                        
         </Button>
         <Button
             fullWidth
@@ -45,8 +56,9 @@ export default function HomePage() {
             color="primary"
             size="large"
             className={classes.btn}
+            href="#payments"
         >
-            Payments
+          Payments
         </Button>
         <Button
             fullWidth
@@ -54,8 +66,9 @@ export default function HomePage() {
             color="primary"
             size="large"
             className={classes.btn}
+            href="#tally"
         >
-            Tally Output
+          Tally Output  
         </Button>
         <Button
             fullWidth
@@ -63,8 +76,9 @@ export default function HomePage() {
             color="primary"
             size="large"
             className={classes.btn}
+            href="#donation"
         >
-            Donation
+          Donation 
         </Button>
         
       </div>
