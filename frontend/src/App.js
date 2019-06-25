@@ -1,22 +1,15 @@
 import React from 'react';
 import './App.css';
+import SignIn from './components/signIn/signIn';
 import MenuAppBar from './components/topbar/topbar';
 import HomePage from './components/homepage/homepage';
-import Inventory from './components/inventory/inventory';
-import { Route, NavLink, HashRouter } from "react-router-dom";
 
 function App() {
   return (
-    <HashRouter>
     <div className="App">
       <MenuAppBar />
-      <Route exact path="/" component={HomePage} />
-      <Route path="/inventory" component={Inventory} />
-      <Route path="/payments" component={HomePage} />
-      <Route path="/tally" component={HomePage} />
-      <Route path="/donation" component={HomePage} />
+      <HomePage />
     </div>
-    </HashRouter>
   );
 }
 
