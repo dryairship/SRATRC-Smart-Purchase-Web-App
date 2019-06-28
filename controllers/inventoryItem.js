@@ -1,4 +1,4 @@
-const { insertInventoryItem, findInventoryItemById, updateInventoryItem, deleteInventoryItem, findAllInventoryItemsByProductId, transferInventoryItem } = require('../db/inventoryItem.js');
+const { insertInventoryItem, findInventoryItemById, updateInventoryItem, deleteInventoryItem, findAllInventoryItemsByProductId, transferInventoryItem, findAllInventoryItemsByDepartmentId } = require('../db/inventoryItem.js');
 
 function handleInventoryItemPost(req, res) {
     var productID = req.body.productID,
@@ -63,6 +63,16 @@ function handleInventoryItemGetByProductId(req, res) {
     });
 }
 
+function handleInventoryItemGetByDepartmentId(req, res) {
+    findAllInventoryItemsByDepartmentId(req.params.departmentID)
+    .then(result => {
+        res.status(result.status).json(result.response);
+    })
+    .catch(error => {
+        res.status(error.status).json(error.response);
+    });
+}
+
 function handleTransferInventoryItem(req, res){
     var value;
     if(req.body.value)
@@ -78,4 +88,4 @@ function handleTransferInventoryItem(req, res){
     });
 }
 
-module.exports = { handleInventoryItemPost, handleInventoryItemGetById, handleInventoryItemPatch, handleInventoryItemDelete, handleInventoryItemGetByProductId, handleTransferInventoryItem }
+module.exports = { handleInventoryItemPost, handleInventoryItemGetById, handleInventoryItemPatch, handleInventoryItemDelete, handleInventoryItemGetByProductId, handleInventoryItemGetByDepartmentId, handleTransferInventoryItem };

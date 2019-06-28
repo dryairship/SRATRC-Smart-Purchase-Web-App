@@ -130,7 +130,6 @@ function findAllInventoryItemsByProductId(productID){
 }
 
 function transferInventoryItem(productID, fromDepartmentID, toDepartmentID, value){
-
     return new Promise((resolve, reject) => {
         InventoryItem.findOne({
             productID: productID,
@@ -148,8 +147,7 @@ function transferInventoryItem(productID, fromDepartmentID, toDepartmentID, valu
                     status: 400, 
                     response: "Not sufficient amount in inventory"
                 });
-        } 
-        )
+        })
         .then(() => {
             updateInventoryItem(productID, fromDepartmentID, -value),
             updateInventoryItem(productID, toDepartmentID, value)
@@ -157,17 +155,42 @@ function transferInventoryItem(productID, fromDepartmentID, toDepartmentID, valu
                 resolve({
                     status: 202,
                     response: "Successful transfer"
-                })
+                });
             })
             .catch(() => {
                 reject({
                     status: 500,
                     response: "Update not successful"
-                })
+                });
             });
         });
     });
 }
 
+function findAllInventoryItemsByDepartmentId(departmentID){
+    return new Promise((resolve, reject) => {
+        InventoryItem.find({
+            departmentID: departmentID
+        },
+        '-__v')
+        .populate({
+            path: 'details',
+            select: '-__v'
+        })
+        .exec(function(err, items){
+            if(!items || items.length==0){
+                reject({
+                    status: 404,
+                    response: "No items found in the inventory of this department"
+                });
+            }else{
+                resolve({
+                    status: 200,
+                    response: items
+                });
+            }
+        });
+    });
+}
 
-module.exports = { insertInventoryItem, findInventoryItemById, updateInventoryItem, deleteInventoryItem, findAllInventoryItemsByProductId, transferInventoryItem };
+module.exports = { insertInventoryItem, findInventoryItemById, updateInventoryItem, deleteInventoryItem, findAllInventoryItemsByProductId, transferInventoryItem, findAllInventoryItemsByDepartmentId };
