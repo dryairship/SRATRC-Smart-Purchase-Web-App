@@ -6,8 +6,8 @@ function calculateTotalAmount(quantity, rate){
             var newRate = rate.value; 
             if(rate.unit != quantity.unit){
                 newRate = convert(rate.value)
-                          .from(''+rate.unit)
-                          .to(''+quantity.unit);
+                          .from(''+quantity.unit)
+                          .to(''+rate.unit);
             }
             var totalCost = quantity.value * newRate;
             resolve(totalCost);
