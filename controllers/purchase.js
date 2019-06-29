@@ -21,19 +21,13 @@ function handlePurchasePost(req, res) {
     
     calculateTotalAmount(quantity, rate)
     .then(totalAmount => {
-        insertPurchase(departmentID, productID, vendorID, purchasedBy, billNumber, quantity, rate, totalAmount, purchaseType, remarks)
-        .then(purchaseResult => {
-            insertPayment(purchaseResult, vendorID, totalAmount)
-            .then(paymentResult => {
-                res.status(paymentResult.status).json(paymentResult.response);
-            })
-            .catch(error => {
-                res.status(error.status).json(error.response);
-            });
-        })
-        .catch(error => {
-            res.status(error.status).json(error.response);
-        });
+        return insertPurchase(departmentID, productID, vendorID, purchasedBy, billNumber, quantity, rate, totalAmount, purchaseType, remarks)
+    })
+    .then(purchaseResult => {
+        return insertPayment(purchaseResult, vendorID, totalAmount)
+    })
+    .then(paymentResult => {
+        return res.status(paymentResult.status).json(paymentResult.response);
     })
     .catch(error => {
         res.status(error.status).json(error.response);

@@ -3,7 +3,7 @@ const User = require('../models/user.js');
 function insertUser(username, name, password, department, phone){
     return new Promise((resolve, reject) => {
         user = new User({
-            username: username, 
+            username: username,
             name: name,
             password: password,
             department: department,

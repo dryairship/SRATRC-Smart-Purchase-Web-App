@@ -11,13 +11,10 @@ function handleUserPost(req, res) {
     
     encryptPassword(password)
     .then(passwordHash => {
-        insertUser(username, name, passwordHash, department, phone)
-        .then(result => {
-            res.status(result.status).json(result.response);
-        })
-        .catch(error => {
-            res.status(error.status).json(error.response);
-        });
+        return insertUser(username, name, passwordHash, department, phone)
+    })
+    .then(result => {
+        res.status(result.status).json(result.response);
     })
     .catch(error => {
         res.status(error.status).json(error.response);

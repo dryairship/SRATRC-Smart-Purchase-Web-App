@@ -30,9 +30,10 @@ function handleInventoryItemGetById(req, res) {
 function handleInventoryItemPatch(req, res) {
     var value;
     if(req.body.value)
-        value= req.body.value
-    else    
-        res.status(400).json('No Change')
+        value = req.body.value;
+    else
+        res.status(400).json('No Change');
+    
     updateInventoryItem(req.params.productID, req.params.departmentID, value)
     .then(result => {
         res.status(result.status).json(result.response);
@@ -76,9 +77,10 @@ function handleInventoryItemGetByDepartmentId(req, res) {
 function handleTransferInventoryItem(req, res){
     var value;
     if(req.body.value)
-        value= req.body.value;
-    else    
+        value = req.body.value;
+    else
         res.status(400).json('No Change');
+    
     transferInventoryItem(req.body.productID, req.body.fromDepartmentID, req.body.toDepartmentID, value)
     .then(result => {
         res.status(result.status).json(result.response);

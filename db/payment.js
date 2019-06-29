@@ -1,4 +1,4 @@
-const Payment = require('../models/payment.js')
+const Payment = require('../models/payment.js');
 
 function updatePayment(purchaseID, amount, paidBy, remarks, time){
     return new Promise((resolve, reject) => {
@@ -58,7 +58,7 @@ function insertPayment(purchaseID, vendorID, totalAmount){
                     status: 202,
                     response: "Product purchased and payment created"
                 });
-    	});
+        });
     });
 }
 

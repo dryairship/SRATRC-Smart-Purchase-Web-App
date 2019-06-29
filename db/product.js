@@ -58,8 +58,7 @@ function findAllProducts(){
                     status: 200,
                     response: products
                 });
-        }
-        );
+        });
     });
 }
 

@@ -1,7 +1,7 @@
-const { insertVendor, findVendorById, deleteVendor, updateVendor, findAllVendors } = require('../db/vendor.js')
+const { insertVendor, findVendorById, deleteVendor, updateVendor, findAllVendors } = require('../db/vendor.js');
 
 function handleVendorPost(req, res){
-	var name = req.body.name,
+    var name = req.body.name,
         contactPerson = req.body.contactPerson,
         address = req.body.address,
         phone = req.body.phone,
@@ -17,44 +17,45 @@ function handleVendorPost(req, res){
 }
 
 function handleVendorGetById(req, res){
-	findVendorById(req.params.vendorID)
-	.then(result => {
-		res.status(result.status).json(result.response);
-	})
-	.catch(error => {
-		res.status(error.status).json(error.response);
-	})
+    findVendorById(req.params.vendorID)
+    .then(result => {
+        res.status(result.status).json(result.response);
+    })
+    .catch(error => {
+        res.status(error.status).json(error.response);
+    });
 }
 
 function handleVendorDelete(req, res){
-	deleteVendor(req.params.vendorID)
-	.then(result => {
-		res.status(result.status).json(result.response);
-	})
-	.catch(error => {
-		res.status(error.status).json(error.response);
-	})	
+    deleteVendor(req.params.vendorID)
+    .then(result => {
+        res.status(result.status).json(result.response);
+    })
+    .catch(error => {
+        res.status(error.status).json(error.response);
+    });
 }
 
 function handleVendorUpdate(req, res){
-	var newVendor = {};
-	if(req.body.name)
-		newVendor['name'] = req.body.name;
-	if(req.body.contactPerson)
-		newVendor['contactPerson'] = req.body.contactPerson;
-	if(req.body.address)
-		newVendor['address'] = req.body.address;
-	if(req.body.phone)
-		newVendor['phone'] = req.body.phone;
-	if(req.body.email)
-		newVendor['email'] = req.body.email;
-	updateVendor(req.params.vendorID, newVendor)
-	.then(result => {
-		res.status(result.status).json(result.response);
-	})
-	.catch(error => {
-		res.status(error.status).json(error.response);
-	})	
+    var newVendor = {};
+    if(req.body.name)
+        newVendor['name'] = req.body.name;
+    if(req.body.contactPerson)
+        newVendor['contactPerson'] = req.body.contactPerson;
+    if(req.body.address)
+        newVendor['address'] = req.body.address;
+    if(req.body.phone)
+        newVendor['phone'] = req.body.phone;
+    if(req.body.email)
+        newVendor['email'] = req.body.email;
+
+    updateVendor(req.params.vendorID, newVendor)
+    .then(result => {
+        res.status(result.status).json(result.response);
+    })
+    .catch(error => {
+        res.status(error.status).json(error.response);
+    });
 }
 
 function handleVendorGetAll(req, res) {

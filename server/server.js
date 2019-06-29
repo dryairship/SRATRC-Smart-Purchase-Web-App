@@ -28,7 +28,7 @@ app.listen(global.server.port, () => {
 });
 
 
-// PRINT
+// PRINT (WILL BE REMOVED LATER)
 
 function print (path, layer) {
   if (layer.route) {

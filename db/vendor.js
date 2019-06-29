@@ -59,7 +59,7 @@ function deleteVendor(id){
             else
                 resolve({status : 202,
                         response : "Vendor successfully deleted"});
-        });   
+        });
     });
 }
 
@@ -67,7 +67,7 @@ function deleteVendor(id){
 function updateVendor(id, newVendor){
     return new Promise((resolve, reject) => {
         Vendor.updateOne({
-        	_id : id
+            _id : id
         },
         newVendor,
         function(err, result) {
@@ -91,12 +91,12 @@ function updateVendor(id, newVendor){
                     status : 202,
                     response : " Vendor successfully updated"
                 });
-		});
+        });
     });
 }
 
 function findAllVendors(){
-return new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
         Vendor.find(
         null,
         '-__v',

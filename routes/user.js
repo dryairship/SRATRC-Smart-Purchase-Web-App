@@ -1,6 +1,6 @@
 const express = require('express');
 
-const { handleUserGet, handleUserPost, handleUserPatch, handleUserLogin } = require('../controllers/user.js')
+const { handleUserGet, handleUserPost, handleUserPatch, handleUserLogin } = require('../controllers/user.js');
 
 var router = express.Router();
 

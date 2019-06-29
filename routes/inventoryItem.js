@@ -1,9 +1,9 @@
 const express = require('express');
 
-const { handleInventoryItemPost, handleInventoryItemGetById, handleInventoryItemPatch, handleInventoryItemDelete, handleInventoryItemGetByProductId, handleInventoryItemGetByDepartmentId, handleTransferInventoryItem } = require('../controllers/inventoryItem.js')
+const { handleInventoryItemPost, handleInventoryItemGetById, handleInventoryItemPatch, handleInventoryItemDelete, handleInventoryItemGetByProductId, handleInventoryItemGetByDepartmentId, handleTransferInventoryItem } = require('../controllers/inventoryItem.js');
 
-var router = express.Router() ;
- 
+var router = express.Router();
+
 router.post('/', handleInventoryItemPost);
 router.get('/product/:productID', handleInventoryItemGetByProductId);
 router.get('/department/:departmentID', handleInventoryItemGetByDepartmentId);

@@ -1,8 +1,8 @@
 const express = require('express')
 
-const { handleVendorPost, handleVendorGetById, handleVendorDelete, handleVendorUpdate, handleVendorGetAll } = require('../controllers/vendor.js')
+const { handleVendorPost, handleVendorGetById, handleVendorDelete, handleVendorUpdate, handleVendorGetAll } = require('../controllers/vendor.js');
 
-var router = express.Router()
+var router = express.Router();
 
 router.post('/',handleVendorPost);
 router.get('/',handleVendorGetAll);

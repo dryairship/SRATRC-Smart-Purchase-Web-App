@@ -25,4 +25,4 @@ DBConnection.options = {
     useNewUrlParser: true
 }
 
-module.exports = DBConnection
+module.exports = DBConnection;
