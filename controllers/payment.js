@@ -2,7 +2,7 @@ const { updatePayment, insertPayment, findPaymentByPurchaseID, findPaymentByVend
 
 function handlePayPost(req, res){
     var amount = req.body.amount;
-    var paidBy = req.body.paidBy;
+    var paidBy = req.user.username;
     var remarks = req.body.remarks;
     var timestamp = Date.now();
 

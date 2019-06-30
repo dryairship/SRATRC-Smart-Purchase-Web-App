@@ -3,10 +3,10 @@ const { updatePayment, insertPayment } = require('../db/payment.js');
 const { calculateTotalAmount } = require('../utils/amount.js');
 
 function handlePurchasePost(req, res) {
-    var departmentID = req.body.departmentID,
+    var departmentID = req.user.department,
         productID = req.body.productID,
         vendorID = req.body.vendorID,
-        purchasedBy = req.body.purchasedBy,
+        purchasedBy = req.user.username,
         billNumber = req.body.billNumber,
         quantity = {
             value: req.body.qValue,
