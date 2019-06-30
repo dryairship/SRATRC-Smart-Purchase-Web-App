@@ -45,4 +45,25 @@ function deleteSession(id){
     });
 }
 
-module.exports = { insertSession , deleteSession };
+function findSessionByID(id){
+    return new Promise((resolve, reject) => {
+        Session.findById(
+        id,
+        function(err, session){
+            if(err)
+                reject({
+                    status: 500,
+                    response: "A server error occured while verifying session"
+                });
+            else if(!session)
+                reject({
+                    status: 403,
+                    response: "User not logged in"
+                });
+            else
+                resolve(session.user);
+        });
+    });
+}
+
+module.exports = { insertSession , deleteSession, findSessionByID };
