@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 
 const config = require('../config/config.js');
 const DBConnection = require('../db/database.js');
@@ -15,6 +16,7 @@ const app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 app.use('/product', productRoutes);
 app.use('/inventory', inventoryItemRoutes);

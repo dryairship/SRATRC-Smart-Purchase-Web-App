@@ -1,6 +1,6 @@
 const { insertUser, findUser,  updateUser } = require('../db/user.js');
 const { encryptPassword, checkPassword } = require('../utils/auth.js');
-const { createSessionCookie } = require('../utils/session.js');
+const { createSessionCookie, deleteSessionCookie } = require('../utils/session.js');
 
 function handleUserPost(req, res) {
     var username = req.body.username,
@@ -69,4 +69,14 @@ function handleUserLogin(req, res){
     });
 }
 
-module.exports = { handleUserGet, handleUserPost, handleUserPatch, handleUserLogin };
+function handleUserLogout(req, res){
+    return deleteSessionCookie(req.cookies.sessionID)
+    .then(result => {
+        res.cookie('sessionID', result.cookie.value, result.cookie.params).status(result.status).json(result.response);
+    })
+    .catch(error => {
+        res.status(error.status).json(error.response);
+    });
+}
+
+module.exports = { handleUserGet, handleUserPost, handleUserPatch, handleUserLogin, handleUserLogout };
