@@ -9,6 +9,7 @@ const inventoryItemRoutes = require('../routes/inventoryItem.js');
 const vendorRoutes = require('../routes/vendor.js');
 const userRoutes = require('../routes/user.js');
 const purchaseRoutes = require('../routes/purchase.js');
+const paymentRoutes = require('../routes/payment.js');
 
 const app = express();
 
@@ -20,6 +21,7 @@ app.use('/inventory', inventoryItemRoutes);
 app.use('/vendor',vendorRoutes);
 app.use('/user', userRoutes);
 app.use('/purchase', purchaseRoutes);
+app.use('/payment', paymentRoutes);
 
 DBConnection.dial();
 

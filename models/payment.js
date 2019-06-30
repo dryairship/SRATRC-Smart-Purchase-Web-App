@@ -23,6 +23,6 @@ var PaymentSchema = new mongoose.Schema({
     amountRemaining : Number
 });
 
-var Payment = mongoose.model('Payment',PaymentSchema)
+var Payment = mongoose.model('Payment',PaymentSchema);
 
 module.exports = Payment;
