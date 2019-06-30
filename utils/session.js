@@ -1,4 +1,4 @@
-const { insertSession } = require('../db/session.js');
+const { insertSession, deleteSession } = require('../db/session.js');
 
 function createSessionCookie(user, remember){
     var maxAge, expireAt;
@@ -34,4 +34,29 @@ function createSessionCookie(user, remember){
     });
 }
 
-module.exports = { createSessionCookie };
+function deleteSessionCookie(id){
+    return new Promise((resolve, reject) => {
+        deleteSession(id)
+        .then(result => {
+            resolve({
+                status: 200,
+                response: "User logged out successfully",
+                cookie: {
+                    value: "",
+                    params: {
+                         maxAge: 0,
+                         httpOnly: true
+                    }
+                }
+            });
+        })
+        .catch(error => {
+            reject({
+                status: 500,
+                response: "Cannot delete session cookie"
+            })
+        });
+    });
+}
+
+module.exports = { createSessionCookie, deleteSessionCookie };
