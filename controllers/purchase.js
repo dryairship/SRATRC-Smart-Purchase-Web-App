@@ -17,17 +17,19 @@ function handlePurchasePost(req, res) {
             unit: req.body.rUnit
         },
         purchaseType = req.body.purchaseType,
-        remarks = req.body.remarks;
+        remarks = req.body.remarks,
+        amount;
     
     calculateTotalAmount(quantity, rate)
     .then(totalAmount => {
-        return insertPurchase(departmentID, productID, vendorID, purchasedBy, billNumber, quantity, rate, totalAmount, purchaseType, remarks)
+        amount = totalAmount;
+        return insertPurchase(departmentID, productID, vendorID, purchasedBy, billNumber, quantity, rate, amount, purchaseType, remarks);
     })
-    .then(purchaseResult => {
-        return insertPayment(purchaseResult, vendorID, totalAmount)
+    .then(purchaseID => {
+        return insertPayment(purchaseID, vendorID, amount);
     })
-    .then(paymentResult => {
-        return res.status(paymentResult.status).json(paymentResult.response);
+    .then(result => {
+        return res.status(result.status).json(result.response);
     })
     .catch(error => {
         res.status(error.status).json(error.response);

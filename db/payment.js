@@ -1,42 +1,71 @@
 const Payment = require('../models/payment.js');
 
-function updatePayment(purchaseID, amount, paidBy, remarks, time){
+function updatePayment(purchaseID, amount, paidBy, remarks, timestamp){
     return new Promise((resolve, reject) => {
         var installmentDetails = {
-            time : time,
+            timestamp : timestamp,
             amount : amount,
             paidBy : paidBy,
             remarks : remarks
         };
 
-        Payment.updateOne({
-            _id: purchaseID
+        var valid = 1;
+        Payment.findOne({
+            purchaseID: purchaseID
         },
-        {
-            $inc: {
-                amountRemaining : -amount
-            },
-            $push: {
-                installments : installmentDetails
-            }
-        },
-        function(err, result){
-            if(err)
-                reject({
-                    status : 500,
-                    response : " A server error occurred"
-                });
-            else if(result.n == 0)
+        '-__v',
+        function(err ,payment){
+            if(err || !payment)
                 reject({
                     status : 404,
-                    response : "invalid purchaseID"
+                    response : "Invalid purchaseID"
                 });
-            else
-                resolve({
-                    status : 202,
-                    response : " Payment successfully done"
+            else if(payment.amountRemaining < amount){
+                valid = 0;
+                reject({
+                    status : 400,
+                    response : "Amount greater than pending"
                 });
-        });
+            }
+        })
+        .then(() => {
+            if(valid){
+                Payment.updatePaymentateOne({
+                    purchaseID: purchaseID
+                },
+                {
+                    $inc: {
+                        amountRemaining : -amount
+                    },
+                    $push: {
+                        installments : installmentDetails
+                    }
+                },
+                function(err, result){
+                    if(err)
+                        reject({
+                            status : 500,
+                            response : "A server error occurred"
+                        });
+                    else if(result.n == 0)
+                        reject({
+                            status : 404,
+                            response : "Invalid purchaseID"
+                        });
+                    else
+                        resolve({
+                            status : 202,
+                            response : "Payment successfully done"
+                        });
+                });
+            }
+        })
+        .catch(() => {
+            reject({
+                status : 500,
+                response : "Update not successful"
+            });
+        }); 
     });
 }
 
@@ -62,4 +91,93 @@ function insertPayment(purchaseID, vendorID, totalAmount){
     });
 }
 
-module.exports = { updatePayment, insertPayment };
+function findPaymentByPurchaseID(id){
+    return new Promise((resolve,reject) => {
+        Payment.find({
+            purchaseID : id 
+        },
+        '-__v',
+        function(err, payments){
+            if(err || !payments || payments.length == 0)
+                reject({
+                    status: 404,
+                    response: "Payment not found"
+                });
+            else
+                resolve({
+                    status: 200,
+                    response: payments
+                });
+        });
+    });
+}
+
+function findPaymentByVendorID(id){
+    return new Promise((resolve, reject) => {
+        Payment.find({
+            vendorID : id
+        },
+        '-__v',
+        function(err, vendors){
+            if(err || !vendors || vendors.length == 0)
+                reject({
+                    status: 404,
+                    response: "Vendor not found"
+                });
+            else
+                resolve({
+                    status: 200,
+                    response: vendors
+                });
+        });
+    });
+}
+
+function findPendingPayment(){
+    return new Promise((resolve, reject) => {
+        Payment.find({
+            amountRemaining : {
+                $gte : 0
+            } 
+        },
+        '-__v',
+        function(err, pendings){
+            if(err || !pendings || pendings.length == 0 )
+                reject({
+                    status: 404,
+                    response: "No pending payments"
+                });
+            else
+                resolve({
+                    status: 200,
+                    response: pendings
+                });
+        });
+    });
+}
+
+function findPaymentInDateRange(begin, finish){
+    return new Promise((resolve, reject) => {
+        Payment.find({
+            "installments.timestamp" : {
+                $gte : begin,
+                $lte : finish
+            }
+        },
+        '-__v',
+        function(err, onDates){
+            if(err || !onDates || onDates.length == 0 )
+                reject({
+                    status: 404,
+                    response: "No payments made in between given dates"
+                });
+            else
+                resolve({
+                    status: 200,
+                    response: onDates
+                });
+        });
+    })
+}
+
+module.exports = { updatePayment, insertPayment, findPaymentByPurchaseID, findPaymentByVendorID, findPendingPayment, findPaymentInDateRange };
