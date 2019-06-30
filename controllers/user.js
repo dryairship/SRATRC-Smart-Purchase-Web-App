@@ -59,7 +59,13 @@ function handleUserLogin(req, res){
         return checkPassword(req.body.password, user.password);
     })
     .then(result => {
-        return createSessionCookie(user, req.body.remember);
+        sessionUser = {
+            username: user.username,
+            name: user.name,
+            department: user.department,
+            phone: user.phone
+        };
+        return createSessionCookie(sessionUser, req.body.remember);
     })
     .then(result => {
         res.cookie('sessionID', result.cookie.value, result.cookie.params).status(result.status).json(result.response);

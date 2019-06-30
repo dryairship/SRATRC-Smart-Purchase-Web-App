@@ -81,7 +81,7 @@ function handleTransferInventoryItem(req, res){
     else
         res.status(400).json('No Change');
     
-    transferInventoryItem(req.body.productID, req.body.fromDepartmentID, req.body.toDepartmentID, value)
+    transferInventoryItem(req.body.productID, req.user.department, req.body.toDepartmentID, value)
     .then(result => {
         res.status(result.status).json(result.response);
     })

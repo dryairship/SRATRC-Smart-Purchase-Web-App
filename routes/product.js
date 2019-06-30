@@ -1,8 +1,11 @@
 const express = require('express');
 
 const { handleProductGetById, handleProductGetAll, handleProductPost, handleProductPatch, handleProductDelete } = require('../controllers/product.js');
+const { validateUser } = require('../utils/middlewares.js');
 
 var router = express.Router();
+
+router.use(validateUser);
 
 router.post('/', handleProductPost);
 router.get('/', handleProductGetAll);
