@@ -8,7 +8,12 @@ var SessionSchema = new mongoose.Schema({
             return uuidv4();
         }
     },
-    user: String,
+    user: {
+        username: String,
+        name: String,
+        department: String,
+        phone: String
+    },
     expireAt: Date
 });
 

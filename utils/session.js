@@ -11,7 +11,7 @@ function createSessionCookie(user, remember){
     expireAt = Date.now() + maxAge;
     
     return new Promise((resolve, reject) => {
-        insertSession(user.username, expireAt)
+        insertSession(user, expireAt)
         .then(result => {
             resolve({
                 status: 200,
