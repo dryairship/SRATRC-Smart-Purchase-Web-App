@@ -47,17 +47,7 @@ function MenuAppBar() {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static" color="primary">
-        <Toolbar>
-            <div>
-              <SideDrawer />              
-            </div>            
-          <Typography variant="h6" className={classes.title}>
-            <NavLink to="/" className={classes.link}>
-              SRATRC
-            </NavLink>
-          </Typography>          
-            <div>
+      
                 <IconButton
                 aria-label="Account of current user"
                 aria-controls="menu-appbar"
@@ -85,9 +75,7 @@ function MenuAppBar() {
                 <MenuItem onClick={handleCloseright}>Profile</MenuItem>
                 <MenuItem onClick={handleCloseright}>Log Out</MenuItem>                
                 </Menu>
-            </div>          
-        </Toolbar>
-      </AppBar>
+            
     </div>
   );
 }
