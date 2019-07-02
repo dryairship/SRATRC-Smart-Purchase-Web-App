@@ -6,7 +6,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-import Link from '@material-ui/core/Link';
+import { NavLink } from "react-router-dom";
 
 const useStyles = makeStyles({
   list: {
@@ -15,6 +15,10 @@ const useStyles = makeStyles({
   fullList: {
     width: 'auto',
   },
+  link: {
+    textDecoration: 'none',
+    color: 'inherit',
+  }
 });
 
 export default function SideDrawer() {
@@ -39,20 +43,47 @@ export default function SideDrawer() {
       onKeyDown={toggleDrawer(side, false)}
     >
       <List>
-          <ListItem 
-            button key="Home"
-            autoFocus="true"
-            divider="true"
-            >
-            <ListItemText primary="Home"/>
-            </ListItem>
-          {['Inventory', 'Payments', 'Tally Output', 'Donation'].map((text, index) => (
-          <ListItem 
-            button key={text}          
-          >
-            <ListItemText primary={text}/>
-          </ListItem>
-        ))}
+            <NavLink to="/" className={classes.link}>
+              <ListItem 
+              button key="Home"
+              autoFocus="true"
+              divider="true"
+              >
+                <ListItemText primary="Home"/>
+              </ListItem>
+            </NavLink>
+            <NavLink to="/inventory" className={classes.link}>
+              <ListItem 
+              button key="inventory"
+              autoFocus="true"
+              >
+                <ListItemText primary="Inventory"/>
+              </ListItem>
+            </NavLink>
+            <NavLink to="/payments" className={classes.link}>
+              <ListItem 
+              button key="payments"
+              autoFocus="true"
+              >
+                <ListItemText primary="Payments"/>
+              </ListItem>
+            </NavLink>
+            <NavLink to="/tally" className={classes.link}>
+              <ListItem 
+              button key="tally"
+              autoFocus="true"
+              >
+                <ListItemText primary="Tally Output"/>
+              </ListItem>
+            </NavLink>
+            <NavLink to="/donation" className={classes.link}>
+              <ListItem 
+              button key="donation"
+              autoFocus="true"
+              >
+                <ListItemText primary="Donation"/>
+              </ListItem>
+            </NavLink>
       </List>
     </div>
   );

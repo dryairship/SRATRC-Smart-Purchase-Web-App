@@ -3,7 +3,8 @@ import './App.css';
 import MenuAppBar from './components/topbar/topbar';
 import HomePage from './components/homepage/homepage';
 import Inventory from './components/inventory/inventory';
-import { Route, NavLink, HashRouter } from "react-router-dom";
+import { Route, HashRouter } from "react-router-dom";
+import SignIn from './components/signIn/signIn';
 
 function App() {
   return (
