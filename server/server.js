@@ -11,6 +11,7 @@ const vendorRoutes = require('../routes/vendor.js');
 const userRoutes = require('../routes/user.js');
 const purchaseRoutes = require('../routes/purchase.js');
 const paymentRoutes = require('../routes/payment.js');
+const listRoutes = require('../routes/list.js');
 
 const app = express();
 
@@ -24,6 +25,7 @@ app.use('/vendor',vendorRoutes);
 app.use('/user', userRoutes);
 app.use('/purchase', purchaseRoutes);
 app.use('/payment', paymentRoutes);
+app.use('/list', listRoutes);
 
 DBConnection.dial();
 
