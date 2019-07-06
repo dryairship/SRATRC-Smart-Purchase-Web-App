@@ -19,8 +19,7 @@ function createSessionCookie(user, remember){
                 cookie: {
                     value: result.response,
                     params: {
-                         maxAge: maxAge,
-                         httpOnly: true
+                         maxAge: maxAge
                     }
                 }
             });
@@ -44,8 +43,7 @@ function deleteSessionCookie(id){
                 cookie: {
                     value: "",
                     params: {
-                         maxAge: 0,
-                         httpOnly: true
+                         maxAge: 0
                     }
                 }
             });
