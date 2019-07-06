@@ -35,20 +35,32 @@ function handleUserPatch(req, res){
     var newUser = {};
     if(req.body.name) 
         newUser.name = req.body.name;
-    if(req.body.password)
-        newUser.password = req.body.password;
     if(req.body.department)
         newUser.department = req.body.department;
     if(req.body.phone)
         newUser.phone = req.body.phone;
     
-    updateUser(req.params.userID, newUser)
-    .then(result => {
-        res.status(result.status).json(result.response);
-    })
-    .catch(error => {
-        res.status(error.status).json(error.response);
-    });
+    if(req.body.password){
+        encryptPassword(password)
+        .then(passwordHash => {
+            newUser.password = passwordHash;
+            return updateUser(req.params.userID, newUser);
+        })
+        .then(result => {
+            res.status(result.status).json(result.response);
+        })
+        .catch(error => {
+            res.status(error.status).json(error.response);
+        });
+    }else{
+        updateUser(req.params.userID, newUser)
+        .then(result => {
+            res.status(result.status).json(result.response);
+        })
+        .catch(error => {
+            res.status(error.status).json(error.response);
+        });
+    }
 }
 
 function handleUserLogin(req, res){
