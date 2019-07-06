@@ -3,6 +3,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
 import ContentsTable from './table';
+import FilterTabs from './tabs';
 
 const useStyles = makeStyles(theme => ({
     '@global': {
@@ -12,26 +13,21 @@ const useStyles = makeStyles(theme => ({
     },
     paper: {
       marginTop: theme.spacing(1),
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
     }
   }));
 
-export default function Inventory() {
+export default function Inventory(props) {
     const classes = useStyles();
 
     return (
     <React.Fragment>
         <CssBaseline />
-        <Container 
-        component="main"
-        maxWidth="md"
-        >
+        
         <div className={classes.paper}>
-            <ContentsTable />
+            <FilterTabs />
+            
         </div>
-        </Container>
+        
     </React.Fragment>
   );
 }
