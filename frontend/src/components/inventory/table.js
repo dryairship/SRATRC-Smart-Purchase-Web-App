@@ -175,17 +175,14 @@ const EnhancedTableToolbar = props => {
 
 const useStyles = makeStyles(theme => ({
   root: {
-    // maxWidth: 750,
-    // width: '100%',
     marginTop: theme.spacing(1),
   },
   paper: {
-    // width: '100%',
+    marginTop: theme.spacing(1),
     marginBottom: theme.spacing(2),
-    // alignContent: 'center',
   },
   table: {
-    // minWidth: 750,
+    minWidth: 750,
     // alignContent: 'center',
   },
   tableWrapper: {
@@ -219,74 +216,72 @@ export default function ContentsTable() {
 
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
-  return (
-    <Container maxWidth="md">
-      <div className={classes.root}>
-        <Paper className={classes.paper}>
-          <div>        
-            <Typography variant="h6" id="tableTitle" className={classes.title}>
-              Inventory
-            </Typography>        
-          </div>
-          <EnhancedTableToolbar />
-          <div className={classes.tableWrapper}>
-            <Table
-              className={classes.table}
-              aria-labelledby="tableTitle"            
-            >
-              <EnhancedTableHead              
-                order={order}
-                orderBy={orderBy}
-                onRequestSort={handleRequestSort}
-                rowCount={rows.length}
-              />
-              <TableBody>
-                {stableSort(rows, getSorting(order, orderBy))
-                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((row, index) => {
-                    const labelId = `enhanced-table-checkbox-${index}`;
+  return (    
+    <Container component="main" maxWidth="md">
+      <Paper className={classes.paper}>
+        <div>        
+          <Typography variant="h6" id="tableTitle" className={classes.title}>
+            Inventory
+          </Typography>        
+        </div>
+        <EnhancedTableToolbar />
+        <div className={classes.tableWrapper}>
+          <Table
+            className={classes.table}
+            aria-labelledby="tableTitle"            
+          >
+            <EnhancedTableHead              
+              order={order}
+              orderBy={orderBy}
+              onRequestSort={handleRequestSort}
+              rowCount={rows.length}
+            />
+            <TableBody>
+              {stableSort(rows, getSorting(order, orderBy))
+                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .map((row, index) => {
+                  const labelId = `enhanced-table-checkbox-${index}`;
 
-                    return (
-                      <TableRow
-                        hover                      
-                        tabIndex={-1}
-                        key={row.name}
-                      >                      
-                        <TableCell component="th" id={labelId} scope="row" padding="default">
-                          {row.name}
-                        </TableCell>
-                        <TableCell align="right">{row.calories}</TableCell>
-                        <TableCell align="right">{row.fat}</TableCell>
-                        <TableCell align="right">{row.carbs}</TableCell>
-                        <TableCell align="right">{row.protein}</TableCell>
-                      </TableRow>
-                    );
-                  })}
-                {emptyRows > 0 && (
-                  <TableRow style={{ height: 49 * emptyRows }}>
-                    <TableCell colSpan={6} />
-                  </TableRow>
-                )}
-              </TableBody>
-            </Table>
-          </div>
-          <TablePagination
-            rowsPerPageOptions={[5, 10, 25]}
-            component="div"
-            count={rows.length}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            backIconButtonProps={{
-              'aria-label': 'Previous Page',
-            }}
-            nextIconButtonProps={{
-              'aria-label': 'Next Page',
-            }}
-            onChangePage={handleChangePage}
-            onChangeRowsPerPage={handleChangeRowsPerPage}
-          />
-        </Paper>
-      </div>
+                  return (
+                    <TableRow
+                      hover                      
+                      tabIndex={-1}
+                      key={row.name}
+                    >                      
+                      <TableCell component="th" id={labelId} scope="row" padding="default">
+                        {row.name}
+                      </TableCell>
+                      <TableCell align="right">{row.calories}</TableCell>
+                      <TableCell align="right">{row.fat}</TableCell>
+                      <TableCell align="right">{row.carbs}</TableCell>
+                      <TableCell align="right">{row.protein}</TableCell>
+                    </TableRow>
+                  );
+                })}
+              {emptyRows > 0 && (
+                <TableRow style={{ height: 49 * emptyRows }}>
+                  <TableCell colSpan={6} />
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        </div>
+        <TablePagination
+          rowsPerPageOptions={[5, 10, 25]}
+          component="div"
+          count={rows.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          backIconButtonProps={{
+            'aria-label': 'Previous Page',
+          }}
+          nextIconButtonProps={{
+            'aria-label': 'Next Page',
+          }}
+          onChangePage={handleChangePage}
+          onChangeRowsPerPage={handleChangeRowsPerPage}
+        />
+      </Paper>
     </Container>
     
   );

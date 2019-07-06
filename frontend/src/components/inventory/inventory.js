@@ -25,7 +25,6 @@ export default function Inventory(props) {
         
         <div className={classes.paper}>
             <FilterTabs />
-            
         </div>
         
     </React.Fragment>
