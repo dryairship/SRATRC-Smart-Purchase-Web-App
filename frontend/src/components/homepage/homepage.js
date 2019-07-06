@@ -28,7 +28,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function HomePage() {
+export default function HomePage(props) {
   const classes = useStyles();
 
   return (
@@ -41,7 +41,7 @@ export default function HomePage() {
             color="primary"
             size="large"
             className={classes.btn}
-            href="#inventory"
+            href="/inventory"
         >
           Inventory                                        
         </Button>
@@ -51,7 +51,7 @@ export default function HomePage() {
             color="primary"
             size="large"
             className={classes.btn}
-            href="#payments"
+            href="/payments"
         >
           Payments
         </Button>
@@ -61,7 +61,7 @@ export default function HomePage() {
             color="primary"
             size="large"
             className={classes.btn}
-            href="#tally"
+            href="/tally"
         >
           Tally Output  
         </Button>
@@ -71,9 +71,19 @@ export default function HomePage() {
             color="primary"
             size="large"
             className={classes.btn}
-            href="#donation"
+            href="/donation"
         >
           Donation 
+        </Button>
+        <Button
+            fullWidth
+            variant="contained"
+            color="primary"
+            size="large"
+            className={classes.btn}
+            href="/purchase"
+        >
+          Purchase 
         </Button>
         
       </div>

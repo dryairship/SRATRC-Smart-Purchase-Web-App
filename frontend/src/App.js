@@ -3,13 +3,14 @@ import './App.css';
 import MenuAppBar from './components/topbar/topbar';
 import HomePage from './components/homepage/homepage';
 import Inventory from './components/inventory/inventory';
-import { Route, HashRouter } from "react-router-dom";
+import Purchase from './components/purchase/purchase';
+import { Route, BrowserRouter as Router } from "react-router-dom";
 import SignIn from './components/signIn/signIn';
 import Cookies from 'js-cookie';
 
 function App() {
 
-  const [loggedIn, setLoggedIn] = React.useState(false);
+  const [loggedIn, setLoggedIn] = React.useState(true);
 
   const loginSuccessful = () => {
     setLoggedIn(true);
@@ -21,24 +22,25 @@ function App() {
 
   if(loggedIn){
     return (
-      <HashRouter>
+      <Router>
         <div className="App">
-          <MenuAppBar />
+          <MenuAppBar loggedIn={loggedIn} />
           <Route exact path="/" component={HomePage} />
           <Route path="/inventory" component={Inventory} />
           <Route path="/payments" component={HomePage} />
           <Route path="/tally" component={HomePage} />
           <Route path="/donation" component={HomePage} />
+          <Route path="/purchase" component={Purchase} />
         </div>
-      </HashRouter>
+      </Router>
     );
   }else{
     return (
-      <HashRouter>
+      <Router>
         <div className="App">
           <SignIn onLogin={loginSuccessful}/>
         </div>
-      </HashRouter>
+      </Router>
     );
   }
 }

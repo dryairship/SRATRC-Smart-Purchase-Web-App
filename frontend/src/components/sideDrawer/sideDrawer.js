@@ -21,7 +21,7 @@ const useStyles = makeStyles({
   }
 });
 
-export default function SideDrawer() {
+export default function SideDrawer(props) {
   const classes = useStyles();
   const [state, setState] = React.useState({
     left: false,
