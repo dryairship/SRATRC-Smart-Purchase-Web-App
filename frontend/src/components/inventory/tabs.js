@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import SwipeableViews from 'react-swipeable-views';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import ContentsTable from './table';
+import CssBaseline from '@material-ui/core/CssBaseline';
 import { Container } from '@material-ui/core';
 
 function TabContainer({ children, dir }) {
@@ -48,8 +48,7 @@ export default function FilterTabs() {
   }
 
   return (    
-    <Container component="main" maxWidth="md">
-      <div className={classes.paper}>
+    <React.Fragment>
         <AppBar position="static" color="default">
         <Tabs
           value={value}
@@ -62,17 +61,8 @@ export default function FilterTabs() {
           <Tab label="Product" />
         </Tabs>
       </AppBar>
-      {/* <SwipeableViews
-        axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-        index={value}
-        onChangeIndex={handleChangeIndex}
-      >
-        <TabContainer dir={theme.direction}><ContentsTable /></TabContainer>
-        <TabContainer dir={theme.direction}><ContentsTable /></TabContainer>
-      </SwipeableViews> */}
-      {value === 0 && <TabContainer><ContentsTable /></TabContainer>}
-      {value === 1 && <TabContainer>The API documentation of the Tab React component. Learn more about the properties and the CSS customization points.The API documentation of the Tab React component. Learn more about the properties and the CSS customization points.The API documentation of the Tab React component. Learn more about the properties and the CSS customization points.The API documentation of the Tab React component. Learn more about the properties and the CSS customization points.</TabContainer>}
-      </div>      
-    </Container>
+      {value === 0 && <ContentsTable />}
+      {value === 1 && <ContentsTable />}
+      </React.Fragment>
   );
 }

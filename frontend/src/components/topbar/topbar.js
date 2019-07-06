@@ -35,7 +35,6 @@ const useStyles = makeStyles(theme => ({
 function MenuAppBar(props) {
   const classes = useStyles();
   const [anchorElright, setAnchorElright] = React.useState(null);
-  // const isLoggedIn = this.state.isLoggedIn;
   const openright = Boolean(anchorElright);
 
   function handleMenuright(event) {
@@ -44,8 +43,7 @@ function MenuAppBar(props) {
 
   function handleCloseright() {
     setAnchorElright(null);
-  }
-  // if (isLoggedIn) 
+  }  
   return (
     <div className={classes.root}>
       <AppBar position="static" color="primary">
@@ -91,19 +89,6 @@ function MenuAppBar(props) {
       </AppBar>
     </div>
   );
-  // else return (
-  //   <div className={classes.root}>
-  //     <AppBar position="static" color="primary">
-  //       <Toolbar>          
-  //         <Typography variant="h6" className={classes.title}>
-  //           <NavLink to="/" className={classes.link}>
-  //             SRATRC
-  //           </NavLink>
-  //         </Typography>
-  //       </Toolbar>
-  //     </AppBar>
-  //   </div>
-  // );
 }
 
 export default MenuAppBar;
