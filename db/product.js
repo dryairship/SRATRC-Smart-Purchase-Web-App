@@ -16,7 +16,7 @@ function insertProduct(name, category, description){
             else
                 resolve({
                     status: 201,
-                    response: "Product successfully created"
+                    response: product._id
                 });
         });
     });

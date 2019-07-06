@@ -13,12 +13,12 @@ function insertVendor(name, contactPerson, address, phone, email){
             if(err)
                 reject({
                     status: 400,
-                    response: "Product not created"
+                    response: "Vendor not created"
                 });
             else
                 resolve({
                     status: 202,
-                    response: "Product successfully created"
+                    response: vendor._id
                 });
         });
     });
@@ -34,7 +34,7 @@ function findVendorById(id){
             if(err || !vendor)
                 reject({
                     status: 404,
-                    response: "Product not found"
+                    response: "Vendor not found"
                 });
             else
                 resolve({
