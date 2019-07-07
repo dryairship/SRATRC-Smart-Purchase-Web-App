@@ -41,10 +41,10 @@ function handleUserPatch(req, res){
         newUser.phone = req.body.phone;
     
     if(req.body.password){
-        encryptPassword(password)
+        encryptPassword(req.body.password)
         .then(passwordHash => {
             newUser.password = passwordHash;
-            return updateUser(req.params.userID, newUser);
+            return updateUser(req.user.username, newUser);
         })
         .then(result => {
             res.status(result.status).json(result.response);
@@ -53,7 +53,7 @@ function handleUserPatch(req, res){
             res.status(error.status).json(error.response);
         });
     }else{
-        updateUser(req.params.userID, newUser)
+        updateUser(req.user.username, newUser)
         .then(result => {
             res.status(result.status).json(result.response);
         })

@@ -6,11 +6,12 @@ import Inventory from './components/inventory/inventory';
 import Purchase from './components/purchase/purchase';
 import { Route, BrowserRouter as Router } from "react-router-dom";
 import SignIn from './components/signIn/signIn';
+import Profile from './components/profile/profile';
 import Cookies from 'js-cookie';
 
 function App() {
 
-  const [loggedIn, setLoggedIn] = React.useState(true);
+  const [loggedIn, setLoggedIn] = React.useState(false);
 
   const loginSuccessful = () => {
     setLoggedIn(true);
@@ -31,6 +32,7 @@ function App() {
           <Route path="/tally" component={HomePage} />
           <Route path="/donation" component={HomePage} />
           <Route path="/purchase" component={Purchase} />
+          <Route path="/profile" component={Profile} />
         </div>
       </Router>
     );
