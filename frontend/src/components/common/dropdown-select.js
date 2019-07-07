@@ -64,7 +64,7 @@ export default function ProductCategory(props) {
           }
         >
             <option value="" disabled="true"></option>
-            {props.items.map(item => <option value={item.value}>{item.label}</option>)}
+            {props.items.map(item => <option key={item.value} value={item.value}>{item.label}</option>)}
         </Select>
         
         <div className={classes.divider} />
@@ -85,8 +85,8 @@ export default function ProductCategory(props) {
             <OutlinedInput name={props.id} labelWidth={labelWidth} id={props.id} />
           }
         >
-            <option value="" disabled="true"></option>
-            {props.items.map(item => <option value={item.value}>{item.label}</option>)}
+            <option value="" disabled={true}></option>
+            {props.items.map(item => <option key={item.value} value={item.value}>{item.label}</option>)}
         </Select>
         
         <div className={classes.divider} />

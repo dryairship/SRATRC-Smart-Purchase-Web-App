@@ -40,6 +40,7 @@ export default function OutlinedTextField(props) {
   return (
       <TextField
         id={props.id}
+        type={props.password? 'password':'text'}
         label={props.label}
         disabled={props.disabled}
         className={classes.halfWidth}
@@ -52,10 +53,12 @@ export default function OutlinedTextField(props) {
       />
   );
   }
+  
   if(props.multiline){
   return (
       <TextField
         id={props.id}
+        type={props.password? 'password':'text'}
         label={props.label}
         className={classes.textField}
         disabled={props.disabled}
@@ -67,10 +70,12 @@ export default function OutlinedTextField(props) {
         rowsMax="4"
       />
   );
-  }else{
+  }
+  
   return (
       <TextField
         id={props.id}
+        type={props.password? 'password':'text'}
         label={props.label}
         className={classes.textField}
         disabled={props.disabled}
@@ -79,7 +84,7 @@ export default function OutlinedTextField(props) {
         margin="normal"
         variant="outlined"
         fullWidth
+        
       />
   );
-  }
 }
