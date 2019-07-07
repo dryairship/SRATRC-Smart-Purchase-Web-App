@@ -66,6 +66,12 @@ export default function SignIn(props) {
           message: '',
         });
         props.onLogin();
+        res.json().then(userData => {
+          sessionStorage.setItem('username', userData.username);
+          sessionStorage.setItem('name', userData.name);
+          sessionStorage.setItem('department', userData.department);
+          sessionStorage.setItem('phone', userData.phone);
+        });
       }else{
         res.json().then(errorMessage => {
           setErrorState({

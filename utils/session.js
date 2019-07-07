@@ -15,7 +15,7 @@ function createSessionCookie(user, remember){
         .then(result => {
             resolve({
                 status: 200,
-                response: "User logged in successfully",
+                response: user,
                 cookie: {
                     value: result.response,
                     params: {
