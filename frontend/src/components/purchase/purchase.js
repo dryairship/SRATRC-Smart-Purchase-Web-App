@@ -8,10 +8,10 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 
-import DropDownSelect from './dropdown-select';
-import SuggestionSelect from './suggestion-select';
-import OutlinedTextField from './outlined-textfield';
-import OKAlert from './ok-alert';
+import DropDownSelect from '../common/dropdown-select';
+import SuggestionSelect from '../common/suggestion-select';
+import OutlinedTextField from '../common/outlined-textfield';
+import OKAlert from '../common/ok-alert';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
