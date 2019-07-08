@@ -24,17 +24,6 @@ const useStyles = makeStyles(theme => ({
 
 const max = 100;
 
-const marks = [
-    {   
-        value: 0, 
-        label: '0',
-    },
-    {
-        value: max,
-        label: max,
-    },
-]
-
 const units = [
   {
     label: 'kg',
@@ -42,21 +31,34 @@ const units = [
   }
 ]
 
-function valuetext(value) {
-  return `${value}°C`;
-}
-
 export default function Quantity(props) {
   const classes = useStyles();
 
-  const [quantityState, setQuantityState] = React.useState(0);
+  var marks = [
+    {   
+        value: 0, 
+        label: '0',
+    },
+    {
+        value: props.Max,
+        label: props.Max,
+    },
+]
+  const [quantityState, setQuantityState] = React.useState(1);
+  const [unit, setUnit] = React.useState(0);
+
+  const onChooseUnit = chosenUnit => {
+    setUnit(chosenUnit)
+  }
   const onTextFldChange = (e) => {
       if(e.target.value > max)   setQuantityState(max);   
-      else setQuantityState(e.target.value);   
+      else setQuantityState(e.target.value);
+      props.sendQuantity(e.target.value);   
     }
 
   const handleSliderChange = (e, newValue) => {
     setQuantityState(newValue);
+    props.sendQuantity(newValue);
   }
 
   return (
@@ -70,19 +72,20 @@ export default function Quantity(props) {
                 className={classes.textField}
                 variant="outlined"
                 fullWidth
+                error={quantityState > 0 ? false : true}
+                helperText={quantityState > 0 ? "" : '*Must be greater than 0'}
         /></Grid>
-        <Grid item xs={2} sm={4}><DropDownSelect  id="units" label="units" items={units}/></Grid>
+        <Grid item xs={2} sm={4}><DropDownSelect  id="units" label="units" items={units} onValueChange={onChooseUnit}/></Grid>
     </Grid>
       <Slider
         id="slider-id"
         defaultValue={quantityState}
         value={quantityState}
-        getAriaValueText={valuetext}
         aria-labelledby="discrete-slider"
         valueLabelDisplay="auto"
         step={1}
         min={0}
-        max={max}
+        max={props.Max}
         onChange={handleSliderChange}
         marks={marks}  
         className={classes.slider}

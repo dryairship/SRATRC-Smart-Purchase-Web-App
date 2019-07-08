@@ -1,5 +1,5 @@
 const { insertDonation } = require('../db/donation.js');
-const { insertInventoryItem } = require('../db/inventoryItem.js');
+const { updateInventoryItem, insertInventoryItem } = require('../db/inventoryItem.js');
 
 function handleDonationPost(req, res) {
     var departmentID = req.user.department,
@@ -16,15 +16,28 @@ function handleDonationPost(req, res) {
     var donationResult;
     insertDonation(departmentID, productID, donor, quantity, timestamp, remarks)
     .then(result => {
-        donationResult = result
-        return insertInventoryItem(productID, departmentID, quantity);
+        updateInventoryItem(productID, departmentID, quantity.value)
+        .then(result => {
+            res.status(result.status).json(result.response);
+            return;
+        })
+        .catch(error => {
+            if(error.status==404){
+                insertInventoryItem(productID, departmentID, quantity)
+                .then(result => {
+                    res.status(result.status).json(result.response);
+                    return;
+                })
+                .catch(error => {
+                    res.status(error.status).json(error.response);    
+                    return;
+                })
+            }else{
+                res.status(error.status).json(error.response);
+                return;
+            }
+        });
     })
-    .then(result => {
-        res.status(donationResult.status).json(donationResult.response);
-    })
-    .catch(error => {
-        res.status(error.status).json(error.response);
-    });
 }
 
 module.exports = { handleDonationPost };

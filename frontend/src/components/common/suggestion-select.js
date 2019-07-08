@@ -270,7 +270,7 @@ export default function AutoSuggest(props) {
       zIndex: focusState ? 999 : 1,
     }),
   };
-  return (
+  if(props.nonCreatable){return (
     <div className={classes.root}>
       <NoSsr>
         <CreatableSelect
@@ -296,5 +296,32 @@ export default function AutoSuggest(props) {
         <div className={classes.divider} />
       </NoSsr>
     </div>
-  );
+  );}else{
+  return (
+    <div className={classes.root}>
+      <NoSsr>
+        <Select
+          variant="outlined"
+          classes={classes}
+          styles={selectStyles}
+          inputId={props.id}
+          TextFieldProps={{
+            label: props.label,
+            InputLabelProps: {
+              htmlFor: props.id,
+              shrink: true,
+            },
+            placeholder: 'Select...',
+          }}
+          options={props.items}
+          components={components}
+          value={single}
+          onChange={handleChangeSingle}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+        />
+        <div className={classes.divider} />
+      </NoSsr>
+    </div>
+  );}
 }
