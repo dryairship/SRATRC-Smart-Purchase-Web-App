@@ -1,6 +1,7 @@
 import React from 'react';
 import clsx from 'clsx';
 import CreatableSelect from 'react-select/creatable';
+import Select from 'react-select';
 import { emphasize, makeStyles, useTheme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import NoSsr from '@material-ui/core/NoSsr';
