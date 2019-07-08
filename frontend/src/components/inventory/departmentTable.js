@@ -18,25 +18,11 @@ import {
   MenuItem, Container
 } from '@material-ui/core';
 
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
 
-const rows = [
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Donut', 452, 25.0, 51, 4.9),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-  createData('Honeycomb', 408, 3.2, 87, 6.5),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Jelly Bean', 375, 0.0, 94, 0.0),
-  createData('KitKat', 518, 26.0, 65, 7.0),
-  createData('Lollipop', 392, 0.2, 98, 0.0),
-  createData('Marshmallow', 318, 0, 81, 2.0),
-  createData('Nougat', 360, 19.0, 9, 37.0),
-  createData('Oreo', 437, 18.0, 63, 4.0),
-];
+var haveFetchedProducts = false;
+var haveFetchedDepartments = false;
+localStorage.setItem('fetchedDeptLists',false);
+localStorage.setItem('deptList',{}.stringify);
 
 function desc(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -49,6 +35,7 @@ function desc(a, b, orderBy) {
 }
 
 function stableSort(array, cmp) {
+  if(typeof(array)!=='object') return [];
   const stabilizedThis = array.map((el, index) => [el, index]);
   stabilizedThis.sort((a, b) => {
     const order = cmp(a[0], b[0]);
@@ -63,11 +50,10 @@ function getSorting(order, orderBy) {
 }
 
 const headRows = [
-  { id: 'name', numeric: false, disablePadding: false, label: 'Dessert (100g serving)' },
-  { id: 'calories', numeric: true, disablePadding: false, label: 'Calories' },
-  { id: 'fat', numeric: true, disablePadding: false, label: 'Fat (g)' },
-  { id: 'carbs', numeric: true, disablePadding: false, label: 'Carbs (g)' },
-  { id: 'protein', numeric: true, disablePadding: false, label: 'Protein (g)' },
+  { id: 'name', numeric: false, disablePadding: false, label: 'Product Name' },
+  { id: 'category', numeric: false, disablePadding: false, label: 'Category' },
+  { id: 'quantity.value', numeric: true, disablePadding: false, label: 'Quantity' },
+  { id: 'quantity.unit', numeric: false, disablePadding: false, label: 'Unit' },
 ];
 
 function EnhancedTableHead(props) {
@@ -101,9 +87,7 @@ function EnhancedTableHead(props) {
 }
 
 EnhancedTableHead.propTypes = {
-  numSelected: PropTypes.number.isRequired,
   onRequestSort: PropTypes.func.isRequired,
-  onSelectAllClick: PropTypes.func.isRequired,
   order: PropTypes.string.isRequired,
   orderBy: PropTypes.string.isRequired,
   rowCount: PropTypes.number.isRequired,
@@ -136,43 +120,6 @@ const useToolbarStyles = makeStyles(theme => ({
   },
 }));
 
-const EnhancedTableToolbar = props => {
-  const classes = useToolbarStyles();
-  const [values, setValues] = React.useState({
-    department: '',
-    name: 'naam',
-  });
-  function handleChange(event) {
-    setValues(oldValues => ({
-      ...oldValues,
-      [event.target.name]: event.target.value,
-    }));
-  }
-  return (
-    <Toolbar
-      className={classes.root}
-    >
-      <div className={classes.actions}>        
-        <FormControl className={classes.formControl}>
-          <InputLabel htmlFor="department-name">Department</InputLabel>
-          <Select
-            value={values.department}
-            onChange={handleChange}
-            inputProps={{
-              name: 'department',
-              id: 'department-name',
-            }}
-          >
-            <MenuItem value={'health'}>Health Care</MenuItem>
-            <MenuItem value={'education'}>Shree Raj Educational Centre</MenuItem>
-            <MenuItem value={'women-empowerment'}>Infrastructure & Development</MenuItem>
-          </Select>
-        </FormControl>        
-      </div>
-    </Toolbar>
-  );
-};
-
 const useStyles = makeStyles(theme => ({
   root: {
     marginTop: theme.spacing(1),
@@ -192,13 +139,63 @@ const useStyles = makeStyles(theme => ({
     paddingTop: theme.spacing(2),
   },
 }));
-
+var firstA = false;
+var firstB=false;
 export default function ContentsTable() {
   const classes = useStyles();
   const [order, setOrder] = React.useState('asc');
-  const [orderBy, setOrderBy] = React.useState('calories');
+  const [orderBy, setOrderBy] = React.useState('name');
   const [page, setPage] = React.useState(0);
+  const [rows, setRows] = React.useState([]);
+  const storedlist=localStorage.getItem('fetchedDeptLists')===true ? localStorage.getItem('deptList'): {items:[]}
+  console.log('stored');
+  console.log('status');
+  console.log(localStorage.getItem('fetchedDeptLists'));
+  console.log(storedlist);
+  const [depts, setDepts] = React.useState(storedlist);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const classes1 = useToolbarStyles();
+  const userdept = sessionStorage.getItem('department');
+  // const [value, setValue] = React.useState(userdept);
+  const [value, setValue] = React.useState('srec');
+  
+  // const [rows, setRows] = React.useState([]);
+  
+  const fetchProducts = (newDept) => {
+    fetch('/inventory/department/'+newDept)
+    .then(list => {
+      return list.json();      
+    }).then(data => {
+      setRows(data);
+      haveFetchedProducts = true;
+    });
+  }
+
+  const fetchDepartments = () => {
+    fetch('/list/departments')
+    .then(list => {
+      return list.json();      
+    }).then(data => {
+      setDepts(data);
+      haveFetchedDepartments = true;
+      console.log('fetched');
+      console.log(depts);
+      console.log(data);
+      localStorage.setItem('fetchedDeptLists',true);
+      localStorage.setItem('deptList',data.stringify);
+    });
+  }  
+
+  haveFetchedProducts || fetchProducts(value);
+  haveFetchedDepartments || fetchDepartments();
+  console.log('outside');
+  console.log(depts);
+  setDepts(localStorage.getItem('deptList'));
+  
+  function handleChange(event) {
+      setValue(event.target.value);
+      fetchProducts(event.target.value);
+    }
 
   function handleRequestSort(event, property) {
     const isDesc = orderBy === property && order === 'desc';
@@ -213,8 +210,16 @@ export default function ContentsTable() {
   function handleChangeRowsPerPage(event) {
     setRowsPerPage(+event.target.value);
   }
-
+  
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
+
+  const orderName = () => {
+    firstA = true;
+    setOrderBy('name');
+  }
+  const orderAsc = () => {firstB=true; setOrder('asc');}
+  firstA || orderName();
+  firstB || orderAsc();
 
   return (    
     <Container component="main" maxWidth="md">
@@ -222,9 +227,29 @@ export default function ContentsTable() {
         <div>        
           <Typography variant="h6" id="tableTitle" className={classes.title}>
             Inventory
-          </Typography>        
+          </Typography>
         </div>
-        <EnhancedTableToolbar />
+        <Toolbar
+          className={classes1.root}
+        >
+          <div className={classes1.actions}>
+            <FormControl className={classes1.formControl}>
+              <InputLabel htmlFor="department-name">
+                Department
+              </InputLabel>
+              <Select
+                value={value}
+                onChange={handleChange}            
+              >
+              {depts.items.map((deptItem, index) => {
+                return  (
+                  <MenuItem value={deptItem.value}>{deptItem.label}</MenuItem>
+                )
+              })}
+              </Select>
+            </FormControl>        
+          </div>
+        </Toolbar>
         <div className={classes.tableWrapper}>
           <Table
             className={classes.table}
@@ -236,31 +261,29 @@ export default function ContentsTable() {
               onRequestSort={handleRequestSort}
               rowCount={rows.length}
             />
-            <TableBody>
+            <TableBody>           
               {stableSort(rows, getSorting(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
-                  const labelId = `enhanced-table-checkbox-${index}`;
-
+                  
                   return (
                     <TableRow
                       hover                      
                       tabIndex={-1}
                       key={row.name}
                     >                      
-                      <TableCell component="th" id={labelId} scope="row" padding="default">
-                        {row.name}
+                      <TableCell component="th" scope="row" padding="default">
+                        {row.details.name}
                       </TableCell>
-                      <TableCell align="right">{row.calories}</TableCell>
-                      <TableCell align="right">{row.fat}</TableCell>
-                      <TableCell align="right">{row.carbs}</TableCell>
-                      <TableCell align="right">{row.protein}</TableCell>
+                      <TableCell>{row.details.category}</TableCell>
+                      <TableCell align="right">{row.quantity.value}</TableCell>
+                      <TableCell>{row.quantity.unit}</TableCell>
                     </TableRow>
                   );
                 })}
               {emptyRows > 0 && (
                 <TableRow style={{ height: 49 * emptyRows }}>
-                  <TableCell colSpan={6} />
+                  <TableCell colSpan={4} />
                 </TableRow>
               )}
             </TableBody>
