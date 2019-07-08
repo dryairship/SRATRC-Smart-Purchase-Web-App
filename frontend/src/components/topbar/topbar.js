@@ -9,6 +9,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import SideDrawer from '../sideDrawer/sideDrawer';
 import { NavLink } from "react-router-dom";
+import { ListItem } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -95,7 +96,7 @@ function MenuAppBar(props) {
                 <NavLink to="/profile" className={classes.link}>
                   <MenuItem>Profile</MenuItem>
                 </NavLink>                
-                <MenuItem button onClick={logout}>Log Out</MenuItem>                
+                <MenuItem className={classes.link}>Log Out</MenuItem>                
                 </Menu>
             </div>          
         </Toolbar>

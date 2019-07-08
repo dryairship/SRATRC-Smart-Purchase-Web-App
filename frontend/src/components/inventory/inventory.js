@@ -1,8 +1,6 @@
 import React from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
-import ContentsTable from './table';
 import FilterTabs from './tabs';
 
 const useStyles = makeStyles(theme => ({
@@ -21,8 +19,7 @@ export default function Inventory(props) {
 
     return (
     <React.Fragment>
-        <CssBaseline />
-        
+        <CssBaseline />        
         <div className={classes.paper}>
             <FilterTabs />
         </div>

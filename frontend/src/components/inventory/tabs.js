@@ -5,9 +5,8 @@ import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
-import ContentsTable from './table';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import { Container } from '@material-ui/core';
+import DepartmentTable from './departmentTable';
+import ProductTable from './productTable';
 
 function TabContainer({ children, dir }) {
   return (
@@ -22,21 +21,7 @@ TabContainer.propTypes = {
   dir: PropTypes.string.isRequired,
 };
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    backgroundColor: theme.palette.background.paper,
-  },
-  paper: {
-    marginTop: theme.spacing(1),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-}));
-
 export default function FilterTabs() {
-  const classes = useStyles();
-  const theme = useTheme();
   const [value, setValue] = React.useState(0);
 
   function handleChange(event, newValue) {
@@ -61,8 +46,8 @@ export default function FilterTabs() {
           <Tab label="Product" />
         </Tabs>
       </AppBar>
-      {value === 0 && <ContentsTable />}
-      {value === 1 && <ContentsTable />}
+      {value === 0 && <DepartmentTable />}
+      {/* {value === 1 && <ProductTable />} */}
       </React.Fragment>
   );
 }

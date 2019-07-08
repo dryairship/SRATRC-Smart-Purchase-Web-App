@@ -25,7 +25,7 @@ const useStyles = makeStyles(theme => ({
     },
   },
   paper: {
-    marginTop: theme.spacing(8),
+    marginTop: theme.spacing(1),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -200,7 +200,6 @@ export default function Purchase() {
         .map(uItem => ({label: uItem.value, value: uItem.value}))
     });
   };
-
   const onChooseQuantityUnit = chosenUnit => {
     setState({
       ...state,
@@ -425,7 +424,7 @@ export default function Purchase() {
           <OutlinedTextField id="quantity-value" label="Quantity Purchased" disabled={false} halfWidth={true} />
           <a>&nbsp;&nbsp;&nbsp;</a>
           <DropDownSelect id="quantity-unit" label="Unit" items={selectedTypeUnits.units} halfWidth={true} onValueChange={onChooseQuantityUnit}/>
-          <h3>purchased @</h3>
+          <h3>Purchased @</h3>
           <OutlinedTextField id="rate-value" label="Rate" disabled={false} halfWidth={true} />
           <a>&nbsp;&nbsp;&nbsp;</a>
           <DropDownSelect id="rate-unit" label="per unit" items={selectedTypeUnits.units} halfWidth={true} onValueChange={onChooseRateUnit}/>
