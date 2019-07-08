@@ -178,6 +178,45 @@ function findPaymentByDepartmentID(id){
     });
 }
 
+
+function findPaymentByProductID(id){
+    return new Promise((resolve, reject) => {
+        Payment.find({
+            productID : id
+        },
+        '-__v')
+        .populate({
+            path: 'purchaseDetails',
+            select: '-__v'
+        })
+        .populate({
+            path: 'vendorDetails',
+            select: '-__v'
+        })
+        .exec(function(err, items){
+            payments = items.map(item => {
+                var payment = {
+                    amountRemaining: item.amountRemaining,
+                    installments: item.installments,
+                    purchase: item.purchaseDetails,
+                    vendor: item.vendorDetails
+                };
+                return payment;
+            });
+            if(err || !payments)
+                reject({
+                    status: 404,
+                    response: "Payments not found"
+                });
+            else
+                resolve({
+                    status: 200,
+                    response: payments
+                });
+        });
+    });
+}
+
 function findPendingPayment(){
     return new Promise((resolve, reject) => {
         Payment.find({
@@ -225,4 +264,4 @@ function findPaymentInDateRange(begin, finish){
     })
 }
 
-module.exports = { updatePayment, insertPayment, findPaymentByPurchaseID, findPaymentByVendorID, findPendingPayment, findPaymentInDateRange, findPaymentByDepartmentID };
+module.exports = { updatePayment, insertPayment, findPaymentByPurchaseID, findPaymentByVendorID, findPendingPayment, findPaymentInDateRange, findPaymentByDepartmentID, findPaymentByProductID };

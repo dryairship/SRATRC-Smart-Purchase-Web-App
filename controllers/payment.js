@@ -1,4 +1,4 @@
-const { updatePayment, insertPayment, findPaymentByPurchaseID, findPaymentByVendorID, findPaymentByDepartmentID, findPendingPayment, findPaymentInDateRange } = require('../db/payment.js');
+const { updatePayment, insertPayment, findPaymentByPurchaseID, findPaymentByVendorID, findPaymentByDepartmentID, findPendingPayment, findPaymentInDateRange, findPaymentByProductID } = require('../db/payment.js');
 
 function handlePayPost(req, res){
     var amount = req.body.amount;
@@ -45,6 +45,16 @@ function handlePaymentGetByDepartmentID(req, res){
     });
 }
 
+function handlePaymentGetByProductID(req, res){
+    findPaymentByProductID(req.params.productID)
+    .then(result => {
+        res.status(result.status).json(result.response);
+    })
+    .catch(error => {
+        res.status(error.status).json(error.response);
+    });
+}
+
 function handlePendingPayment(req, res){
     findPendingPayment()
     .then(result => {
@@ -68,4 +78,4 @@ function handlePaymentInPeriod(req, res){
     });
 }
 
-module.exports = { handlePayPost, handlePaymentGetByPurchaseID, handlePaymentGetByVendorID, handlePendingPayment, handlePaymentInPeriod, handlePaymentGetByDepartmentID };
+module.exports = { handlePayPost, handlePaymentGetByPurchaseID, handlePaymentGetByVendorID, handlePendingPayment, handlePaymentInPeriod, handlePaymentGetByDepartmentID, handlePaymentGetByProductID };
