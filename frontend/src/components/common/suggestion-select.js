@@ -238,6 +238,7 @@ export default function AutoSuggest(props) {
   const [single, setSingle] = React.useState(null);
   // const [multi, setMulti] = React.useState(null);
   const [focusState, setFocusState] = React.useState(null);
+  const [category, setCategory] = React.useState('');
 
   function handleChangeSingle(value) {
     setSingle(value);
@@ -254,6 +255,12 @@ export default function AutoSuggest(props) {
   
   function handleBlur(){
     setFocusState(false);
+  }
+
+  if(props.category !== category && single!==''){
+    console.log(category);
+    handleChangeSingle('');
+    setCategory(props.category);
   }
 
   const selectStyles = {
@@ -317,6 +324,7 @@ export default function AutoSuggest(props) {
           options={props.items}
           components={components}
           value={single}
+        
           onChange={handleChangeSingle}
           onFocus={handleFocus}
           onBlur={handleBlur}
