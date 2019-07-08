@@ -1,6 +1,5 @@
 import React from 'react';
 import clsx from 'clsx';
-import Select from 'react-select';
 import CreatableSelect from 'react-select/creatable';
 import { emphasize, makeStyles, useTheme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
@@ -9,7 +8,6 @@ import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
 import Chip from '@material-ui/core/Chip';
 import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
 import CancelIcon from '@material-ui/icons/Cancel';
 import PropTypes from 'prop-types';
 
@@ -237,7 +235,7 @@ export default function AutoSuggest(props) {
   const classes = useStyles();
   const theme = useTheme();
   const [single, setSingle] = React.useState(null);
-  const [multi, setMulti] = React.useState(null);
+  // const [multi, setMulti] = React.useState(null);
   const [focusState, setFocusState] = React.useState(null);
 
   function handleChangeSingle(value) {
@@ -245,9 +243,9 @@ export default function AutoSuggest(props) {
     props.onValueChange(value);
   }
 
-  function handleChangeMulti(value) {
-    setMulti(value);
-  }
+  // function handleChangeMulti(value) {
+  //   setMulti(value);
+  // }
   
   function handleFocus(){
     setFocusState(true);

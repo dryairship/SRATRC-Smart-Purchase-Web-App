@@ -11,7 +11,6 @@ import CreateUser from './components/createUser/createUser';
 import Cookies from 'js-cookie';
 
 function App() {
-
   const [loggedIn, setLoggedIn] = React.useState(false);
 
   const loginSuccessful = () => {
@@ -30,7 +29,6 @@ function App() {
           <Route exact path="/" component={HomePage} />
           <Route path="/inventory" component={Inventory} />
           <Route path="/payments" component={HomePage} />
-          <Route path="/tally" component={HomePage} />
           <Route path="/donation" component={HomePage} />
           <Route path="/purchase" component={Purchase} />
           <Route path="/profile" component={Profile} />

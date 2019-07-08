@@ -61,9 +61,9 @@ export default function HomePage(props) {
             color="primary"
             size="large"
             className={classes.btn}
-            href="/tally"
+            href="/purchase"
         >
-          Tally Output  
+          Purchase 
         </Button>
         <Button
             fullWidth
@@ -74,18 +74,7 @@ export default function HomePage(props) {
             href="/donation"
         >
           Donation 
-        </Button>
-        <Button
-            fullWidth
-            variant="contained"
-            color="primary"
-            size="large"
-            className={classes.btn}
-            href="/purchase"
-        >
-          Purchase 
-        </Button>
-        
+        </Button>      
       </div>
     </Container>
   );
