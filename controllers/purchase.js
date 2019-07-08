@@ -26,7 +26,7 @@ function handlePurchasePost(req, res) {
         return insertPurchase(departmentID, productID, vendorID, purchasedBy, billNumber, quantity, rate, amount, purchaseType, remarks);
     })
     .then(purchaseID => {
-        return insertPayment(purchaseID, vendorID, amount);
+        return insertPayment(purchaseID, vendorID, departmentID, productID, amount);
     })
     .then(result => {
         return res.status(result.status).json(result.response);

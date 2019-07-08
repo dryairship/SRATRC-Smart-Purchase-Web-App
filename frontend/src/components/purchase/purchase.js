@@ -272,6 +272,7 @@ export default function Purchase() {
     setState({
       ...state,
       vendor: {
+        id: chosenVendor.value,
         name: chosenVendor.label,
         contactPerson: newContactPerson,
         address: newAddress,

@@ -69,11 +69,13 @@ function updatePayment(purchaseID, amount, paidBy, remarks, timestamp){
     });
 }
 
-function insertPayment(purchaseID, vendorID, totalAmount){
+function insertPayment(purchaseID, vendorID, departmentID, productID, totalAmount){
     return new Promise((resolve, reject) => {
         payment = new Payment({
             purchaseID : purchaseID,
             vendorID : vendorID,
+            departmentID: departmentID,
+            productID: productID,
             amountRemaining : totalAmount
         });
         payment.save(function(err){
@@ -98,10 +100,10 @@ function findPaymentByPurchaseID(id){
         },
         '-__v',
         function(err, payments){
-            if(err || !payments || payments.length == 0)
+            if(err || !payments)
                 reject({
                     status: 404,
-                    response: "Payment not found"
+                    response: "Payments not found"
                 });
             else
                 resolve({
@@ -118,16 +120,59 @@ function findPaymentByVendorID(id){
             vendorID : id
         },
         '-__v',
-        function(err, vendors){
-            if(err || !vendors || vendors.length == 0)
+        function(err, payments){
+            if(err || !payments)
                 reject({
                     status: 404,
-                    response: "Vendor not found"
+                    response: "Payments not found"
                 });
             else
                 resolve({
                     status: 200,
-                    response: vendors
+                    response: payments
+                });
+        });
+    });
+}
+
+function findPaymentByDepartmentID(id){
+    return new Promise((resolve, reject) => {
+        Payment.find({
+            departmentID : id
+        },
+        '-__v')
+        .populate({
+            path: 'productDetails',
+            select: '-__v'
+        })
+        .populate({
+            path: 'purchaseDetails',
+            select: '-__v'
+        })
+        .populate({
+            path: 'vendorDetails',
+            select: '-__v'
+        })
+        .exec(function(err, items){
+            payments = items.map(item => {
+                var payment = {
+                    amountRemaining: item.amountRemaining,
+                    installments: item.installments,
+                    purchase: item.purchaseDetails,
+                    product: item.productDetails,
+                    vendor: item.vendorDetails
+                };
+                return payment;
+            });
+            if(err || !payments)
+                reject({
+                    status: 404,
+                    response: "Payments not found"
+                });
+            else
+                resolve({
+                    status: 200,
+                    response: payments
                 });
         });
     });
@@ -180,4 +225,4 @@ function findPaymentInDateRange(begin, finish){
     })
 }
 
-module.exports = { updatePayment, insertPayment, findPaymentByPurchaseID, findPaymentByVendorID, findPendingPayment, findPaymentInDateRange };
+module.exports = { updatePayment, insertPayment, findPaymentByPurchaseID, findPaymentByVendorID, findPendingPayment, findPaymentInDateRange, findPaymentByDepartmentID };

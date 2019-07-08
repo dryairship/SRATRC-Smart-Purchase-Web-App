@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 
 var InstallmentSchema = new mongoose.Schema({
     timestamp : {
@@ -8,21 +8,42 @@ var InstallmentSchema = new mongoose.Schema({
     amount : Number,
     paidBy : String,
     remarks : String
+},
+{
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true }
 });
 
 var PaymentSchema = new mongoose.Schema({
-    purchaseID : {
-        type: String,
-        ref: 'Purchase'
-    },
-    vendorID : {
-        type: String,
-        ref: 'Vendor'
-    },
+    purchaseID : String,
+    vendorID : String,
+    departmentID: String,
+    productID: String,
     installments : [InstallmentSchema],
     amountRemaining : Number
 });
 
-var Payment = mongoose.model('Payment',PaymentSchema);
+PaymentSchema.virtual('purchaseDetails', {
+    ref: 'Purchase',
+    localField: 'purchaseID',
+    foreignField: '_id',
+    justOne: true
+});
+
+PaymentSchema.virtual('vendorDetails', {
+    ref: 'Vendor',
+    localField: 'vendorID',
+    foreignField: '_id',
+    justOne: true
+});
+
+PaymentSchema.virtual('productDetails', {
+    ref: 'Product',
+    localField: 'productID',
+    foreignField: '_id',
+    justOne: true
+});
+
+var Payment = mongoose.model('Payment', PaymentSchema);
 
 module.exports = Payment;
