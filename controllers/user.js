@@ -97,4 +97,19 @@ function handleUserLogout(req, res){
     });
 }
 
-module.exports = { handleUserGet, handleUserPost, handleUserPatch, handleUserLogin, handleUserLogout };
+function handleCheckPassword(req, res){
+    var user;
+    findUser(req.user.username)
+    .then(result => {
+        user = result.response;
+        return checkPassword(req.body.oldPassword, user.password) ;
+    })
+    .then(result => {
+        res.status(result.status).json(result.response); 
+    })
+    .catch(error =>{
+        res.status(error.status).json(error.respone);
+    });
+}
+
+module.exports = { handleUserGet, handleUserPost, handleUserPatch, handleUserLogin, handleUserLogout, handleCheckPassword};
