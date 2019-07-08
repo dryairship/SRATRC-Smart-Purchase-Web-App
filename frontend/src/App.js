@@ -7,6 +7,7 @@ import Purchase from './components/purchase/purchase';
 import { Route, BrowserRouter as Router } from "react-router-dom";
 import SignIn from './components/signIn/signIn';
 import Profile from './components/profile/profile';
+import Transfer from './components/inventory/transfer';
 import CreateUser from './components/createUser/createUser';
 import Cookies from 'js-cookie';
 
@@ -33,6 +34,7 @@ function App() {
           <Route path="/purchase" component={Purchase} />
           <Route path="/profile" component={Profile} />
           <Route path="/addUser" component={CreateUser} />
+          <Route path="/transfer" component={Transfer} />
         </div>
       </Router>
     );

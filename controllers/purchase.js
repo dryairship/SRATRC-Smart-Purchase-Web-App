@@ -1,6 +1,7 @@
 const { insertPurchase } = require('../db/purchase.js');
 const { updatePayment, insertPayment } = require('../db/payment.js');
 const { calculateTotalAmount } = require('../utils/amount.js');
+const { updateInventoryItem, insertInventoryItem } = require('../db/inventoryItem.js')
 
 function handlePurchasePost(req, res) {
     var departmentID = req.user.department,
@@ -8,7 +9,7 @@ function handlePurchasePost(req, res) {
         vendorID = req.body.vendorID,
         purchasedBy = req.user.username,
         billNumber = req.body.billNumber,
-        quantity = {
+        quantity = { 
             value: req.body.qValue,
             unit: req.body.qUnit
         },
@@ -29,11 +30,28 @@ function handlePurchasePost(req, res) {
         return insertPayment(purchaseID, vendorID, departmentID, productID, amount);
     })
     .then(result => {
-        return res.status(result.status).json(result.response);
+        updateInventoryItem(productID, departmentID, quantity.value)
+        .then(result => {
+            res.status(result.status).json(result.response);
+            return result;
+        })
+        .catch(error => {
+            if(error.status==404){
+                insertInventoryItem(productID, departmentID, quantity)
+                .then(result => {
+                    res.status(result.status).json(result.response);
+                    return;
+                })
+                .catch(error => {
+                    res.status(error.status).json(error.response);    
+                    return;
+                })
+            }else{
+                res.status(error.status).json(error.response);
+                return;
+            }
+        });
     })
-    .catch(error => {
-        res.status(error.status).json(error.response);
-    });
 }
 
 module.exports = { handlePurchasePost };
