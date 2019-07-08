@@ -68,14 +68,14 @@ export default function SideDrawer(props) {
                 <ListItemText primary="Payments"/>
               </ListItem>
             </NavLink>
-            <NavLink to="/tally" className={classes.link}>
+            <NavLink to="/purchase" className={classes.link}>
               <ListItem 
-              button key="tally"
+              button key="purchase"
               autoFocus="true"
               >
-                <ListItemText primary="Tally Output"/>
+                <ListItemText primary="Purchase"/>
               </ListItem>
-            </NavLink>
+            </NavLink>          
             <NavLink to="/donation" className={classes.link}>
               <ListItem 
               button key="donation"

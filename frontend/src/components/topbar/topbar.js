@@ -36,6 +36,7 @@ function MenuAppBar(props) {
   const classes = useStyles();
   const [anchorElright, setAnchorElright] = React.useState(null);
   const openright = Boolean(anchorElright);
+  const [loggedIn, setLoggedIn] = React.useState(props.loggedIn);
 
   function handleMenuright(event) {
     setAnchorElright(event.currentTarget);
@@ -43,8 +44,18 @@ function MenuAppBar(props) {
 
   function handleCloseright() {
     setAnchorElright(null);
+    // setLoggedIn(!loggedIn);
+
   }  
-  return (
+
+  function logout() {
+    fetch('/user/logout', {
+      method: 'POST',
+    });
+  }
+
+  if (loggedIn) {
+    return (
     <div className={classes.root}>
       <AppBar position="static" color="primary">
         <Toolbar>
@@ -81,14 +92,28 @@ function MenuAppBar(props) {
                 open={openright}
                 onClose={handleCloseright}
                 >
-                <MenuItem onClick={handleCloseright}>Profile</MenuItem>
-                <MenuItem onClick={handleCloseright}>Log Out</MenuItem>                
+                <NavLink to="/profile" className={classes.link}>
+                  <MenuItem>Profile</MenuItem>
+                </NavLink>                
+                <MenuItem button onClick={logout}>Log Out</MenuItem>                
                 </Menu>
             </div>          
         </Toolbar>
       </AppBar>
-    </div>
-  );
+    </div>   
+  );} 
+  else return (
+    <div className={classes.root}>
+      <AppBar position="static" color="primary">
+        <Toolbar>         
+          <Typography variant="h6" className={classes.title}>            
+              SRATRC            
+          </Typography> 
+        </Toolbar>
+      </AppBar>
+    </div>   
+
+  )
 }
 
 export default MenuAppBar;
