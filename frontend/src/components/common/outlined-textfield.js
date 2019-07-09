@@ -56,7 +56,7 @@ export default function OutlinedTextField(props) {
   return (
       <TextField
         id={props.id}
-        type={props.password? 'password':'text'}
+        type={props.password ? 'password':'text'}
         label={props.label}
         className={classes.textField}
         disabled={props.disabled}

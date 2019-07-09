@@ -2,7 +2,8 @@ import React from 'react';
 import './App.css';
 import MenuAppBar from './components/topbar/topbar';
 import HomePage from './components/homepage/homepage';
-import Inventory from './components/inventory/inventory';
+import DepartmentInventory from './components/inventory/department-inventory';
+import ProductInventory from './components/inventory/product-inventory';
 import Purchase from './components/purchase/purchase';
 import ChangePassword from './components/changePassword/changePassword'
 import Donation from './components/donation/donation'
@@ -31,7 +32,8 @@ function App() {
         <div className="App">
           <MenuAppBar loggedIn={loggedIn} />
           <Route exact path="/" component={HomePage} />
-          <Route path="/inventory" component={Inventory} />
+          <Route path="/departmentInventory" component={DepartmentInventory} />
+          <Route path="/productInventory" component={ProductInventory} />
           <Route path="/payments" component={HomePage} />
           <Route path="/donation" component={Donation} />
           <Route path="/changePassword" component={ChangePassword} />

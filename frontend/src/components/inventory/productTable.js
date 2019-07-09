@@ -14,12 +14,12 @@ import Paper from '@material-ui/core/Paper';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
+import SuggestionSelect from '../common/suggestion-select';
+import OutlinedTextField from '../common/outlined-textfield';
+
 import {
   MenuItem, Container
 } from '@material-ui/core';
-
-
-var haveFetchedProducts = false;
 
 
 function desc(a, b, orderBy) {
@@ -48,8 +48,7 @@ function getSorting(order, orderBy) {
 }
 
 const headRows = [
-  { id: 'name', numeric: false, disablePadding: false, label: 'Product Name' },
-  { id: 'category', numeric: false, disablePadding: false, label: 'Category' },
+  { id: 'name', numeric: false, disablePadding: false, label: 'Department Name' },
   { id: 'quantity.value', numeric: true, disablePadding: false, label: 'Quantity' },
   { id: 'quantity.unit', numeric: false, disablePadding: false, label: 'Unit' },
 ];
@@ -111,57 +110,15 @@ const useToolbarStyles = makeStyles(theme => ({
     flex: '1 1 100%',
   },
   actions: {
-    flex: '0 0 auto',
+    minWidth:'50%',
+    maxWidth: '100%',
+    flex: '0.7 1 auto',
   },
   formControl: {
     paddingRight: theme.spacing(2),
-    minWidth: 150,
+    minWidth: '50%',
   },
 }));
-
-// const EnhancedTableToolbar = props => {
-//   const classes1 = useToolbarStyles();
-//   const [value, setValue] = React.useState('health');
-//   const [rows, setRows] = React.useState([]);
-  
-//   const fetchProducts = () => {
-//     fetch('/inventory/department/'+value)
-//     .then(list => {
-//       return list.json();
-//     }).then(data => {
-//       setRows(data);
-//       haveFetchedProducts = true;
-//       props.departmentChanged(data);
-//     });
-//   }  
-//   haveFetchedProducts || fetchProducts();
-//   function handleChange(event) {
-//       setValue(event.target.value);
-//       fetchProducts(event.target.value);
-//     }
-
-//   return (
-//     <Toolbar
-//       className={classes1.root}
-//     >
-//       <div className={classes1.actions}>
-//         <FormControl className={classes1.formControl}>
-//           <InputLabel htmlFor="department-name">
-//             Department
-//           </InputLabel>
-//           <Select
-//             value={value}
-//             onChange={handleChange}            
-//           >
-//             <MenuItem value={'health'}>Health Care</MenuItem>
-//             <MenuItem value={'education'}>Shree Raj Educational Centre</MenuItem>
-//             <MenuItem value={'women-empowerment'}>Infrastructure & Development</MenuItem>
-//           </Select>
-//         </FormControl>        
-//       </div>
-//     </Toolbar>
-//   );
-// };
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -182,14 +139,22 @@ const useStyles = makeStyles(theme => ({
     paddingTop: theme.spacing(2),
   },
 }));
+
 var firstA = false;
 var firstB=false;
+var haveFetchedProducts = false;
+var haveFetchedDepartments = false;
+
 export default function ContentsTable() {
   const classes = useStyles();
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('name');
   const [page, setPage] = React.useState(0);
   const [rows, setRows] = React.useState([]);
+  const [fetchedProducts, setFetchedProducts] = React.useState([]);
+  const [chosenProduct, setChosenProduct] = React.useState({});
+  const [productsNameList, setProductsNameList] = React.useState([]);
+  const [departments, setDepartments] = React.useState({});
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const classes1 = useToolbarStyles();
   const dept = sessionStorage.getItem('department');
@@ -197,21 +162,61 @@ export default function ContentsTable() {
   
   // const [rows, setRows] = React.useState([]);
   
-  const fetchProducts = (newDept) => {
-    fetch('/inventory/department/'+newDept)
+  const fetchProducts = () => {
+    fetch('/product')
     .then(list => {
-      return list.json();      
+      return list.json();
     }).then(data => {
-      setRows(data);
+      setFetchedProducts(data);
+      setProductsNameList(data.map(pItem => ({value:pItem._id, label:pItem.name})));
       haveFetchedProducts = true;
     });
   }  
-  haveFetchedProducts || fetchProducts(value);
+  
+  const fetchDepartments = () => {
+    haveFetchedDepartments = true;
+    fetch('/list/departments')
+    .then(list => {
+      return list.json();      
+    }).then(data => {
+      data.items.unshift({value:'', label:''});
+      var depts = data.items.reduce((map, dItem) => {
+        map[dItem.value] = dItem.label;
+        return map;
+      });
+      setDepartments(depts);
+    });
+  }
+  
+  haveFetchedProducts || fetchProducts();
+  haveFetchedDepartments || fetchDepartments();
+  
+  const fetchProductInInventory = (pID) => {
+    fetch('/inventory/product/'+pID)
+    .then(list => {
+      return list.json();
+    }).then(data => {
+      console.log(data);
+      setRows(data);
+      haveFetchedProducts = true;
+    });
+    console.log("CHOSEN");
+    console.log(chosenProduct);
+  }
   
   function handleChange(event) {
       setValue(event.target.value);
-      fetchProducts(event.target.value);
+     // fetchProducts(;vent.target.value);
     }
+    
+  function onChooseProduct(theChosenProduct) {
+    var thisProduct = fetchedProducts.filter(pItem => pItem._id == theChosenProduct.value)[0];
+    console.log("THISPRO");
+    console.log(thisProduct);
+    setChosenProduct(thisProduct?thisProduct:{});
+    fetchProductInInventory(theChosenProduct.value);
+    
+  }
 
   function handleRequestSort(event, property) {
     const isDesc = orderBy === property && order === 'desc';
@@ -249,19 +254,9 @@ export default function ContentsTable() {
           className={classes1.root}
         >
           <div className={classes1.actions}>
-            <FormControl className={classes1.formControl}>
-              <InputLabel htmlFor="department-name">
-                Department
-              </InputLabel>
-              <Select
-                value={value}
-                onChange={handleChange}            
-              >
-                <MenuItem value={'health'}>Health Care</MenuItem>
-                <MenuItem value={'education'}>Shree Raj Educational Centre</MenuItem>
-                <MenuItem value={'women-empowerment'}>Infrastructure & Development</MenuItem>
-              </Select>
-            </FormControl>        
+            <SuggestionSelect id="product-inventory" label="Product Name" items={productsNameList} onValueChange={onChooseProduct} nonCreatable={true}/>
+            <OutlinedTextField id="pInventory-category" label="Product Category" value={chosenProduct.category} disabled={true}/>
+            <OutlinedTextField id="pInventory-description" label="Product Description" value={chosenProduct.description} disabled={true}/>
           </div>
         </Toolbar>
         <div className={classes.tableWrapper}>
@@ -287,9 +282,8 @@ export default function ContentsTable() {
                       key={row.name}
                     >                      
                       <TableCell component="th" scope="row" padding="default">
-                        {row.details.name}
+                        {departments[row.departmentID]}
                       </TableCell>
-                      <TableCell>{row.details.category}</TableCell>
                       <TableCell align="right">{row.quantity.value}</TableCell>
                       <TableCell>{row.quantity.unit}</TableCell>
                     </TableRow>

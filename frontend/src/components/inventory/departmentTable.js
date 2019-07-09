@@ -14,6 +14,7 @@ import Paper from '@material-ui/core/Paper';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
+import DropDownSelect from '../common/dropdown-select';
 import {
   MenuItem, Container
 } from '@material-ui/core';
@@ -191,6 +192,11 @@ export default function ContentsTable() {
       setValue(event.target.value);
       fetchProducts(event.target.value);
     }
+    
+  function handleDepartmentChange(chosenDepartment) {
+      setValue(chosenDepartment);
+      fetchProducts(chosenDepartment);
+    }
 
   function handleRequestSort(event, property) {
     const isDesc = orderBy === property && order === 'desc';
@@ -228,22 +234,7 @@ export default function ContentsTable() {
           className={classes1.root}
         >
           <div className={classes1.actions}>
-            <FormControl className={classes1.formControl}>
-              <InputLabel htmlFor="department-name">
-                Department
-              </InputLabel>
-              <Select
-                value={value}
-                onChange={handleChange}            
-              >
-              {depts.items?
-              depts.items.map((deptItem, index) => {
-                return  (
-                  <MenuItem value={deptItem.value}>{deptItem.label}</MenuItem>
-                )
-              }):""}
-              </Select>
-            </FormControl>        
+            <DropDownSelect id="inventory-department" label="Department" items={depts && depts.items ?depts.items:[]} onValueChange={handleDepartmentChange} defaultValue={userdept}/>
           </div>
         </Toolbar>
         <div className={classes.tableWrapper}>

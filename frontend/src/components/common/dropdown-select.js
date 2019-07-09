@@ -75,7 +75,7 @@ export default function ProductCategory(props) {
         </InputLabel>
         <Select
           native
-          value={state.chosenItem}
+          defaultValue={props.defaultValue?props.defaultValue:state.chosenItem}
           onChange={handleChange('chosenItem')}
           input={
             <OutlinedInput name={props.id} labelWidth={labelWidth} id={props.id} />
