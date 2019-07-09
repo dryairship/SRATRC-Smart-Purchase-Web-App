@@ -12,6 +12,7 @@ import DropDownSelect from '../common/dropdown-select.js';
 import SwapHorizIcon from '@material-ui/icons/SwapHoriz';
 import SuggestionSelect from '../common/suggestion-select';
 
+import OKAlert from '../common/ok-alert';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
@@ -49,6 +50,7 @@ var productsList = [];
 
 var haveFetchedCategories = false;
 var haveFetchedProducts = false;
+var haveFetchedDepts = false;
 var productIsAvailable = false;
 
 
@@ -80,13 +82,14 @@ export default function Transfer() {
 
     const [fetchedCategories, setFetchedCategories] = React.useState({categories: []});
     const [selectedCategoryProducts, setSelectedCategoryProducts] = React.useState({productsNameList: [], productsValueList: []});
-    const [quantity , setQuantity] = React.useState(0);
+    const [fetchedDepts, setFetchDepts] = React.useState({departments: []});
+    const [quantity , setQuantity] = React.useState(1);
     const [toDept, setToDept] = React.useState('');
     const [unit, setUnit] = React.useState('');
     const [Max, setMax] = React.useState(100);
+    const [alertState, setAlertState] = React.useState({show: false, message:'', title:''});
+    const department = sessionStorage.getItem('department');
 
-
-    
     const fetchCategories = () => {
       fetch('/list/categories')
       .then(list => {
@@ -109,13 +112,25 @@ export default function Transfer() {
       });
     }
 
-    
+    const fetchDepartments = () => {
+      fetch('/list/departments')
+      .then(list => {
+        return list.json();
+      }).then(data => {
+        setFetchDepts({
+          departments: data.items.filter(item => {return item.value!==sessionStorage.getItem('department')}),
+        });
+        haveFetchedDepts = true
+      });
+    }
+
 
     haveFetchedCategories || fetchCategories();
     haveFetchedProducts || fetchProducts();
+    haveFetchedDepts || fetchDepartments();
 
     const onChooseCategory = chosenCategory => {
-      setState({
+        setState({
         ...state,
         category: chosenCategory,
         product: {
@@ -133,35 +148,28 @@ export default function Transfer() {
             value: product.productID,
             label: product.details.name,
           })),
-        productsValueList: productsList
-        .filter(product => {
-            return product.details.category==chosenCategory;
-        })
-        .map(product => ({
-          value: product.productID,
-          label: product.quantity.value,
-        })),
       });
     };
 
 
 
     const onChooseProductName = chosenProduct => {
-        var prod = productsList.filter(pItem => {return pItem.productID==chosenProduct.value});
-        if(prod.length == 0){
-          productIsAvailable = false;
-        }else{
-          setState({
-            ...state,
-            product: {
-              id: chosenProduct.value,
-              name: chosenProduct.label,
-              description: "",
-            }
-          });
-        }   
-        console.log(prod);
-        setMax(prod[0].quantity.value);     
+        if(chosenProduct)
+          {var prod = productsList.filter(pItem => {return pItem.productID==chosenProduct.value});
+          if(prod.length == 0){
+            productIsAvailable = false;
+          }else{
+            setState({
+              ...state,
+              product: {
+                id: chosenProduct.value,
+                name: chosenProduct.label,
+                description: "",
+              }
+            });
+            setUnit(prod[0].quantity.unit);
+            setMax(prod[0].quantity.value);     
+          }}   
     }
 
     const onChooseToDept = chosenDept => {
@@ -172,10 +180,52 @@ export default function Transfer() {
       setQuantity(quantityFromChild);
     }
 
-    const products = [{label:'LOL', value:'LOL'}];
+    const transferItem = () => {
+      return new Promise((resolve, reject) => {
+        var transferIt = {
+          productID: state.product.id,
+          fromDepartmentID: department,
+          toDepartmentID: toDept,
+          value: quantity,
+        };
+        fetch('/inventory/transfer',{
+          method: 'PATCH',
+          body: JSON.stringify(transferIt),
+          headers:{'Content-Type': 'application/json'}
+        })
+        .then(res => {console.log(transferIt);res.json();})
+        .then(response => {resolve(response);})
+        .catch(error => {reject(error);});
+      })
+    }
 
-    const department = sessionStorage.getItem('department');
+    const submitForm = () => {
+      transferItem()
+      // .then(result => {
+      //   console.log(result);
+      //   setAlertState({
+      //     show: true,
+      //     message: result, 
+      //     title: "Transfer successful",
+      //   });
+      // })
+      // .catch(error => {
+      //   console.log('Mota Balak');
+      //   setAlertState({
+      //     show: true,
+      //     message: error,
+      //     title: "Transfer failed",
+      //   })
+      // })
+    }
 
+    const closeAlert = () => {
+      setAlertState({
+        show: false,
+        message: "",
+        title: "",
+      });
+    }
   
     return (
       <Container component="main" maxWidth="xs">
@@ -189,13 +239,24 @@ export default function Transfer() {
           </Typography>
           <form className={classes.form} noValidate >
               <OutlinedTextField id="from_dept" label={department} disabled={true}/>
-              <br></br>
               <DropDownSelect id="product-category" label="Product Category" items={fetchedCategories.categories} onValueChange={onChooseCategory} />
-              <div><SuggestionSelect id="product-name" label="Product Name" items={selectedCategoryProducts.productsNameList} onValueChange={onChooseProductName} nonCreatable={productIsAvailable}/></div>
-              <div><Quantity id="quantity" sendQuantity={getQuantity} Max={Max}/></div>
-              <DropDownSelect id="to_dept" label="To Department" items={products} onValueChange={onChooseToDept}/>
+              <SuggestionSelect id="product-name" label="Product Name" category={state.category} items={selectedCategoryProducts.productsNameList} onValueChange={onChooseProductName} nonCreatable={true}/>
+              <Quantity id="quantity" sendQuantity={getQuantity} Max={Max} unit={unit}/>
+              <DropDownSelect id="to_dept" label="To Department" items={fetchedDepts.departments} onValueChange={onChooseToDept}/>
+              <Button
+                onClick={submitForm}
+                fullWidth
+                variant="contained"
+                color="primary"
+                className={classes.submit}
+              >
+            Confirm Transfer
+          </Button>
           </form>
         </div>
+        <div className={classes.paper} id="response-div">
+        <OKAlert show={alertState.show} title={alertState.title} message={alertState.message} onClose={closeAlert}/>
+      </div>
     </Container>
       );
 }

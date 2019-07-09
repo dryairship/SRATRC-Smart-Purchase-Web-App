@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
@@ -45,7 +46,7 @@ export default function Quantity(props) {
     },
 ]
   const [quantityState, setQuantityState] = React.useState(1);
-  const [unit, setUnit] = React.useState(0);
+  const [unit, setUnit] = React.useState('');
 
   const onChooseUnit = chosenUnit => {
     setUnit(chosenUnit)

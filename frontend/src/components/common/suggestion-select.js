@@ -11,7 +11,7 @@ import Chip from '@material-ui/core/Chip';
 import MenuItem from '@material-ui/core/MenuItem';
 import CancelIcon from '@material-ui/icons/Cancel';
 import PropTypes from 'prop-types';
-
+ 
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
@@ -61,7 +61,7 @@ const useStyles = makeStyles(theme => ({
     height: theme.spacing(2),
   },
 }));
-
+ 
 function NoOptionsMessage(props) {
   return (
     <Typography
@@ -73,21 +73,21 @@ function NoOptionsMessage(props) {
     </Typography>
   );
 }
-
+ 
 NoOptionsMessage.propTypes = {
   children: PropTypes.node,
   innerProps: PropTypes.object,
   selectProps: PropTypes.object.isRequired,
 };
-
+ 
 function inputComponent({ inputRef, ...props }) {
   return <div ref={inputRef} {...props} />;
 }
-
+ 
 inputComponent.propTypes = {
   inputRef: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
 };
-
+ 
 function Control(props) {
   const {
     children,
@@ -95,7 +95,7 @@ function Control(props) {
     innerRef,
     selectProps: { classes, TextFieldProps },
   } = props;
-
+ 
   return (
     <TextField
       fullWidth
@@ -113,14 +113,14 @@ function Control(props) {
     />
   );
 }
-
+ 
 Control.propTypes = {
   children: PropTypes.node,
   innerProps: PropTypes.object,
   innerRef: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
   selectProps: PropTypes.object.isRequired,
 };
-
+ 
 function Option(props) {
   return (
     <MenuItem
@@ -136,7 +136,7 @@ function Option(props) {
     </MenuItem>
   );
 }
-
+ 
 Option.propTypes = {
   children: PropTypes.node,
   innerProps: PropTypes.object,
@@ -144,7 +144,7 @@ Option.propTypes = {
   isFocused: PropTypes.bool,
   isSelected: PropTypes.bool,
 };
-
+ 
 function Placeholder(props) {
   return (
     <Typography
@@ -156,13 +156,13 @@ function Placeholder(props) {
     </Typography>
   );
 }
-
+ 
 Placeholder.propTypes = {
   children: PropTypes.node,
   innerProps: PropTypes.object,
   selectProps: PropTypes.object.isRequired,
 };
-
+ 
 function SingleValue(props) {
   return (
     <Typography className={props.selectProps.classes.singleValue} {...props.innerProps}>
@@ -170,22 +170,22 @@ function SingleValue(props) {
     </Typography>
   );
 }
-
+ 
 SingleValue.propTypes = {
   children: PropTypes.node,
   innerProps: PropTypes.object,
   selectProps: PropTypes.object.isRequired,
 };
-
+ 
 function ValueContainer(props) {
   return <div className={props.selectProps.classes.valueContainer}>{props.children}</div>;
 }
-
+ 
 ValueContainer.propTypes = {
   children: PropTypes.node,
   selectProps: PropTypes.object.isRequired,
 };
-
+ 
 function MultiValue(props) {
   return (
     <Chip
@@ -199,14 +199,14 @@ function MultiValue(props) {
     />
   );
 }
-
+ 
 MultiValue.propTypes = {
   children: PropTypes.node,
   isFocused: PropTypes.bool,
   removeProps: PropTypes.object.isRequired,
   selectProps: PropTypes.object.isRequired,
 };
-
+ 
 function Menu(props) {
   return (
     <Paper square className={props.selectProps.classes.paper} {...props.innerProps}>
@@ -214,13 +214,13 @@ function Menu(props) {
     </Paper>
   );
 }
-
+ 
 Menu.propTypes = {
   children: PropTypes.node,
   innerProps: PropTypes.object,
   selectProps: PropTypes.object,
 };
-
+ 
 const components = {
   Control,
   Menu,
@@ -231,7 +231,7 @@ const components = {
   SingleValue,
   ValueContainer,
 };
-
+ 
 export default function AutoSuggest(props) {
   const classes = useStyles();
   const theme = useTheme();
@@ -239,12 +239,14 @@ export default function AutoSuggest(props) {
   // const [multi, setMulti] = React.useState(null);
   const [focusState, setFocusState] = React.useState(null);
   const [category, setCategory] = React.useState('');
-
-  function handleChangeSingle(value) {
-    setSingle(value);
+ 
+  const handleChangeSingle = (value) => {
     props.onValueChange(value);
+    setSingle(value);
+    console.log(props.category)
+    setCategory(props.category);
   }
-
+ 
   // function handleChangeMulti(value) {
   //   setMulti(value);
   // }
@@ -252,17 +254,18 @@ export default function AutoSuggest(props) {
   function handleFocus(){
     setFocusState(true);
   }
+ 
+  if(props.category !== category && single!==null ){
+    console.log(props.category)
+    handleChangeSingle(null);
+    props.onValueChange(null);
+    setCategory(props.category);
+  }
   
   function handleBlur(){
     setFocusState(false);
   }
-
-  if(props.category !== category && single!==''){
-    console.log(category);
-    // handleChangeSingle('');
-    setCategory(props.category);
-  }
-
+ 
   const selectStyles = {
     input: base => ({
       ...base,
@@ -278,10 +281,10 @@ export default function AutoSuggest(props) {
       zIndex: focusState ? 999 : 1,
     }),
   };
-  if(!props.nonCreatable){return (
+  if(props.nonCreatable){return (
     <div className={classes.root}>
       <NoSsr>
-        <CreatableSelect
+        <Select
           variant="outlined"
           classes={classes}
           styles={selectStyles}
@@ -308,7 +311,7 @@ export default function AutoSuggest(props) {
   return (
     <div className={classes.root}>
       <NoSsr>
-        <Select
+        <CreatableSelect
           variant="outlined"
           classes={classes}
           styles={selectStyles}
@@ -324,7 +327,6 @@ export default function AutoSuggest(props) {
           options={props.items}
           components={components}
           value={single}
-        
           onChange={handleChangeSingle}
           onFocus={handleFocus}
           onBlur={handleBlur}
