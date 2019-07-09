@@ -4,8 +4,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { Grid, Avatar, Typography } from '@material-ui/core';
-import StorageOutlinedIcon from '@material-ui/icons/StorageSharp';
-import { AttachMoneyOutlined, ShoppingCartOutlined, SentimentSatisfiedAltOutlined } from '@material-ui/icons';
+import { HistoryOutlined, AttachMoneyOutlined } from '@material-ui/icons';
 
 const useStyles = makeStyles(theme => ({
   '@global': {
@@ -20,8 +19,8 @@ const useStyles = makeStyles(theme => ({
     alignItems: 'center',
   },
   btn: {
-    marginBottom: theme.spacing(0),
-    height: "250px",
+    margin: theme.spacing(0),
+    height: "18em",
     fontSize: "16px",
     textDecoration: "none", 
     display: 'flex',
@@ -45,14 +44,14 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function HomePage(props) {
+export default function InventoryMainPage(props) {
   const classes = useStyles();
 
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
-        <Grid container spacing={2}>
+      <Grid container spacing={2}>
           <Grid item xs={6}>
             <Button
               fullWidth
@@ -60,7 +59,7 @@ export default function HomePage(props) {
               color="primary"
               size="large"
               className={classes.btn}
-              href="/inventory"
+              href="/paymentshistory"
           >          
               <Grid
               container
@@ -70,17 +69,17 @@ export default function HomePage(props) {
               >
                 <Grid item>
                   <Avatar className={classes.avatar}>
-                  <StorageOutlinedIcon fontSize='inherit'/>
+                  <HistoryOutlined fontSize='inherit'/>
                 </Avatar>
                 </Grid>
                 <Grid item>
                   <Typography component="h6" variant="h6">              
-                    Inventory
+                    Payment History
                   </Typography>
                 </Grid>
                 <Grid item>
                   <Typography align='center' className={classes.description}>              
-                    Track inventory and transfer products
+                    Shows pending and completed payments
                   </Typography>
                 </Grid>
               </Grid>                                    
@@ -93,7 +92,7 @@ export default function HomePage(props) {
               color="primary"
               size="large"
               className={classes.btn}
-              href="/payments"
+              href="/previousquotations"
           >          
               <Grid
               container
@@ -108,83 +107,17 @@ export default function HomePage(props) {
                 </Grid>
                 <Grid item>
                   <Typography component="h6" variant="h6">              
-                    Payments
+                    Previous Quotations
                   </Typography>
                 </Grid>
                 <Grid item>
                   <Typography align='center' className={classes.description}>              
-                    Track installments and payments history
+                    Shows all previous quotations for a product
                   </Typography>
                 </Grid>
               </Grid>                                    
           </Button>
-          </Grid>
-          <Grid item xs={6}>
-            <Button
-              fullWidth
-              variant="contained"
-              color="primary"
-              size="large"
-              className={classes.btn}
-              href="/purchase"
-          >          
-              <Grid
-              container
-              direction="column"
-              justify="center"
-              alignItems="center"
-              >
-                <Grid item>
-                  <Avatar className={classes.avatar}>
-                  <ShoppingCartOutlined fontSize='inherit'/>
-                </Avatar>
-                </Grid>
-                <Grid item>
-                  <Typography component="h6" variant="h6">              
-                    Purchase
-                  </Typography>
-                </Grid>
-                <Grid item>
-                  <Typography align='center' className={classes.description}>              
-                    Update details of a new purchase
-                  </Typography>
-                </Grid>
-              </Grid>                                    
-          </Button>
-          </Grid>
-          <Grid item xs={6}>
-            <Button
-              fullWidth
-              variant="contained"
-              color="primary"
-              size="large"
-              className={classes.btn}
-              href="/donation"
-          >          
-              <Grid
-              container
-              direction="column"
-              justify="center"
-              alignItems="center"
-              >
-                <Grid item>
-                  <Avatar className={classes.avatar}>
-                  <SentimentSatisfiedAltOutlined fontSize='inherit'/>
-                </Avatar>
-                </Grid>
-                <Grid item>
-                  <Typography component="h6" variant="h6">              
-                    Donation
-                  </Typography>
-                </Grid>
-                <Grid item>
-                  <Typography align='center' className={classes.description}>              
-                    Update details of a donation
-                  </Typography>
-                </Grid>
-              </Grid>                                    
-          </Button>
-          </Grid>
+          </Grid>          
         </Grid>
       </div>
     </Container>

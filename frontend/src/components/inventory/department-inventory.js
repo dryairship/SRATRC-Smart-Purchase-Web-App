@@ -1,7 +1,6 @@
 import React from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { makeStyles } from '@material-ui/core/styles';
-import FilterTabs from './tabs';
 import DepartmentTable from './departmentTable';
 
 const useStyles = makeStyles(theme => ({

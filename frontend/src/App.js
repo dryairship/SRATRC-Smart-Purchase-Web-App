@@ -2,12 +2,16 @@ import React from 'react';
 import './App.css';
 import MenuAppBar from './components/topbar/topbar';
 import HomePage from './components/homepage/homepage';
-import DepartmentInventory from './components/inventory/department-inventory';
-import ProductInventory from './components/inventory/product-inventory';
+import DepartmentInventory from './components/inventory/departmentTable';
+import ProductInventory from './components/inventory/productTable';
 import Purchase from './components/purchase/purchase';
 import ChangePassword from './components/changePassword/changePassword'
-import Donation from './components/donation/donation'
+import DonationMain from './components/donation/donationMain';
+import MakeDonation from './components/donation/donation';
+import InventoryMainPage from './components/inventory/inventoryMain';
+import PaymentsMain from './components/payment/paymentMain';
 import { Route, BrowserRouter as Router } from "react-router-dom";
+import PaymentsHistory from './components/payment/payment_history';
 import SignIn from './components/signIn/signIn';
 import Logout from './components/logout/logout';
 import Profile from './components/profile/profile';
@@ -32,10 +36,15 @@ function App() {
         <div className="App">
           <MenuAppBar loggedIn={loggedIn} />
           <Route exact path="/" component={HomePage} />
-          <Route path="/departmentInventory" component={DepartmentInventory} />
-          <Route path="/productInventory" component={ProductInventory} />
-          <Route path="/payments" component={HomePage} />
-          <Route path="/donation" component={Donation} />
+          <Route path="/inventory" component={InventoryMainPage} />
+          <Route path="/departmentinventory" component={DepartmentInventory} />
+          <Route path="/productinventory" component={ProductInventory} />
+          <Route path="/payments" component={PaymentsMain} />
+          <Route path="/paymentshistory" component={PaymentsHistory} />
+          <Route path="/previousquotations" component={PaymentsMain} />
+          <Route path="/donation" component={DonationMain} />
+          <Route path="/makedonation" component={MakeDonation} />
+          <Route path="/donationhistory" component={HomePage} />
           <Route path="/changePassword" component={ChangePassword} />
           <Route path="/purchase" component={Purchase} />
           <Route path="/profile" component={Profile} />

@@ -4,8 +4,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { Grid, Avatar, Typography } from '@material-ui/core';
-import StorageOutlinedIcon from '@material-ui/icons/StorageSharp';
-import { AttachMoneyOutlined, ShoppingCartOutlined, SentimentSatisfiedAltOutlined } from '@material-ui/icons';
+import { HistoryOutlined, SentimentSatisfiedAltOutlined } from '@material-ui/icons';
 
 const useStyles = makeStyles(theme => ({
   '@global': {
@@ -20,8 +19,8 @@ const useStyles = makeStyles(theme => ({
     alignItems: 'center',
   },
   btn: {
-    marginBottom: theme.spacing(0),
-    height: "250px",
+    margin: theme.spacing(0),
+    height: "18em",
     fontSize: "16px",
     textDecoration: "none", 
     display: 'flex',
@@ -45,14 +44,14 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function HomePage(props) {
+export default function DonationMainPage(props) {
   const classes = useStyles();
 
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
-        <Grid container spacing={2}>
+      <Grid container spacing={2}>
           <Grid item xs={6}>
             <Button
               fullWidth
@@ -60,106 +59,7 @@ export default function HomePage(props) {
               color="primary"
               size="large"
               className={classes.btn}
-              href="/inventory"
-          >          
-              <Grid
-              container
-              direction="column"
-              justify="center"
-              alignItems="center"
-              >
-                <Grid item>
-                  <Avatar className={classes.avatar}>
-                  <StorageOutlinedIcon fontSize='inherit'/>
-                </Avatar>
-                </Grid>
-                <Grid item>
-                  <Typography component="h6" variant="h6">              
-                    Inventory
-                  </Typography>
-                </Grid>
-                <Grid item>
-                  <Typography align='center' className={classes.description}>              
-                    Track inventory and transfer products
-                  </Typography>
-                </Grid>
-              </Grid>                                    
-          </Button>
-          </Grid>
-          <Grid item xs={6}>
-            <Button
-              fullWidth
-              variant="contained"
-              color="primary"
-              size="large"
-              className={classes.btn}
-              href="/payments"
-          >          
-              <Grid
-              container
-              direction="column"
-              justify="center"
-              alignItems="center"
-              >
-                <Grid item>
-                  <Avatar className={classes.avatar}>
-                  <AttachMoneyOutlined fontSize='inherit'/>
-                </Avatar>
-                </Grid>
-                <Grid item>
-                  <Typography component="h6" variant="h6">              
-                    Payments
-                  </Typography>
-                </Grid>
-                <Grid item>
-                  <Typography align='center' className={classes.description}>              
-                    Track installments and payments history
-                  </Typography>
-                </Grid>
-              </Grid>                                    
-          </Button>
-          </Grid>
-          <Grid item xs={6}>
-            <Button
-              fullWidth
-              variant="contained"
-              color="primary"
-              size="large"
-              className={classes.btn}
-              href="/purchase"
-          >          
-              <Grid
-              container
-              direction="column"
-              justify="center"
-              alignItems="center"
-              >
-                <Grid item>
-                  <Avatar className={classes.avatar}>
-                  <ShoppingCartOutlined fontSize='inherit'/>
-                </Avatar>
-                </Grid>
-                <Grid item>
-                  <Typography component="h6" variant="h6">              
-                    Purchase
-                  </Typography>
-                </Grid>
-                <Grid item>
-                  <Typography align='center' className={classes.description}>              
-                    Update details of a new purchase
-                  </Typography>
-                </Grid>
-              </Grid>                                    
-          </Button>
-          </Grid>
-          <Grid item xs={6}>
-            <Button
-              fullWidth
-              variant="contained"
-              color="primary"
-              size="large"
-              className={classes.btn}
-              href="/donation"
+              href="/makedonation"
           >          
               <Grid
               container
@@ -174,12 +74,45 @@ export default function HomePage(props) {
                 </Grid>
                 <Grid item>
                   <Typography component="h6" variant="h6">              
-                    Donation
+                    Make Donation
                   </Typography>
                 </Grid>
                 <Grid item>
                   <Typography align='center' className={classes.description}>              
-                    Update details of a donation
+                    Enter details of a new donation
+                  </Typography>
+                </Grid>
+              </Grid>                                    
+          </Button>
+          </Grid>
+          <Grid item xs={6}>
+            <Button
+              fullWidth
+              variant="contained"
+              color="primary"
+              size="large"
+              className={classes.btn}
+              href="/donationhistory"
+          >          
+              <Grid
+              container
+              direction="column"
+              justify="center"
+              alignItems="center"
+              >
+                <Grid item>
+                  <Avatar className={classes.avatar}>
+                  <HistoryOutlined fontSize='inherit'/>
+                </Avatar>
+                </Grid>
+                <Grid item>
+                  <Typography component="h6" variant="h6">              
+                    Donation history
+                  </Typography>
+                </Grid>
+                <Grid item>
+                  <Typography align='center' className={classes.description}>              
+                    Track donations history
                   </Typography>
                 </Grid>
               </Grid>                                    
