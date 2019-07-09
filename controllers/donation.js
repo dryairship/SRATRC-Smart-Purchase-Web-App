@@ -16,16 +16,21 @@ function handleDonationPost(req, res) {
     var donationResult;
     insertDonation(departmentID, productID, donor, quantity, timestamp, remarks)
     .then(result => {
+        donationResult = result;
+        if(productID == 'money'){
+            res.status(donationResult.status).json(donationResult.response);
+            return;
+        }
         updateInventoryItem(productID, departmentID, quantity.value)
         .then(result => {
-            res.status(result.status).json(result.response);
+            res.status(donationResult.status).json(donationResult.response);
             return;
         })
         .catch(error => {
             if(error.status==404){
                 insertInventoryItem(productID, departmentID, quantity)
                 .then(result => {
-                    res.status(result.status).json(result.response);
+                    res.status(donationResult.status).json(donationResult.response);
                     return;
                 })
                 .catch(error => {

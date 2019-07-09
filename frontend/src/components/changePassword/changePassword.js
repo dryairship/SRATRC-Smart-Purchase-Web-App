@@ -18,18 +18,14 @@ const useStyles = makeStyles(theme => ({
       marginTop: theme.spacing(10),
   },
   paper: {
-    marginTop: theme.spacing(8),
+    marginTop: theme.spacing(4),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.common.white,
-    fontSize: '20em',
-    color: theme.palette.primary.main,
-    width: 'auto',
-    height: 'auto',
+    backgroundColor: theme.palette.secondary.main,
   },
   form: {
     width: '100%', // Fix IE 11 issue.
@@ -75,7 +71,6 @@ export default function ChangePassword() {
         headers:{ 'Content-Type': 'application/json' }
       })
       .then(res => {
-        console.log(res);
         if(res.ok){
           fetch('/user', {
             method: 'PATCH',
@@ -136,7 +131,7 @@ export default function ChangePassword() {
       <CssBaseline />
       <div className={classes.paper} id="change-password-div">
             <Avatar className={classes.avatar}>
-            <LockOutlinedIcon />
+            <LockOutlinedIcon fontSize='inherit'/>
             </Avatar>
         
         <div className="divider" />
