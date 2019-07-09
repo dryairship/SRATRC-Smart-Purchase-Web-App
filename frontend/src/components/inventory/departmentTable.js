@@ -147,7 +147,7 @@ export default function ContentsTable() {
   const [orderBy, setOrderBy] = React.useState('name');
   const [page, setPage] = React.useState(0);
   const [rows, setRows] = React.useState([]);
-  const storedlist=localStorage.getItem('fetchedDeptLists')===true ? localStorage.getItem('deptList'): {items:[]}
+  const storedlist=localStorage.getItem('fetchedDeptLists') ? localStorage.getItem('deptList'): {items:[]}
   console.log('stored');
   console.log('status');
   console.log(localStorage.getItem('fetchedDeptLists'));
@@ -178,9 +178,6 @@ export default function ContentsTable() {
     }).then(data => {
       setDepts(data);
       haveFetchedDepartments = true;
-      console.log('fetched');
-      console.log(depts);
-      console.log(data);
       localStorage.setItem('fetchedDeptLists',true);
       localStorage.setItem('deptList',data.stringify);
     });
@@ -188,9 +185,7 @@ export default function ContentsTable() {
 
   haveFetchedProducts || fetchProducts(value);
   haveFetchedDepartments || fetchDepartments();
-  console.log('outside');
-  console.log(depts);
-  setDepts(localStorage.getItem('deptList'));
+  //setDepts(localStorage.getItem('deptList'));
   
   function handleChange(event) {
       setValue(event.target.value);
@@ -241,11 +236,12 @@ export default function ContentsTable() {
                 value={value}
                 onChange={handleChange}            
               >
-              {depts.items.map((deptItem, index) => {
+              {depts.items?
+              depts.items.map((deptItem, index) => {
                 return  (
                   <MenuItem value={deptItem.value}>{deptItem.label}</MenuItem>
                 )
-              })}
+              }):""}
               </Select>
             </FormControl>        
           </div>

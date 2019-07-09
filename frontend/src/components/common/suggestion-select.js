@@ -278,7 +278,7 @@ export default function AutoSuggest(props) {
       zIndex: focusState ? 999 : 1,
     }),
   };
-  if(props.nonCreatable){return (
+  if(!props.nonCreatable){return (
     <div className={classes.root}>
       <NoSsr>
         <CreatableSelect

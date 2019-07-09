@@ -8,6 +8,7 @@ import ChangePassword from './components/changePassword/changePassword'
 import Donation from './components/donation/donation'
 import { Route, BrowserRouter as Router } from "react-router-dom";
 import SignIn from './components/signIn/signIn';
+import Logout from './components/logout/logout';
 import Profile from './components/profile/profile';
 import Transfer from './components/inventory/transfer';
 import CreateUser from './components/createUser/createUser';
@@ -38,6 +39,7 @@ function App() {
           <Route path="/profile" component={Profile} />
           <Route path="/addUser" component={CreateUser} />
           <Route path="/transfer" component={Transfer} />
+          <Route path="/logout" component={Logout} />
         </div>
       </Router>
     );
