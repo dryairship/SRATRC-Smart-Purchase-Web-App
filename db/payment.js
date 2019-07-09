@@ -30,7 +30,7 @@ function updatePayment(purchaseID, amount, paidBy, remarks, timestamp){
         })
         .then(() => {
             if(valid){
-                Payment.updatePaymentateOne({
+                Payment.updateOne({
                     purchaseID: purchaseID
                 },
                 {
@@ -60,7 +60,7 @@ function updatePayment(purchaseID, amount, paidBy, remarks, timestamp){
                 });
             }
         })
-        .catch(() => {
+        .catch(error => {
             reject({
                 status : 500,
                 response : "Update not successful"

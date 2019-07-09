@@ -4,7 +4,7 @@ function handlePayPost(req, res){
     var amount = req.body.amount;
     var paidBy = req.user.username;
     var remarks = req.body.remarks;
-    var timestamp = Date.now();
+    var timestamp = Date.parse(req.body.timestamp);
 
     updatePayment(req.params.purchaseID, amount, paidBy, remarks, timestamp)
     .then(result => {
