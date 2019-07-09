@@ -4,6 +4,8 @@ import MenuAppBar from './components/topbar/topbar';
 import HomePage from './components/homepage/homepage';
 import Inventory from './components/inventory/inventory';
 import Purchase from './components/purchase/purchase';
+import ChangePassword from './components/changePassword/changePassword'
+import Donation from './components/donation/donation'
 import { Route, BrowserRouter as Router } from "react-router-dom";
 import SignIn from './components/signIn/signIn';
 import Profile from './components/profile/profile';
@@ -30,7 +32,8 @@ function App() {
           <Route exact path="/" component={HomePage} />
           <Route path="/inventory" component={Inventory} />
           <Route path="/payments" component={HomePage} />
-          <Route path="/donation" component={HomePage} />
+          <Route path="/donation" component={Donation} />
+          <Route path="/changePassword" component={ChangePassword} />
           <Route path="/purchase" component={Purchase} />
           <Route path="/profile" component={Profile} />
           <Route path="/addUser" component={CreateUser} />

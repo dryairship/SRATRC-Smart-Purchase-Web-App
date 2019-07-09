@@ -259,7 +259,7 @@ export default function AutoSuggest(props) {
 
   if(props.category !== category && single!==''){
     console.log(category);
-    handleChangeSingle('');
+    // handleChangeSingle('');
     setCategory(props.category);
   }
 
