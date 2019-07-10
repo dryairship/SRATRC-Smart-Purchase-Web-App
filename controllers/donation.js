@@ -1,4 +1,4 @@
-const { insertDonation } = require('../db/donation.js');
+const { insertDonation, findAllDonationsByDepartmentId } = require('../db/donation.js');
 const { updateInventoryItem, insertInventoryItem } = require('../db/inventoryItem.js');
 
 function handleDonationPost(req, res) {
@@ -45,4 +45,15 @@ function handleDonationPost(req, res) {
     })
 }
 
-module.exports = { handleDonationPost };
+
+function handleDonationGetByDepartmentId(req, res) {
+    findAllDonationsByDepartmentId(req.params.departmentID)
+    .then(result => {
+        res.status(result.status).json(result.response);
+    })
+    .catch(error => {
+        res.status(error.status).json(error.response);
+    });
+}
+
+module.exports = { handleDonationPost, handleDonationGetByDepartmentId };

@@ -20,6 +20,17 @@ var DonationSchema = new mongoose.Schema({
         default: Date.now
     },
     remarks: String
+},
+{
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true }
+});
+
+DonationSchema.virtual('productDetails', {
+    ref: 'Product',
+    localField: 'productID',
+    foreignField: '_id',
+    justOne: true
 });
 
 var Donation = mongoose.model('Donation', DonationSchema);

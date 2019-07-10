@@ -26,4 +26,30 @@ function insertDonation(departmentID, productID, donor, quantity, timestamp, rem
     });
 }
 
-module.exports = { insertDonation };
+function findAllDonationsByDepartmentId(departmentID){
+    return new Promise((resolve, reject) => {
+        Donation.find({
+            departmentID: departmentID
+        },
+        '-__v')
+        .populate({
+            path: 'productDetails',
+            select: '-__v'
+        })
+        .exec(function(err, donations){
+            if(!donations || donations.length==0){
+                reject({
+                    status: 404,
+                    response: "No donations found for this department"
+                });
+            }else{
+                resolve({
+                    status: 200,
+                    response: donations
+                });
+            }
+        });
+    });
+}
+
+module.exports = { insertDonation, findAllDonationsByDepartmentId };

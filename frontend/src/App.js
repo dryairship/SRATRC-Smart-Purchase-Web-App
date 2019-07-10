@@ -8,6 +8,7 @@ import Purchase from './components/purchase/purchase';
 import ChangePassword from './components/changePassword/changePassword'
 import DonationMain from './components/donation/donationMain';
 import MakeDonation from './components/donation/donation';
+import DonationHistory from './components/donation/donationHistory';
 import InventoryMainPage from './components/inventory/inventoryMain';
 import PaymentsMain from './components/payment/paymentMain';
 import MakePayment from './components/payment/payment_entry'
@@ -49,7 +50,7 @@ function App() {
           <Route path="/previousQuotations" component={PreviousQuotations} />
           <Route path="/donation" component={DonationMain} />
           <Route path="/makedonation" component={MakeDonation} />
-          <Route path="/donationhistory" component={HomePage} />
+          <Route path="/donationhistory" component={DonationHistory} />
           <Route path="/changePassword" component={ChangePassword} />
           <Route path="/purchase" component={Purchase} />
           <Route path="/profile" component={Profile} />
