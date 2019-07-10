@@ -59,7 +59,7 @@ export default function InventoryMainPage(props) {
               color="primary"
               size="large"
               className={classes.btn}
-              href="/paymentshistory"
+              href="/paymentsSummary"
           >          
               <Grid
               container
@@ -74,7 +74,7 @@ export default function InventoryMainPage(props) {
                 </Grid>
                 <Grid item>
                   <Typography component="h6" variant="h6">              
-                    Payment History
+                    Payments Summary
                   </Typography>
                 </Grid>
                 <Grid item>
@@ -92,7 +92,7 @@ export default function InventoryMainPage(props) {
               color="primary"
               size="large"
               className={classes.btn}
-              href="/previousquotations"
+              href="/previousQuotations"
           >          
               <Grid
               container

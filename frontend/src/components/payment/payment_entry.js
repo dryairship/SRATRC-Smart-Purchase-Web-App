@@ -10,7 +10,6 @@ import Container from '@material-ui/core/Container';
 import 'date-fns';
 import Paper from '@material-ui/core/Paper';
 import DateFnsUtils from '@date-io/date-fns';
-import Moment from 'moment';
 import OKAlert from '../common/ok-alert';
 import {
   MuiPickersUtilsProvider,

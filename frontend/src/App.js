@@ -10,13 +10,16 @@ import DonationMain from './components/donation/donationMain';
 import MakeDonation from './components/donation/donation';
 import InventoryMainPage from './components/inventory/inventoryMain';
 import PaymentsMain from './components/payment/paymentMain';
-import { Route, BrowserRouter as Router } from "react-router-dom";
+import MakePayment from './components/payment/payment_entry'
+import PaymentsSummary from './components/payment/payment';
 import PaymentsHistory from './components/payment/payment_history';
+import { Route, BrowserRouter as Router } from "react-router-dom";
 import SignIn from './components/signIn/signIn';
 import Logout from './components/logout/logout';
 import Profile from './components/profile/profile';
 import Transfer from './components/inventory/transfer';
 import CreateUser from './components/createUser/createUser';
+import PreviousQuotations from './components/payment/quotation';
 import Cookies from 'js-cookie';
 
 function App() {
@@ -40,8 +43,10 @@ function App() {
           <Route path="/departmentinventory" component={DepartmentInventory} />
           <Route path="/productinventory" component={ProductInventory} />
           <Route path="/payments" component={PaymentsMain} />
-          <Route path="/paymentshistory" component={PaymentsHistory} />
-          <Route path="/previousquotations" component={PaymentsMain} />
+          <Route path="/paymentsSummary" component={PaymentsSummary} />
+          <Route path="/makePayment/:id" component={MakePayment} />
+          <Route path="/paymentsHistory/:id" component={PaymentsHistory} />
+          <Route path="/previousQuotations" component={PreviousQuotations} />
           <Route path="/donation" component={DonationMain} />
           <Route path="/makedonation" component={MakeDonation} />
           <Route path="/donationhistory" component={HomePage} />

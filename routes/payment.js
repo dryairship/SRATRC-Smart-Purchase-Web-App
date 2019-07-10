@@ -9,7 +9,7 @@ router.use(validateUser);
 
 router.post('/:purchaseID', handlePayPost);
 router.get('/department/:departmentID', handlePaymentGetByDepartmentID);
-router.get('/id/:productID', handlePaymentGetByProductID);
+router.get('/product/:productID', handlePaymentGetByProductID);
 router.get('/id/:purchaseID', handlePaymentGetByPurchaseID);
 router.get('/vendor/:vendorID', handlePaymentGetByVendorID);
 router.get('/pending', handlePendingPayment);

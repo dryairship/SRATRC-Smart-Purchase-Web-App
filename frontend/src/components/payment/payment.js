@@ -102,7 +102,7 @@ export default function PaymentRecord() {
                     color="primary" 
                     className={classes.button} 
                     onClick={onPay} fullWidth
-                    href={"/payment_entry/"+row.purchase._id}
+                    href={"/makePayment/"+row.purchase._id}
                   >
                     Pay
                   </Button>
@@ -114,7 +114,7 @@ export default function PaymentRecord() {
                       color="primary" 
                       className={classes.button} 
                       fullWidth
-                      href={"/payment_history/"+row.purchase._id}
+                      href={"/paymentsHistory/"+row.purchase._id}
                     >
                     History
                   </Button>

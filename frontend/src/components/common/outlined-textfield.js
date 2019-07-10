@@ -70,6 +70,24 @@ export default function OutlinedTextField(props) {
   );
   }
   
+  if(props.valueSetter){
+  return (
+      <TextField
+        id={props.id}
+        type={props.password? 'password':'text'}
+        label={props.label}
+        className={classes.textField}
+        disabled={props.disabled}
+        value={props.value}
+        onChange={handleChange('name')}
+        margin="normal"
+        variant="outlined"
+        fullWidth
+        
+      />
+  );
+  }
+  
   return (
       <TextField
         id={props.id}

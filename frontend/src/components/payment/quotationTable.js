@@ -48,9 +48,10 @@ function getSorting(order, orderBy) {
 }
 
 const headRows = [
-  { id: 'name', numeric: false, disablePadding: false, label: 'Department Name' },
-  { id: 'quantity.value', numeric: true, disablePadding: false, label: 'Quantity' },
-  { id: 'quantity.unit', numeric: false, disablePadding: false, label: 'Unit' },
+  { id: 'department', numeric: false, disablePadding: false, label: 'Department Name' },
+  { id: 'vendor', numeric: false, disablePadding: false, label: 'Vendor Name' },
+  { id: 'rate', numeric: false, disablePadding: false, label: 'Rate' },
+  { id: 'quantity', numeric: false, disablePadding: false, label: 'Quantity' },
 ];
 
 function EnhancedTableHead(props) {
@@ -212,7 +213,7 @@ export default function ContentsTable(props) {
   haveFetchedCategories || fetchCategories();
   
   const fetchProductInInventory = (pID) => {
-    fetch('/inventory/product/'+pID)
+    fetch('/payment/product/'+pID)
     .then(list => {
       return list.json();
     }).then(data => {
@@ -270,7 +271,7 @@ export default function ContentsTable(props) {
       <Paper className={classes.paper}>
         <div>        
           <Typography variant="h6" id="tableTitle" className={classes.title}>
-            Inventory
+            Find Previous Quotations For A Product
           </Typography>
         </div>
         <Toolbar
@@ -304,10 +305,11 @@ export default function ContentsTable(props) {
                       key={row.name}
                     >                      
                       <TableCell component="th" scope="row" padding="default">
-                        {departments[row.departmentID]}
+                        {departments[row.purchase.departmentID]}
                       </TableCell>
-                      <TableCell align="right">{row.quantity.value}</TableCell>
-                      <TableCell>{row.quantity.unit}</TableCell>
+                      <TableCell>{row.vendor.name}</TableCell>
+                      <TableCell>{row.purchase.rate.value} per {row.purchase.rate.unit}</TableCell>
+                      <TableCell>{row.purchase.quantity.value} {row.purchase.quantity.unit}</TableCell>
                     </TableRow>
                   );
                 })
