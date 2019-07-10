@@ -231,13 +231,12 @@ export default function Checkout() {
               Checkout an Item
           </Typography>
           <form className={classes.form} noValidate >
-              <OutlinedTextField id="from_dept" label={departments[department]} disabled={true}/>
+              <OutlinedTextField id="from_dept" label="From Department" value={departments[department]} valueSetter={true} disabled={true}/>
               <DropDownSelect id="product-category" label="Product Category" items={fetchedCategories.categories} onValueChange={onChooseCategory} />
               <SuggestionSelect id="product-name" label="Product Name" category={state.category} items={selectedCategoryProducts.productsNameList} onValueChange={onChooseProductName} nonCreatable={true}/>
               <Quantity id="quantity" sendQuantity={getQuantity} Max={Max} unit={unit}/>
               <Button
                 onClick={submitForm}
-                fullWidth
                 variant="contained"
                 color="primary"
                 className={classes.submit}

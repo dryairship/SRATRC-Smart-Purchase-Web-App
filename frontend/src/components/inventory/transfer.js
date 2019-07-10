@@ -260,14 +260,13 @@ export default function Transfer() {
               Transfer an Item
           </Typography>
           <form className={classes.form} noValidate >
-              <OutlinedTextField id="from_dept" label={departments[department]} disabled={true}/>
+              <OutlinedTextField id="from_dept" label="From Department" value={departments[department]} valueSetter={true} disabled={true}/>
               <DropDownSelect id="product-category" label="Product Category" items={fetchedCategories.categories} onValueChange={onChooseCategory} />
               <SuggestionSelect id="product-name" label="Product Name" category={state.category} items={selectedCategoryProducts.productsNameList} onValueChange={onChooseProductName} nonCreatable={true}/>
               <Quantity id="quantity" sendQuantity={getQuantity} Max={Max} unit={unit}/>
               <DropDownSelect id="to_dept" label="To Department" items={fetchedDepts.departments} onValueChange={onChooseToDept}/>
               <Button
                 onClick={submitForm}
-                fullWidth
                 variant="contained"
                 color="primary"
                 className={classes.submit}

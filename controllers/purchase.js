@@ -30,7 +30,7 @@ function handlePurchasePost(req, res) {
         return insertPayment(purchaseID, vendorID, departmentID, productID, amount);
     })
     .then(result => {
-        updateInventoryItem(productID, departmentID, quantity.value)
+        updateInventoryItem(productID, departmentID, quantity, 1)
         .then(result => {
             res.status(result.status).json(result.response);
             return result;

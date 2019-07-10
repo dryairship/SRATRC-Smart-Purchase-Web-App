@@ -21,7 +21,7 @@ function handleDonationPost(req, res) {
             res.status(donationResult.status).json(donationResult.response);
             return;
         }
-        updateInventoryItem(productID, departmentID, quantity.value)
+        updateInventoryItem(productID, departmentID, quantity, 1)
         .then(result => {
             res.status(donationResult.status).json(donationResult.response);
             return;
