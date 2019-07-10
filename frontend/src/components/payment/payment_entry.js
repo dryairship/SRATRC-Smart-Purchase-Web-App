@@ -11,6 +11,7 @@ import 'date-fns';
 import Paper from '@material-ui/core/Paper';
 import DateFnsUtils from '@date-io/date-fns';
 import OKAlert from '../common/ok-alert';
+import OutlinedTextField from '../common/outlined-textfield';
 import {
   MuiPickersUtilsProvider,
   KeyboardTimePicker,
@@ -69,8 +70,8 @@ export default function PaymentForm(props) {
     console.log(props.match.params.id);
     return new Promise((resolve, reject) => {
       var installment = {
+        timestamp: selectedDate,
         amount: parseInt(document.getElementById('amount').value),
-        paidBy: document.getElementById('paidBy').value,
         remarks: document.getElementById('remarks').value,
       };
       console.log(installment);
@@ -115,7 +116,7 @@ export default function PaymentForm(props) {
           Add Payment Details
         </Typography>
         <form className={classes.form} noValidate onSubmit={submitForm}>
-          <TextField
+          <OutlinedTextField
             fullWidth
             margin="normal"
             required
@@ -149,16 +150,7 @@ export default function PaymentForm(props) {
             }}
           />
           </MuiPickersUtilsProvider>
-          <TextField
-            fullWidth
-            margin="normal"
-            required
-            className={classes.amountClass}
-            name="paidBy"
-            label="paidBy"
-            id="paidBy"
-          />
-          <TextField
+          <OutlinedTextField
             fullWidth
             margin="normal"
             required
