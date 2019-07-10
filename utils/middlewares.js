@@ -40,7 +40,7 @@ const checkUserFromParams = function checkUserFromParams(req, res, next) {
 };
 
 const verifyDepartmentAfterValidation = function verifyDepartmentAfterValidation(req, res, next) {
-    if(user.department == req.params.departmentID)
+    if(req.user.department == req.params.departmentID)
         next();
     else
         res.status(403).json("This user cannot access this resource");

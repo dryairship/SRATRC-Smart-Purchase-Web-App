@@ -228,30 +228,31 @@ export default function Purchase() {
   };
 
   const onChooseProductName = chosenProduct => {
-    if(chosenProduct.__isNew__){
-      setState({
-        ...state,
-        product: {
-          id: 'new',
-          name: chosenProduct.label,
-          description: '',
-        },
-        isNewProduct: true,
-      });
-      document.getElementById("product-description").value = "";
-    }else{
-      var desc = productsList.filter(pItem => {return pItem._id==chosenProduct.value})[0].description;
-      setState({
-        ...state,
-        product: {
-          id: chosenProduct.value,
-          name: chosenProduct.label,
-          description: "",
-        },
-        isNewProduct: false,
-      });
-      document.getElementById("product-description").value = desc;
-    }
+    
+      if(chosenProduct.__isNew__){
+        setState({
+          ...state,
+          product: {
+            id: 'new',
+            name: chosenProduct.label,
+            description: '',
+          },
+          isNewProduct: true,
+        });
+        document.getElementById("product-description").value = "";
+      }else{
+        var desc = productsList.filter(pItem => {return pItem._id==chosenProduct.value})[0].description;
+        setState({
+          ...state,
+          product: {
+            id: chosenProduct.value,
+            name: chosenProduct.label,
+            description: "",
+          },
+          isNewProduct: false,
+        });
+        document.getElementById("product-description").value = desc;
+      }
   }
 
   const onChooseVendorName = chosenVendor => {

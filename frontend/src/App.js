@@ -19,6 +19,7 @@ import SignIn from './components/signIn/signIn';
 import Logout from './components/logout/logout';
 import Profile from './components/profile/profile';
 import Transfer from './components/inventory/transfer';
+import Checkout from './components/inventory/checkout';
 import CreateUser from './components/createUser/createUser';
 import PreviousQuotations from './components/payment/quotation';
 import Cookies from 'js-cookie';
@@ -57,6 +58,7 @@ function App() {
           <Route path="/addUser" component={CreateUser} />
           <Route path="/transfer" component={Transfer} />
           <Route path="/logout" component={Logout} />
+          <Route path="/checkout" component={Checkout}/>
         </div>
       </Router>
     );

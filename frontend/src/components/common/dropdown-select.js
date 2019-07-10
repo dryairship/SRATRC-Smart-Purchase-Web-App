@@ -82,7 +82,7 @@ export default function ProductCategory(props) {
           }
         >
             <option value="" disabled={true}></option>
-            {props.items.map(item => <option key={item.value} value={item.value}>{item.label}</option>)}
+            {props.items.map(item => <option key={item.value} value={item.value} selected={item.value==props.defaultValue}>{item.label}</option>)}
         </Select>
         
         <div className={classes.divider} />

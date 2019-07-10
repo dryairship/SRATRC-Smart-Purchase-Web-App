@@ -6,6 +6,7 @@ import Slider from '@material-ui/core/Slider';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import DropDownSelect from '../common/dropdown-select.js';
+import OutlinedTextField from '../common/outlined-textfield.js';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -77,7 +78,7 @@ export default function Quantity(props) {
                 error={quantityState > 0 ? false : true}
                 helperText={quantityState > 0 ? "" : '*Must be greater than 0'}
         /></Grid>
-        <Grid item xs={2} sm={4}><DropDownSelect  id="units" label="units" items={units} onValueChange={onChooseUnit}/></Grid>
+        <Grid item xs={2} sm={4}><OutlinedTextField  id="units" label={props.unit} onValueChange={onChooseUnit}/></Grid>
     </Grid>
       <Slider
         id="slider-id"

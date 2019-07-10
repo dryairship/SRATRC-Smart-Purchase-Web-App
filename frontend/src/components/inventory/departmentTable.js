@@ -158,7 +158,7 @@ export default function ContentsTable() {
   const classes1 = useToolbarStyles();
   const userdept = sessionStorage.getItem('department');
   // const [value, setValue] = React.useState(userdept);
-  const [value, setValue] = React.useState('srec');
+  const [value, setValue] = React.useState(sessionStorage.getItem('department'));
   
   // const [rows, setRows] = React.useState([]);
   
@@ -234,7 +234,7 @@ export default function ContentsTable() {
           className={classes1.root}
         >
           <div className={classes1.actions}>
-            <DropDownSelect id="inventory-department" label="Department" items={depts && depts.items ?depts.items:[]} onValueChange={handleDepartmentChange} defaultValue={userdept}/>
+            <DropDownSelect id="inventory-department" label="Department" items={depts && depts.items ?depts.items:[]} onValueChange={handleDepartmentChange} defaultValue={value}/>
           </div>
         </Toolbar>
         <div className={classes.tableWrapper}>
