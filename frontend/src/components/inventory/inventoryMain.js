@@ -4,7 +4,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { Grid, Avatar, Typography } from '@material-ui/core';
-import { ShoppingBasketOutlined, DomainOutlined } from '@material-ui/icons';
+import { ShoppingBasketOutlined, DomainOutlined, CompareArrowsOutlined } from '@material-ui/icons';
 
 const useStyles = makeStyles(theme => ({
   '@global': {
@@ -13,7 +13,7 @@ const useStyles = makeStyles(theme => ({
     },
   },
   paper: {
-    marginTop: theme.spacing(8),
+    marginTop: theme.spacing(4),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -113,6 +113,40 @@ export default function InventoryMainPage(props) {
                 <Grid item>
                   <Typography align='center' className={classes.description}>              
                     Lists all departments containing a product
+                  </Typography>
+                </Grid>
+              </Grid>                                    
+          </Button>
+          </Grid>
+          <Grid item xs={3} />
+          <Grid item xs={6}>
+            <Button
+              fullWidth
+              variant="contained"
+              color="primary"
+              size="large"
+              className={classes.btn}
+              href="/productinventory"
+          >          
+              <Grid
+              container
+              direction="column"
+              justify="center"
+              alignItems="center"
+              >
+                <Grid item>
+                  <Avatar className={classes.avatar}>
+                  <CompareArrowsOutlined fontSize='inherit'/>
+                </Avatar>
+                </Grid>
+                <Grid item>
+                  <Typography component="h6" variant="h6">              
+                    Transfer
+                  </Typography>
+                </Grid>
+                <Grid item>
+                  <Typography align='center' className={classes.description}>              
+                    Transfer products from your department to another
                   </Typography>
                 </Grid>
               </Grid>                                    

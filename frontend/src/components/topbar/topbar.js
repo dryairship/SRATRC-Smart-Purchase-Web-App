@@ -96,6 +96,9 @@ function MenuAppBar(props) {
                 <NavLink to="/profile" className={classes.link}>
                   <MenuItem>Profile</MenuItem>
                 </NavLink>
+                <NavLink to="/changePassword" className={classes.link}>
+                  <MenuItem>Change Password</MenuItem>
+                </NavLink>
                 <NavLink to="/logout" className={classes.link}>
                   <MenuItem>Log Out</MenuItem>
                 </NavLink>
