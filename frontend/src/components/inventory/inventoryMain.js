@@ -126,7 +126,7 @@ export default function InventoryMainPage(props) {
               color="primary"
               size="large"
               className={classes.btn}
-              href="/productinventory"
+              href="/transfer"
           >          
               <Grid
               container
