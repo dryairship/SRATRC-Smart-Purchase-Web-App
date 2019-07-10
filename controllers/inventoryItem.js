@@ -7,13 +7,23 @@ function handleInventoryItemPost(req, res) {
             value : req.body.quantity,
             unit : req.body.unit
         };
-    
-    insertInventoryItem(productID, departmentID, quantity)
+        
+    updateInventoryItem(productID, departmentID, quantity, 1)
     .then(result => {
         res.status(result.status).json(result.response);
     })
     .catch(error => {
-        res.status(error.status).json(error.response);
+        if(error.status==404){
+            insertInventoryItem(productID, departmentID, quantity)
+            .then(result => {
+                res.status(result.status).json(result.response);
+            })
+            .catch(error => {
+                res.status(error.status).json(error.response);
+            })
+        }else{
+             res.status(error.status).json(error.response);
+        }
     });
 }
 
@@ -37,7 +47,7 @@ function handleInventoryItemPatch(req, res) {
         return;
     }
 
-    updateInventoryItem(req.params.productID, req.params.departmentID, quantity, -1)
+    updateInventoryItem(req.params.productID, req.params.departmentID, quantity, 1)
     .then(result => {
         res.status(result.status).json(result.response);
     })
