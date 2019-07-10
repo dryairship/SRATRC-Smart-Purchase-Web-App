@@ -28,13 +28,16 @@ function handleInventoryItemGetById(req, res) {
 }
 
 function handleInventoryItemPatch(req, res) {
-    var value;
-    if(req.body.value)
-        value = req.body.value;
-    else
+    var quantity = {};
+    if(req.body.qValue && req.body.unit){
+        quantity.value = req.body.qValue;
+        quantity.unit = req.body.unit;
+    }else{
         res.status(400).json('No Change');
-    
-    updateInventoryItem(req.params.productID, req.params.departmentID, value)
+        return;
+    }
+
+    updateInventoryItem(req.params.productID, req.params.departmentID, quantity, -1)
     .then(result => {
         res.status(result.status).json(result.response);
     })

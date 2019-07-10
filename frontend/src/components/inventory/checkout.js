@@ -10,6 +10,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Quantity from './Quantity';
 import DropDownSelect from '../common/dropdown-select.js';
 import SwapHorizIcon from '@material-ui/icons/SwapHoriz';
+import Unarchive from '@material-ui/icons/Unarchive';
 import SuggestionSelect from '../common/suggestion-select';
 
 import OKAlert from '../common/ok-alert';
@@ -50,13 +51,10 @@ var productsList = [];
 
 var haveFetchedCategories = false;
 var haveFetchedProducts = false;
-var haveFetchedDepts = false;
 var haveFetchedDepartment = false;
 var productIsAvailable = false;
 
-
-
-export default function Transfer() {
+export default function Checkout() {
 
     const classes = useStyles();
     const [state, setState] = React.useState({
@@ -74,24 +72,16 @@ export default function Transfer() {
       if(inputLabel.current) setLabelWidth(inputLabel.current.offsetWidth);
     }, []);
 
-    const handleChange = name => event => {
-      setState({
-        ...state,
-        [name]: event.target.value,
-      });
-    };
 
     const [fetchedCategories, setFetchedCategories] = React.useState({categories: []});
     const [selectedCategoryProducts, setSelectedCategoryProducts] = React.useState({productsNameList: [], productsValueList: []});
-    const [fetchedDepts, setFetchDepts] = React.useState({departments: []});
     const [quantity , setQuantity] = React.useState(1);
-    const [toDept, setToDept] = React.useState('');
     const [unit, setUnit] = React.useState('');
     const [Max, setMax] = React.useState(100);
     const [alertState, setAlertState] = React.useState({show: false, message:'', title:''});
     const [departments, setDepartments] = React.useState({});
+    const [checkoutState, setCheckoutState] = React.useState(false);
     const department = sessionStorage.getItem('department');
-    const [transferState, setTransferState] = React.useState(false);
 
     const fetchCategories = () => {
       fetch('/list/categories')
@@ -116,36 +106,23 @@ export default function Transfer() {
     }
 
     const fetchDepartments = () => {
-      fetch('/list/departments')
-      .then(list => {
-        return list.json();
-      }).then(data => {
-        setFetchDepts({
-          departments: data.items.filter(item => {return item.value!==sessionStorage.getItem('department')}),
+        haveFetchedDepartment = true;
+        fetch('/list/departments')
+        .then(list => {
+          return list.json();      
+        }).then(data => {
+          data.items.unshift({value:'', label:''});
+          var depts = data.items.reduce((map, dItem) => {
+            map[dItem.value] = dItem.label;
+            return map;
+          });
+          setDepartments(depts);
         });
-        haveFetchedDepts = true
-      });
-    }
-
-    const fetchDepartment = () => {
-      haveFetchedDepartment = true;
-      fetch('/list/departments')
-      .then(list => {
-        return list.json();      
-      }).then(data => {
-        data.items.unshift({value:'', label:''});
-        var depts = data.items.reduce((map, dItem) => {
-          map[dItem.value] = dItem.label;
-          return map;
-        });
-        setDepartments(depts);
-      });
-    }
+      }
 
     haveFetchedCategories || fetchCategories();
     haveFetchedProducts || fetchProducts();
-    haveFetchedDepts || fetchDepartments();
-    haveFetchedDepartment || fetchDepartment();
+    haveFetchedDepartment || fetchDepartments();
 
     const onChooseCategory = chosenCategory => {
         setState({
@@ -191,29 +168,24 @@ export default function Transfer() {
           }}   
     }
 
-    const onChooseToDept = chosenDept => {
-      setToDept(chosenDept);
-    }
-
     const getQuantity = quantityFromChild => {
       setQuantity(quantityFromChild.value);
     }
 
     const transferItem = () => {
       return new Promise((resolve, reject) => {
-        var transferIt = {
+        var checkout = {
           productID: state.product.id,
-          fromDepartmentID: department,
-          toDepartmentID: toDept,
+          departmentID: department,
           qValue: quantity,
           unit: unit,
         };
-        fetch('/inventory/transfer',{
+        fetch('/inventory/' + department + '/' + state.product.id,{
           method: 'PATCH',
-          body: JSON.stringify(transferIt),
+          body: JSON.stringify(checkout),
           headers:{'Content-Type': 'application/json'}
         })
-        .then(res => {console.log(transferIt);res.json();})
+        .then(res => {console.log(checkout);res.json();})
         .then(response => {resolve(response);})
         .catch(error => {reject(error);});
       })
@@ -222,21 +194,20 @@ export default function Transfer() {
     const submitForm = () => {
       transferItem()
       .then(result => {
-        console.log(result);
         setAlertState({
           show: true,
           message: result, 
-          title: "Transfer successful",
+          title: "Checkout successful",
         });
-        setTransferState(true);
+        setCheckoutState(true);
       })
       .catch(error => {
         setAlertState({
           show: true,
           message: error,
-          title: "Transfer failed",
+          title: "Checkout failed",
         });
-        setTransferState(true);
+        setCheckoutState(false);
       })
     }
 
@@ -246,7 +217,7 @@ export default function Transfer() {
         message: "",
         title: "",
       });
-      if(transferState) window.location.href = '/departmentinventory';
+      if(checkoutState) window.location.href = '/departmentinventory';
     }
   
     return (
@@ -254,17 +225,16 @@ export default function Transfer() {
       <CssBaseline />
         <div className={classes.paper} id="purchase-div">
           <Avatar className={classes.avatar}>
-              <SwapHorizIcon />
+              <Unarchive />
           </Avatar>
           <Typography component="h1" variant="h5">
-              Transfer an Item
+              Checkout an Item
           </Typography>
           <form className={classes.form} noValidate >
               <OutlinedTextField id="from_dept" label={departments[department]} disabled={true}/>
               <DropDownSelect id="product-category" label="Product Category" items={fetchedCategories.categories} onValueChange={onChooseCategory} />
               <SuggestionSelect id="product-name" label="Product Name" category={state.category} items={selectedCategoryProducts.productsNameList} onValueChange={onChooseProductName} nonCreatable={true}/>
               <Quantity id="quantity" sendQuantity={getQuantity} Max={Max} unit={unit}/>
-              <DropDownSelect id="to_dept" label="To Department" items={fetchedDepts.departments} onValueChange={onChooseToDept}/>
               <Button
                 onClick={submitForm}
                 fullWidth
@@ -272,7 +242,7 @@ export default function Transfer() {
                 color="primary"
                 className={classes.submit}
               >
-            Confirm Transfer
+            Confirm Checkout
           </Button>
           </form>
         </div>
