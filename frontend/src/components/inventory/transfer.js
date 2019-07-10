@@ -177,7 +177,8 @@ export default function Transfer() {
     }
 
     const getQuantity = quantityFromChild => {
-      setQuantity(quantityFromChild);
+      setQuantity(quantityFromChild.value);
+      setUnit(quantityFromChild.unit);
     }
 
     const transferItem = () => {
@@ -186,7 +187,8 @@ export default function Transfer() {
           productID: state.product.id,
           fromDepartmentID: department,
           toDepartmentID: toDept,
-          value: quantity,
+          qValue: quantity,
+          unit: unit
         };
         fetch('/inventory/transfer',{
           method: 'PATCH',

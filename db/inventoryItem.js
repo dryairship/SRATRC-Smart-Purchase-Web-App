@@ -70,7 +70,7 @@ function deleteInventoryItem(productID, departmentID){
     });
 }
 
-function updateInventoryItem(productID, departmentID, value){
+function updateInventoryItem(productID, departmentID, quantity, multiplier){
     return new Promise((resolve, reject) => {
         InventoryItem.updateOne({
             productID: productID,
@@ -78,7 +78,7 @@ function updateInventoryItem(productID, departmentID, value){
         },
         {
             $inc: {
-                'quantity.value' :  value
+                'quantity.value' :  multiplier*quantity.value
             }
         },
         function(err, result){
@@ -129,7 +129,7 @@ function findAllInventoryItemsByProductId(productID){
     });
 }
 
-function transferInventoryItem(productID, fromDepartmentID, toDepartmentID, value){
+function transferInventoryItem(productID, fromDepartmentID, toDepartmentID, quantity){
     return new Promise((resolve, reject) => {
         InventoryItem.findOne({
             productID: productID,
@@ -139,20 +139,20 @@ function transferInventoryItem(productID, fromDepartmentID, toDepartmentID, valu
         function(err, inventoryItem){
             if(err || !inventoryItem)
                 reject({
-                    status: 404,
+                    status: 400,
                     response: "Item not found in inventory"
                 });
-            else if(inventoryItem.quantity.value < value)
+            else if(inventoryItem.quantity.value < quantity.value)
                 reject({
                     status: 400,
                     response: "Not sufficient amount in inventory"
                 });
         })
         .then(() => {
-            return updateInventoryItem(productID, fromDepartmentID, -value);
+            return updateInventoryItem(productID, fromDepartmentID, quantity, -1);
         })
         .then(() => {
-            return updateInventoryItem(productID, toDepartmentID, value);
+            return updateInventoryItem(productID, toDepartmentID, quantity, 1);
         })
         .then(() => {
             resolve({
@@ -160,11 +160,27 @@ function transferInventoryItem(productID, fromDepartmentID, toDepartmentID, valu
                 response: "Successful transfer"
             });
         })
-        .catch(() => {
-            reject({
-                status: 500,
-                response: "Update not successful"
-            });
+        .catch(error => {
+            if(error.status && error.status==404){
+                insertInventoryItem(productID, toDepartmentID, quantity)
+                .then(() => {
+                    resolve({
+                        status: 202,
+                        response: "Successful transfer"
+                    });
+                })
+                .catch(error => {
+                    reject({
+                        status: 500,
+                        response: "Transfer not successful"
+                    });
+                });
+            }else{
+                reject({
+                    status: 500,
+                    response: "Transfer not successful"
+                });
+            }
         });
     });
 }

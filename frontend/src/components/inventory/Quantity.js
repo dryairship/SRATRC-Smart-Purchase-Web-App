@@ -49,17 +49,18 @@ export default function Quantity(props) {
   const [unit, setUnit] = React.useState('');
 
   const onChooseUnit = chosenUnit => {
-    setUnit(chosenUnit)
+    setUnit(chosenUnit);
+    props.sendQuantity({value:quantityState, unit:chosenUnit});
   }
   const onTextFldChange = (e) => {
       if(e.target.value > max)   setQuantityState(max);   
       else setQuantityState(e.target.value);
-      props.sendQuantity(e.target.value);   
+      props.sendQuantity({value:e.target.value, unit:unit});
     }
 
   const handleSliderChange = (e, newValue) => {
     setQuantityState(newValue);
-    props.sendQuantity(newValue);
+    props.sendQuantity({value:newValue, unit:unit});
   }
 
   return (

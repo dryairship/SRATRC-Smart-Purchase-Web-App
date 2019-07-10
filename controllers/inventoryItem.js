@@ -75,13 +75,16 @@ function handleInventoryItemGetByDepartmentId(req, res) {
 }
 
 function handleTransferInventoryItem(req, res){
-    var value;
-    if(req.body.value)
-        value = req.body.value;
-    else
+    var quantity = {};
+    if(req.body.qValue && req.body.unit){
+        quantity.value = req.body.qValue;
+        quantity.unit = req.body.unit;
+    }else{
         res.status(400).json('No Change');
+        return;
+    }
     
-    transferInventoryItem(req.body.productID, req.user.department, req.body.toDepartmentID, value)
+    transferInventoryItem(req.body.productID, req.user.department, req.body.toDepartmentID, quantity)
     .then(result => {
         res.status(result.status).json(result.response);
     })
