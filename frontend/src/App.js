@@ -20,6 +20,7 @@ import Logout from './components/logout/logout';
 import Profile from './components/profile/profile';
 import Transfer from './components/inventory/transfer';
 import Checkout from './components/inventory/checkout';
+import AddStock from './components/inventory/add-stock';
 import CreateUser from './components/createUser/createUser';
 import PreviousQuotations from './components/payment/quotation';
 import Cookies from 'js-cookie';
@@ -39,7 +40,7 @@ function App() {
     return (
       <Router>
         <div className="App">
-          <MenuAppBar loggedIn={loggedIn} />
+          <MenuAppBar/>
           <Route exact path="/" component={HomePage} />
           <Route path="/inventory" component={InventoryMainPage} />
           <Route path="/departmentinventory" component={DepartmentInventory} />
@@ -57,6 +58,7 @@ function App() {
           <Route path="/profile" component={Profile} />
           <Route path="/addUser" component={CreateUser} />
           <Route path="/transfer" component={Transfer} />
+          <Route path="/addStock" component={AddStock} />
           <Route path="/logout" component={Logout} />
           <Route path="/checkout" component={Checkout}/>
         </div>
@@ -66,6 +68,7 @@ function App() {
     return (
       <Router>
         <div className="App">
+          <MenuAppBar/>
           <SignIn onLogin={loginSuccessful}/>
         </div>
       </Router>

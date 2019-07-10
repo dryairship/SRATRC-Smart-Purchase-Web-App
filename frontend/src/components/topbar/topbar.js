@@ -10,6 +10,7 @@ import Menu from '@material-ui/core/Menu';
 import SideDrawer from '../sideDrawer/sideDrawer';
 import { NavLink } from "react-router-dom";
 import { ListItem } from '@material-ui/core';
+import Cookies from 'js-cookie';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -43,6 +44,10 @@ function MenuAppBar(props) {
     setAnchorElright(event.currentTarget);
   }
 
+  if(!loggedIn && Cookies.get('sessionID')){
+    setLoggedIn(true);
+  }
+  
   function handleCloseright() {
     setAnchorElright(null);
     // setLoggedIn(!loggedIn);
@@ -65,7 +70,7 @@ function MenuAppBar(props) {
             </div>            
           <Typography variant="h6" className={classes.title}>
             <NavLink to="/" className={classes.link}>
-              SRATRC
+              Centralized Inventory and Purchasing
             </NavLink>
           </Typography>          
             <div>
@@ -114,7 +119,7 @@ function MenuAppBar(props) {
       <AppBar position="static" color="primary">
         <Toolbar>         
           <Typography variant="h6" className={classes.title}>            
-              SRATRC            
+              Centralized Inventory and Purchasing
           </Typography> 
         </Toolbar>
       </AppBar>
