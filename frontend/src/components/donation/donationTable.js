@@ -184,9 +184,9 @@ export default function ContentsTable() {
   function formatTimestamp(timestamp) {
     
     var date = new Date(timestamp);
-    return date.getDate() + '/' +  month[date.getMonth()] + '/' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes();
-
+    return date.toLocaleString();
   }
+  
   function handleDepartmentChange(chosenDepartment) {
       setValue(chosenDepartment);
       fetchDonations(chosenDepartment);
