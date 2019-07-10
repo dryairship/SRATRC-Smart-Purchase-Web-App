@@ -56,8 +56,9 @@ function getSorting(order, orderBy) {
 const headRows = [
   { id: 'product.name', numeric: false, disablePadding: false, label: 'Product' },
   { id: 'vendor.name', numeric: false, disablePadding: false, label: 'Vendor' },
-  { id: 'item', numeric: true, disablePadding: false, label: 'Quantity' },
-  { id: 'purchase.quantity', numeric: true, disablePadding: false, label: 'Total Amount' },
+  { id: 'purchase.timestamp', numeric: true, disablePadding: false, label: 'Date & Time' },
+  { id: 'purchase.quantity.value', numeric: true, disablePadding: false, label: 'Quantity' },
+  { id: 'purchase.totalAmount', numeric: true, disablePadding: false, label: 'Total Amount' },
   { id: 'amountRemaining', numeric: true, disablePadding: false, label: 'Pending Amount' },
   { id: 'Pay', numeric: false, disablePadding: false, label: 'Pay' },
   { id: 'History', numeric: false, disablePadding: false, label: 'View History' }, 
@@ -214,7 +215,7 @@ export default function ContentsTable() {
   
 
   return (    
-    <Container component="main" maxWidth="md">
+    <Container component="main">
       <Paper className={classes.paper}>
         <div>        
           <Typography variant="h6" id="tableTitle" className={classes.title}>
@@ -236,7 +237,6 @@ export default function ContentsTable() {
               {stableSort(fetchedPayments.payments, getSorting(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
-                  
                   return (
                     <TableRow
                       hover                      
@@ -245,6 +245,7 @@ export default function ContentsTable() {
                     >                   
                       <TableCell component="th" scope="row" padding="default">{row.product.name}</TableCell>
                       <TableCell align="left">{row.vendor.name}</TableCell>
+                      <TableCell align="right">{(new Date(row.purchase.timestamp).toLocaleString())}</TableCell>
                       <TableCell align="right">{row.purchase.quantity.value}</TableCell>
                       <TableCell align="right">{row.purchase.totalAmount}</TableCell> 
                       <TableCell align="right">{row.amountRemaining}</TableCell>
@@ -253,6 +254,7 @@ export default function ContentsTable() {
                           variant="contained" 
                           value={row.product} 
                           color="primary" 
+                          disabled={row.amountRemaining==0}
                           className={classes.button} 
                           onClick={onPay} fullWidth
                           href={"/makePayment/"+row.purchase._id}
@@ -265,7 +267,8 @@ export default function ContentsTable() {
                               variant="contained"
                               value={row.purchase._id}
                               color="primary" 
-                              className={classes.button} 
+                              className={classes.button}
+                              disabled={row.installments.length==0}
                               fullWidth
                               href={"/paymentsHistory/"+row.purchase._id}
                             >
