@@ -1,4 +1,5 @@
 const InventoryItem = require('../models/inventoryItem.js');
+const { addQuantities } = require('../utils/units.js');
 
 function insertInventoryItem(productID, departmentID, quantity){
     return new Promise((resolve, reject) => {
@@ -70,38 +71,48 @@ function deleteInventoryItem(productID, departmentID){
     });
 }
 
-function updateInventoryItem(productID, departmentID, quantity, multiplier){
+function updateInventoryItem(productID, departmentID, deltaQuantity, multiplier){
     return new Promise((resolve, reject) => {
-        InventoryItem.updateOne({
+        InventoryItem.findOne({
             productID: productID,
             departmentID: departmentID
         },
-        {
-            $inc: {
-                'quantity.value' :  multiplier*quantity.value
-            }
-        },
-        function(err, result){
-            if(err)
+        function(err, item){
+            if(err){
                 reject({
                     status: 500,
                     response: "A server error occurred"
                 });
-            else if(result.n == 0)
+                return;
+            }else if(!item){
                 reject({
                     status: 404,
-                    response: "Inventory Item not found"
+                    response: "Inventory item not found"
                 });
-            else if(result.nModified == 0)
-                resolve({
-                    status: 200,
-                    response: "Inventory Item was already up-to-date"
+                return;
+            }
+            var originalQuantity = item.quantity;
+            deltaQuantity.value *= multiplier;
+            addQuantities(originalQuantity, deltaQuantity)
+            .then(resultantQuantity => {
+                item.quantity = resultantQuantity;
+                item.save((err, result) => {
+                    if(err || !result){
+                        reject({
+                            status: 400,
+                            response: "Cannot update inventory"
+                        })
+                    }else{
+                        resolve({
+                            status: 202,
+                            response: "Inventory successfully updated"
+                        });
+                    }
                 });
-            else
-                resolve({
-                    status: 202,
-                    response: "Inventory Item successfully updated"
-                });
+            })
+            .catch(err => {
+                reject(err);
+            })
         });
     });
 }
