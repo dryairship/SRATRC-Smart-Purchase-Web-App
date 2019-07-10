@@ -7,6 +7,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import { NavLink } from "react-router-dom";
+import { ExpansionPanel, ExpansionPanelSummary, ExpansionPanelDetails, Typography, Divider } from '@material-ui/core';
 
 const useStyles = makeStyles({
   list: {
@@ -16,6 +17,14 @@ const useStyles = makeStyles({
     width: 'auto',
   },
   link: {
+    textDecoration: 'none',
+    color: 'inherit',
+  },
+  details: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  detailChild: {
     textDecoration: 'none',
     color: 'inherit',
   }
@@ -39,51 +48,116 @@ export default function SideDrawer(props) {
     <div
       className={classes.list}
       role="presentation"
-      onClick={toggleDrawer(side, false)}
+      onClick={toggleDrawer(side, true)}
       onKeyDown={toggleDrawer(side, false)}
     >
       <List>
-            <NavLink to="/" className={classes.link}>
-              <ListItem 
-              button key="Home"
-              autoFocus="true"
-              divider="true"
-              >
-                <ListItemText primary="Home"/>
-              </ListItem>
-            </NavLink>
-            <NavLink to="/inventory" className={classes.link}>
-              <ListItem 
-              button key="inventory"
-              autoFocus="true"
-              >
-                <ListItemText primary="Inventory"/>
-              </ListItem>
-            </NavLink>
-            <NavLink to="/payments" className={classes.link}>
-              <ListItem 
-              button key="payments"
-              autoFocus="true"
-              >
-                <ListItemText primary="Payments"/>
-              </ListItem>
-            </NavLink>
-            <NavLink to="/purchase" className={classes.link}>
-              <ListItem 
-              button key="purchase"
-              autoFocus="true"
-              >
-                <ListItemText primary="Purchase"/>
-              </ListItem>
-            </NavLink>          
-            <NavLink to="/donation" className={classes.link}>
-              <ListItem 
-              button key="donation"
-              autoFocus="true"
-              >
-                <ListItemText primary="Donation"/>
-              </ListItem>
-            </NavLink>
+            <ExpansionPanel>
+              <ExpansionPanelSummary>
+                <NavLink to="/" className={classes.link}>
+                  <Typography>
+                    Home
+                  </Typography>
+                </NavLink>                   
+              </ExpansionPanelSummary>
+            </ExpansionPanel>
+
+            <ExpansionPanel>
+              <ExpansionPanelSummary>
+                <NavLink to="/inventory" className={classes.link}>
+                  <Typography>
+                    Inventory
+                  </Typography>
+                </NavLink>                   
+              </ExpansionPanelSummary>
+              <Divider />
+              <ExpansionPanelDetails className={classes.details}>                
+                <NavLink to="/departmentinventory" className={classes.link}>
+                  <ListItem 
+                  divider 
+                  button key="departmentinventory"
+                  autoFocus="true">
+                    Department Inventory
+                  </ListItem>
+                </NavLink>
+                <NavLink to="/productinventory" className={classes.detailChild}>
+                  <ListItem
+                  divider 
+                  button key="departmentinventory"
+                  autoFocus="true">
+                    Product Inventory
+                  </ListItem>
+                </NavLink>
+              </ExpansionPanelDetails>
+            </ExpansionPanel>
+            
+            <ExpansionPanel>
+              <ExpansionPanelSummary>
+                <NavLink to="/payments" className={classes.link}>
+                  <Typography>
+                    Payments
+                  </Typography>
+                </NavLink>                   
+              </ExpansionPanelSummary>
+              <Divider />
+              <ExpansionPanelDetails className={classes.details}>                
+                <NavLink to="/paymentsSummary" className={classes.link}>
+                  <ListItem 
+                  divider 
+                  button key="paymentsSummary"
+                  autoFocus="true">
+                    Payments Summary
+                  </ListItem>
+                </NavLink>
+                <NavLink to="/previousQuotations" className={classes.detailChild}>
+                  <ListItem
+                  divider 
+                  button key="previousQuotations"
+                  autoFocus="true">
+                    Previous Quotations
+                  </ListItem>
+                </NavLink>
+              </ExpansionPanelDetails>
+            </ExpansionPanel>
+
+            <ExpansionPanel>
+              <ExpansionPanelSummary>
+                <NavLink to="/purchase" className={classes.link}>
+                  <Typography>
+                    Purchase
+                  </Typography>
+                </NavLink>                   
+              </ExpansionPanelSummary>
+            </ExpansionPanel>
+
+            <ExpansionPanel>
+              <ExpansionPanelSummary>
+                <NavLink to="/donation" className={classes.link}>
+                  <Typography>
+                    Donation
+                  </Typography>
+                </NavLink>                   
+              </ExpansionPanelSummary>
+              <Divider />
+              <ExpansionPanelDetails className={classes.details}>                
+                <NavLink to="/makedonation" className={classes.link}>
+                  <ListItem 
+                  divider 
+                  button key="makedonation"
+                  autoFocus="true">
+                    Make Donation
+                  </ListItem>
+                </NavLink>
+                <NavLink to="/donationhistory" className={classes.detailChild}>
+                  <ListItem
+                  divider 
+                  button key="donationhistory"
+                  autoFocus="true">
+                    Donation History
+                  </ListItem>
+                </NavLink>
+              </ExpansionPanelDetails>
+            </ExpansionPanel>
       </List>
     </div>
   );
