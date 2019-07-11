@@ -92,7 +92,7 @@ function updateRequest(id, fromDepartment, deltaQuantity){
             
             transferInventoryItem(request.productID, fromDepartment, request.departmentID, deltaQuantity)
             .then(() => {
-                var remainingQuantity = request.remainingQuantity;
+                var remainingQuantity = request.quantityRemaining;
                 var newDeltaQuantity = {
                     value: -deltaQuantity.value,
                     unit: deltaQuantity.unit
@@ -100,7 +100,7 @@ function updateRequest(id, fromDepartment, deltaQuantity){
                 return addQuantities(remainingQuantity, newDeltaQuantity);
             })
             .then(resultantQuantity => {
-                request.remainingQuantity = resultantQuantity;
+                request.quantityRemaining = resultantQuantity;
                 request.save((err, result) => {
                     if(err || !result)
                         reject({
@@ -115,10 +115,7 @@ function updateRequest(id, fromDepartment, deltaQuantity){
                 });
             })
             .catch(err => {
-                reject({
-                    status: 400,
-                    response: "Cannot update request"
-                });
+                reject(err);
             });
         });
     });

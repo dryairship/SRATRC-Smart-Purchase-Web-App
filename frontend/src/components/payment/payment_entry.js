@@ -47,7 +47,7 @@ var array2 = JSON.parse(array);
 var ID = array2[0].purchase._id;
 */
 export default function PaymentForm(props) {
-  const [selectedDate, setSelectedDate] = React.useState(new Date('2014-08-18T21:11:54'));
+  const [selectedDate, setSelectedDate] = React.useState(new Date());
   const [alertState, setAlertState] = React.useState({show: false, message:'', title:''});
   const [success, setSuccess] = React.useState(false);
 

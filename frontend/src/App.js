@@ -20,6 +20,7 @@ import Logout from './components/logout/logout';
 import Profile from './components/profile/profile';
 import Transfer from './components/inventory/transfer';
 import RequestProduct from './components/inventory/request';
+import AcceptRequest from './components/inventory/accept-request';
 import PendingRequests from './components/inventory/pending-requests';
 import Checkout from './components/inventory/checkout';
 import AddStock from './components/inventory/add-stock';
@@ -59,6 +60,7 @@ function App() {
           <Route path="/purchase" component={Purchase} />
           <Route path="/profile" component={Profile} />
           <Route path="/pendingRequests" component={PendingRequests} />
+          <Route path="/acceptRequest" component={AcceptRequest} />
           <Route path="/addUser" component={CreateUser} />
           <Route path="/transfer" component={Transfer} />
           <Route path="/requestProduct" component={RequestProduct} />

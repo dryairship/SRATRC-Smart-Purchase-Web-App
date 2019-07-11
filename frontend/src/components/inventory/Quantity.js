@@ -66,7 +66,7 @@ export default function Quantity(props) {
   return (
     <div className={classes.root}>
     <Grid container spacing={1}>
-        <Grid item xs={6} sm={8}><TextField
+        <Grid item xs={6} sm={6}><TextField
                 id="text-id"
                 label="Quantity"        
                 value={quantityState}
@@ -77,7 +77,7 @@ export default function Quantity(props) {
                 error={quantityState > 0 ? false : true}
                 helperText={quantityState > 0 ? "" : '*Must be greater than 0'}
         /></Grid>
-        <Grid item xs={2} sm={4}><OutlinedTextField label="Unit" id="units" value={props.unit} onValueChange={onChooseUnit}  valueSetter={true} disabled={true}/></Grid>
+        <Grid item xs={6} sm={6}><OutlinedTextField label="Unit" id="units" value={props.unit} onValueChange={onChooseUnit}  valueSetter={true} disabled={true}/></Grid>
     </Grid>
       <Slider
         id="slider-id"
