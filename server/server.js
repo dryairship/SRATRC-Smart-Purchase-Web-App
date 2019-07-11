@@ -13,6 +13,7 @@ const purchaseRoutes = require('../routes/purchase.js');
 const paymentRoutes = require('../routes/payment.js');
 const listRoutes = require('../routes/list.js');
 const donationRoutes = require('../routes/donation.js');
+const requestRoutes = require('../routes/request.js');
 
 const app = express();
 
@@ -28,6 +29,7 @@ app.use('/purchase', purchaseRoutes);
 app.use('/payment', paymentRoutes);
 app.use('/list', listRoutes);
 app.use('/donation', donationRoutes);
+app.use('/request', requestRoutes);
 
 DBConnection.dial();
 
