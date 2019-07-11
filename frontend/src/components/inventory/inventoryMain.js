@@ -56,11 +56,11 @@ export default function InventoryMainPage(props) {
   const classes = useStyles();
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container component="main" maxWidth="lg">
       <CssBaseline />
       <div className={classes.paper}>
         <Grid container spacing={2}>
-          <Grid item xs={6}>
+          <Grid item xs={6} sm={3} lg={4}>
             <Button
               fullWidth
               variant="contained"
@@ -93,7 +93,7 @@ export default function InventoryMainPage(props) {
               </Grid>
             </Button>
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={6} sm={3} lg={4}>
             <Button
               fullWidth
               variant="contained"
@@ -126,7 +126,7 @@ export default function InventoryMainPage(props) {
               </Grid>
             </Button>
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={6} sm={3} lg={4}>
             <Button
               fullWidth
               variant="contained"
@@ -159,7 +159,7 @@ export default function InventoryMainPage(props) {
               </Grid>
             </Button>
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={6} sm={3} lg={4}>
             <Button
               fullWidth
               variant="contained"
@@ -192,7 +192,7 @@ export default function InventoryMainPage(props) {
               </Grid>
             </Button>
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={6} sm={3} lg={4}>
             <Button
               fullWidth
               variant="contained"
@@ -225,7 +225,7 @@ export default function InventoryMainPage(props) {
               </Grid>
             </Button>
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={6} sm={3} lg={4}>
             <Button
               fullWidth
               variant="contained"
@@ -247,7 +247,7 @@ export default function InventoryMainPage(props) {
                 </Grid>
                 <Grid item>
                 <Typography component="h6" variant="h6" className={classes.btnName}>
-                    Request Products from others
+                    Request Products
                   </Typography>
                 </Grid>
                 <Grid item>

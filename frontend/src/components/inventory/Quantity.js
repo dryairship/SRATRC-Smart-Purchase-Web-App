@@ -1,11 +1,9 @@
 
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
 import Slider from '@material-ui/core/Slider';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
-import DropDownSelect from '../common/dropdown-select.js';
 import OutlinedTextField from '../common/outlined-textfield.js';
 
 const useStyles = makeStyles(theme => ({

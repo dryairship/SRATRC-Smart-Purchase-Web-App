@@ -48,11 +48,11 @@ export default function InventoryMainPage(props) {
   const classes = useStyles();
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container component="main" maxWidth="sm">
       <CssBaseline />
       <div className={classes.paper}>
       <Grid container spacing={2}>
-          <Grid item xs={6}>
+          <Grid item xs={6} sm={6}>
             <Button
               fullWidth
               variant="contained"
@@ -85,7 +85,7 @@ export default function InventoryMainPage(props) {
               </Grid>                                    
           </Button>
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={6} sm={6}>
             <Button
               fullWidth
               variant="contained"
