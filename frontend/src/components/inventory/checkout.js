@@ -53,6 +53,8 @@ var haveFetchedCategories = false;
 var haveFetchedProducts = false;
 var haveFetchedDepartment = false;
 var productIsAvailable = false;
+var haveCheckedLocalStorage = false;
+var productAlreadyChosen = false;
 
 export default function Checkout() {
 
@@ -120,6 +122,27 @@ export default function Checkout() {
         });
       }
 
+    
+    const checkLocalStorage = () => {
+      haveCheckedLocalStorage = true;
+      var productForCheckout = JSON.parse(localStorage.getItem('productForCheckout'));
+      if(productForCheckout){
+        localStorage.removeItem('productForCheckout');
+        productAlreadyChosen = true;
+        setState({
+          category: productForCheckout.details.category,
+          product: {
+            id: productForCheckout.details._id,
+            name: productForCheckout.details.name,
+            description: productForCheckout.details.description,
+          }
+        });
+        setUnit(productForCheckout.quantity.unit);
+        setMax(productForCheckout.quantity.value);
+      }
+    }
+
+    haveCheckedLocalStorage || checkLocalStorage();
     haveFetchedCategories || fetchCategories();
     haveFetchedProducts || fetchProducts();
     haveFetchedDepartment || fetchDepartments();
@@ -177,7 +200,7 @@ export default function Checkout() {
         var checkout = {
           productID: state.product.id,
           departmentID: department,
-          qValue: quantity,
+          qValue: -quantity,
           unit: unit,
         };
         fetch('/inventory/' + department + '/' + state.product.id,{
@@ -232,8 +255,15 @@ export default function Checkout() {
           </Typography>
           <form className={classes.form} noValidate >
               <OutlinedTextField id="from_dept" label="From Department" value={departments[department]} valueSetter={true} disabled={true}/>
-              <DropDownSelect id="product-category" label="Product Category" items={fetchedCategories.categories} onValueChange={onChooseCategory} />
-              <SuggestionSelect id="product-name" label="Product Name" category={state.category} items={selectedCategoryProducts.productsNameList} onValueChange={onChooseProductName} nonCreatable={true}/>
+              { !productAlreadyChosen ?
+              <React.Fragment>
+                <DropDownSelect id="product-category" label="Product Category" items={fetchedCategories.categories} onValueChange={onChooseCategory} />
+                <SuggestionSelect id="product-name" label="Product Name" category={state.category} items={selectedCategoryProducts.productsNameList} onValueChange={onChooseProductName} nonCreatable={true}/>
+              </React.Fragment> : <React.Fragment>
+                <OutlinedTextField id="product-category" label="Product Category" value={state.category} valueSetter={true} disabled={true}/> 
+                <OutlinedTextField id="product-name" label="Product Name" value={state.product.name} valueSetter={true} disabled={true}/> 
+              </React.Fragment>
+              }
               <Quantity id="quantity" sendQuantity={getQuantity} Max={Max} unit={unit}/>
               <Button
                 onClick={submitForm}

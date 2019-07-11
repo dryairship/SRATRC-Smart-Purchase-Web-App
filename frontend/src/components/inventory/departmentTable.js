@@ -215,7 +215,17 @@ export default function ContentsTable() {
   
   function transferProductByID(product){
     localStorage.setItem('productForTransfer', JSON.stringify(product));
-    window.location.href='/transfer/';
+    window.location.href='/transfer';
+  }
+  
+  function checkoutProductByID(product){
+    localStorage.setItem('productForCheckout', JSON.stringify(product));
+    window.location.href='/checkout';
+  }
+  
+  function requestProductByID(product){
+    localStorage.setItem('productForRequest', JSON.stringify(product));
+    window.location.href='/requestProduct';
   }
   
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
@@ -276,7 +286,7 @@ export default function ContentsTable() {
                               value={row.details._id}
                               color="primary" 
                               className={classes.button}
-                              href={value==userdept?"/checkout/"+row.details._id:"/request/"+row.details._id}
+                              onClick={value==userdept ? function(){checkoutProductByID(row);} : function(){requestProductByID(row);}}
                             >
                             {value==userdept?"Checkout":"Request transfer"}
                           </Button>
