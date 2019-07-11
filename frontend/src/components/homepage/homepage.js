@@ -3,9 +3,9 @@ import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { Grid, Avatar, Typography } from '@material-ui/core';
+import { Grid, Avatar, Typography, Fab } from '@material-ui/core';
 import StorageOutlinedIcon from '@material-ui/icons/StorageSharp';
-import { AttachMoneyOutlined, ShoppingCartOutlined, SentimentSatisfiedAltOutlined } from '@material-ui/icons';
+import { AttachMoneyOutlined, ShoppingCartOutlined, SentimentSatisfiedAltOutlined, HelpOutline } from '@material-ui/icons';
 
 const useStyles = makeStyles(theme => ({
   '@global': {
@@ -42,6 +42,12 @@ const useStyles = makeStyles(theme => ({
   description: {
     fontSize: '0.8rem',
     marginTop: theme.spacing(1),
+  },
+  fab: {
+    position: 'absolute',
+    bottom: theme.spacing(2),
+    right: theme.spacing(2),
+    color: 'primary',
   }
 }));
 
@@ -52,6 +58,7 @@ export default function HomePage(props) {
     <Container component="main" maxWidth="lg">
       <CssBaseline />
       <div className={classes.paper}>
+              
         <Grid container spacing={2}>
           <Grid item xs={6} sm={3}>
             <Button
@@ -187,6 +194,9 @@ export default function HomePage(props) {
           </Grid>
         </Grid>
       </div>
+      <Fab className={classes.fab} color='secondary' href="/help">
+        <HelpOutline />
+      </Fab>
     </Container>
   );
 }

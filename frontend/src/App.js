@@ -67,6 +67,7 @@ function App() {
           <Route path="/addStock" component={AddStock} />
           <Route path="/logout" component={Logout} />
           <Route path="/checkout" component={Checkout}/>
+          <Route path="/help" component={HomePage}/>
         </div>
       </Router>
     );
