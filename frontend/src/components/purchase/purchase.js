@@ -90,6 +90,7 @@ export default function Purchase() {
   const [selectedTypeUnits, setSelectedTypeUnits] = React.useState({units: []});
   const [alertState, setAlertState] = React.useState({show: false, message:'', title:''});
   const [selectedCategoryProducts, setSelectedCategoryProducts] = React.useState({productsNameList: []});
+  const [success,setSuccess] = React.useState(false);
 
   const inputLabel = React.useRef(null);
   const [labelWidth, setLabelWidth] = React.useState(0);
@@ -367,6 +368,7 @@ export default function Purchase() {
         message: result,
         title: "Transaction successful",
       });
+      setSuccess(true);
     })
     .catch(error => {
       setAlertState({
@@ -374,6 +376,7 @@ export default function Purchase() {
         message: error,
         title: "Transaction failed",
       });
+      setSuccess(false);
     });
   }
 
@@ -383,6 +386,8 @@ export default function Purchase() {
       message: "",
       title: "",
     });
+    if(success)
+      window.location.href = '/purchase';
   }
   
   
