@@ -9,9 +9,8 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import SideDrawer from '../sideDrawer/sideDrawer';
 import { NavLink } from "react-router-dom";
-import { ListItem, Badge, Chip } from '@material-ui/core';
+import { Chip } from '@material-ui/core';
 import Cookies from 'js-cookie';
-import NotificationsIcon from '@material-ui/icons/Notifications';
 
 const useStyles = makeStyles(theme => ({
   root: {

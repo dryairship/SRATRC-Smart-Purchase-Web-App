@@ -2,7 +2,6 @@ import React from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
 import PublicOutlinedIcon from '@material-ui/icons/PublicOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
@@ -17,13 +16,7 @@ import {
 import OKAlert from '../common/ok-alert';
 import OutlinedTextField from '../common/outlined-textfield';
 import DropDownSelect from '../common/dropdown-select';
-import Box from '@material-ui/core/Box';
 import SuggestionSelect from '../common/suggestion-select';
-import OutlinedInput from '@material-ui/core/OutlinedInput';
-import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
-import Divider from '@material-ui/core/Divider';
-import Select from '@material-ui/core/Select';
 
 var productsList = [];
 var unitsList = [];
@@ -57,8 +50,6 @@ var haveFetchedCategories = false;
 var haveFetchedUnitTypes = false;
 var haveFetchedUnits = false;
 var haveFetchedProducts = false;
-var chosenTime = false;
-var chosenDate = false;
 
 export default function Donate() {
   const classes = useStyles();
@@ -144,13 +135,6 @@ haveFetchedCategories || fetchCategories();
 haveFetchedProducts || fetchProducts();
 haveFetchedUnitTypes || fetchUnitTypes();
 haveFetchedUnits || fetchUnits();
-
-const handleChange = name => event => {
-  setState({
-    ...state,
-    [name]: event.target.value,
-  });
-};
 
 const onChooseCategory = chosenCategory => {
   if(chosenCategory == "money"){

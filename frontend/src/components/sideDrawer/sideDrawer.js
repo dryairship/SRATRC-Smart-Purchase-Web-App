@@ -7,10 +7,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import { NavLink } from "react-router-dom";
-import { ExpansionPanel, ExpansionPanelSummary, ExpansionPanelDetails, Typography, Divider, ListItemIcon } from '@material-ui/core';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Collapse from '@material-ui/core/Collapse';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 
@@ -32,8 +29,6 @@ const useStyles = makeStyles(theme => ({
   detailChild: {
     textDecoration: 'none',
     color: 'inherit',
-    // paddingLeft: theme.spacing(1)
-    // marginLeft: theme.spacing(2),
   },
 }));
 

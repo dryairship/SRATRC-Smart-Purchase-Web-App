@@ -3,7 +3,6 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
@@ -63,9 +62,10 @@ export default function Profile(props) {
 
   const fetchDepartments = () => {
     fetch('/list/departments')
-    .then(res => res.json())
+    .then(res => {console.log(res);return res.json();})
     .then(list => {
-      setDepartmentState({departments: list.items});
+      console.log(list.items);
+      setDepartmentState({departments: Array.isArray(list.items) ? list.items : []});
       fetchedDepartments=true;
     })
     .catch(error => {

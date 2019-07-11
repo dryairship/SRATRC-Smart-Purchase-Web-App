@@ -2,7 +2,6 @@ import React from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
 import PlayListAddOutlinedIcon from '@material-ui/icons/PlaylistAddOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
@@ -12,11 +11,7 @@ import DropDownSelect from '../common/dropdown-select';
 import SuggestionSelect from '../common/suggestion-select';
 import OutlinedTextField from '../common/outlined-textfield';
 import OKAlert from '../common/ok-alert';
-import OutlinedInput from '@material-ui/core/OutlinedInput';
-import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
 import Divider from '@material-ui/core/Divider';
-import Select from '@material-ui/core/Select';
 
 const useStyles = makeStyles(theme => ({
   '@global': {
