@@ -1,7 +1,12 @@
 const mongoose = require('mongoose');
-
+const uuidv4 = require('uuid/v4');
 var RequestSchema = new mongoose.Schema({
-    _id: Number,
+    _id: {
+        type: String,
+        default: function(){
+            return uuidv4();
+        }
+    },
     departmentID: String,
     productID: String,
     quantity: {

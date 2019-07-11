@@ -19,6 +19,7 @@ import SignIn from './components/signIn/signIn';
 import Logout from './components/logout/logout';
 import Profile from './components/profile/profile';
 import Transfer from './components/inventory/transfer';
+import RequestProduct from './components/inventory/request';
 import Checkout from './components/inventory/checkout';
 import AddStock from './components/inventory/add-stock';
 import CreateUser from './components/createUser/createUser';
@@ -58,6 +59,7 @@ function App() {
           <Route path="/profile" component={Profile} />
           <Route path="/addUser" component={CreateUser} />
           <Route path="/transfer" component={Transfer} />
+          <Route path="/requestProduct" component={RequestProduct} />
           <Route path="/addStock" component={AddStock} />
           <Route path="/logout" component={Logout} />
           <Route path="/checkout" component={Checkout}/>
