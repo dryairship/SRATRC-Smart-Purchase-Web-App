@@ -49,6 +49,7 @@ var ID = array2[0].purchase._id;
 export default function PaymentForm(props) {
   const [selectedDate, setSelectedDate] = React.useState(new Date('2014-08-18T21:11:54'));
   const [alertState, setAlertState] = React.useState({show: false, message:'', title:''});
+  const [success, setSuccess] = React.useState(false);
 
   const classes = useStyles();
 
@@ -64,6 +65,8 @@ export default function PaymentForm(props) {
       message: "",
       title: "",
     });
+    if(success)
+      window.location.href = '/paymentsSummary';
   }
 
   const makePayment = () => {
@@ -96,6 +99,7 @@ export default function PaymentForm(props) {
         message: result,
         title: "Payment successful",
       });
+      setSuccess(true);
     })
     .catch(error => {
       setAlertState({
@@ -103,6 +107,7 @@ export default function PaymentForm(props) {
         message: error,
         title: "Payment failed",
       });
+      setSuccess(true);
     });
   }
   return (

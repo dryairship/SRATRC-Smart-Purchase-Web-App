@@ -86,6 +86,7 @@ const [selectedCategoryProducts, setSelectedCategoryProducts] = React.useState({
 const [alertState, setAlertState] = React.useState({show: false, message:'', title:''});
 const [selectedDate, setSelectedDate] = React.useState(new Date());
 const [isMoney, setIsMoney] = React.useState(false);
+const [success, setSuccess] = React.useState(false);
 
 function handleDateChange(date){
   setSelectedDate(date);
@@ -274,11 +275,12 @@ const submitForm = () => {
   .then(pId => productID=pId)
   .then(()=>{return makeDonation(productID);})
   .then(result => {
-      setAlertState({
-        show: true,
-        message: result,
-        title: "Donation successful",
-      });
+    setAlertState({
+      show: true,
+      message: result,
+      title: "Donation successful",
+    });
+    setSuccess(true);
   })
   .catch(error => {
     setAlertState({
@@ -286,6 +288,7 @@ const submitForm = () => {
       message: error,
       title: "Donation failed",
     });
+    setSuccess(false);
   });
 }
 
@@ -296,6 +299,8 @@ const closeAlert = () => {
     message: "",
     title: "",
   });
+  if(success)
+    window.location.href = '/makedonation' ;
 }
   
 

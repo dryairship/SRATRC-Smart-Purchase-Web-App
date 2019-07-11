@@ -74,7 +74,7 @@ export default function AddStock() {
   const [selectedTypeUnits, setSelectedTypeUnits] = React.useState({units: []});
   const [alertState, setAlertState] = React.useState({show: false, message:'', title:''});
   const [selectedCategoryProducts, setSelectedCategoryProducts] = React.useState({productsNameList: []});
-
+  const [success,setSuccess] = React.useState(false);
   const inputLabel = React.useRef(null);
   const [labelWidth, setLabelWidth] = React.useState(0);
 
@@ -256,6 +256,7 @@ export default function AddStock() {
         message: result,
         title: "Successfully updated stock",
       });
+      setSuccess(true);
     })
     .catch(error => {
       setAlertState({
@@ -263,6 +264,7 @@ export default function AddStock() {
         message: error,
         title: "Could not update stock",
       });
+      setSuccess(false);
     });
   }
 
@@ -272,6 +274,8 @@ export default function AddStock() {
       message: "",
       title: "",
     });
+    if(success)
+      window.location.href = '/addStock';
   }
   
   return (

@@ -25,8 +25,6 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const max = 100;
-
 const units = [
   {
     label: 'kg',
@@ -55,7 +53,7 @@ export default function Quantity(props) {
     props.sendQuantity({value:quantityState, unit:chosenUnit});
   }
   const onTextFldChange = (e) => {
-      if(e.target.value > max)   setQuantityState(max);   
+      if(e.target.value > props.Max)   setQuantityState(props.Max);   
       else setQuantityState(e.target.value);
       props.sendQuantity({value:e.target.value, unit:unit});
     }
