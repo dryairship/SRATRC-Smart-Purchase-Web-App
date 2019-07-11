@@ -16,6 +16,7 @@ import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import SuggestionSelect from '../common/suggestion-select';
 import OutlinedTextField from '../common/outlined-textfield';
+import Button from '@material-ui/core/Button';
 
 import {
   MenuItem, Container
@@ -138,6 +139,9 @@ const useStyles = makeStyles(theme => ({
   title: {
     paddingTop: theme.spacing(2),
   },
+  button: {
+    marginBottom: theme.spacing(4),
+  },
 }));
 
 var firstA = false;
@@ -163,6 +167,7 @@ export default function ContentsTable(props) {
   const classes1 = useToolbarStyles();
   const dept = localStorage.getItem('department');
   const [value, setValue] = React.useState(dept);
+  const [productChosen, setProductChosen] = React.useState(false);
   
   // const [rows, setRows] = React.useState([]);
   
@@ -238,7 +243,7 @@ export default function ContentsTable(props) {
     setChosenCategory(thisProduct.category);
     setChosenDescription(thisProduct.description);
     fetchProductInInventory(theChosenProduct.value);
-    
+    setProductChosen(true);
   }
 
   function handleRequestSort(event, property) {
@@ -264,6 +269,10 @@ export default function ContentsTable(props) {
   const orderAsc = () => {firstB=true; setOrder('asc');}
     firstA || orderName();
     firstB || orderAsc();
+
+  const request = () => {
+    window.location.href = '/requestProduct'
+  }
 
   return (    
     <Container component="main" maxWidth="md">
@@ -336,6 +345,11 @@ export default function ContentsTable(props) {
           onChangeRowsPerPage={handleChangeRowsPerPage}
         />
       </Paper>
+      {!productChosen ? 
+        <br/> :
+        <Button onClick={request} variant="contained" color="primary" className={classes.button}>
+          Request Transfer
+      </Button>}
     </Container>
     
   );
