@@ -297,7 +297,7 @@ export default function AutoSuggest(props) {
             },
             placeholder: 'Select...',
           }}
-          options={props.items}
+          options={Array.isArray(props.items) ? props.items : []}
           components={components}
           value={single}
           onChange={handleChangeSingle}
@@ -324,7 +324,7 @@ export default function AutoSuggest(props) {
             },
             placeholder: 'Select...',
           }}
-          options={props.items}
+          options={Array.isArray(props.items) ? props.items : []}
           components={components}
           value={single}
           onChange={handleChangeSingle}

@@ -271,7 +271,10 @@ export default function ContentsTable(props) {
     firstB || orderAsc();
 
   const request = () => {
-    window.location.href = '/requestProduct'
+    console.log("REQUESTING");
+    console.log(chosenProduct);
+    localStorage.setItem('onlyProductForRequest', JSON.stringify(chosenProduct));
+    window.location.href = '/requestProduct';
   }
 
   return (    

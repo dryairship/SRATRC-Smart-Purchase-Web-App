@@ -75,6 +75,7 @@ export default function Request() {
     };
 
     const [fetchedCategories, setFetchedCategories] = React.useState({categories: []});
+    const [JSONCategories, setJSONCategories] = React.useState({});
     const [fetchedUnitTypes, setFetchedUnitTypes] = React.useState({unitTypes: []});
     const [selectedTypeUnits, setSelectedTypeUnits] = React.useState({units: []});
     const [selectedCategoryProducts, setSelectedCategoryProducts] = React.useState({productsNameList: [], productsValueList: []});
@@ -97,6 +98,12 @@ export default function Request() {
           categories: data.items,
         });
         haveFetchedCategories = true;
+        data.items.unshift({value:'', label:''});
+        var cats = data.items.reduce((map, cItem) => {
+          map[cItem.value] = cItem.label;
+          return map;
+        });
+        setJSONCategories(cats);
       });
     }
     
@@ -166,6 +173,22 @@ export default function Request() {
         });
         setUnit(productForRequest.quantity.unit);
         setMax(productForRequest.quantity.value);
+      }else{
+        productForRequest = JSON.parse(localStorage.getItem('onlyProductForRequest'));
+        if(productForRequest){
+          localStorage.removeItem('onlyProductForRequest');
+          productAlreadyChosen = true;
+          setState({
+            category: productForRequest.category,
+            product: {
+              id: productForRequest._id,
+              name: productForRequest.name,
+              description: productForRequest.description,
+            }
+          });
+        }else{
+          window.location.href='/inventory';
+        }
       }
     }
 
@@ -311,7 +334,7 @@ export default function Request() {
                 <DropDownSelect id="product-category" label="Product Category" items={fetchedCategories.categories} onValueChange={onChooseCategory} />
                 <SuggestionSelect id="product-name" label="Product Name" category={state.category} items={selectedCategoryProducts.productsNameList} onValueChange={onChooseProductName} nonCreatable={true}/>
               </React.Fragment> : <React.Fragment>
-                <OutlinedTextField id="product-category" label="Product Category" value={state.category} valueSetter={true} disabled={true}/> 
+                <OutlinedTextField id="product-category" label="Product Category" value={JSONCategories[state.category]} valueSetter={true} disabled={true}/> 
                 <OutlinedTextField id="product-name" label="Product Name" value={state.product.name} valueSetter={true} disabled={true}/> 
               </React.Fragment>
               }
