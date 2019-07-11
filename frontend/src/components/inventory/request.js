@@ -267,9 +267,7 @@ export default function Request() {
     }
 
     const requestItem = () => {
-      console.log("INSIDE METHOD");
       return new Promise((resolve, reject) => {
-      console.log("INSIDE PRoMISE");
         var requestIt = {
           productID: state.product.id,
           departmentID: department,
@@ -281,11 +279,17 @@ export default function Request() {
           method: 'POST',
           body: JSON.stringify(requestIt),
           headers:{'Content-Type': 'application/json'}
+       })
+        .then(res => {
+          res.json()
+          .then(result => {
+            if(res.ok) resolve(result);
+            else reject(result);  
+          })
+          .catch(error => {reject(error);});
         })
-        .then(res => {console.log(res); return res.json();})
-        .then(response => {resolve(response);})
         .catch(error => {reject(error);});
-      })
+      });
     }
 
     const submitForm = () => {

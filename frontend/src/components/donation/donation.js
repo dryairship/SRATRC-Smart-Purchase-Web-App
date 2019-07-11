@@ -247,8 +247,15 @@ const makeDonation = (productId) => {
       method: 'POST',
       body: JSON.stringify(donation),
       headers:{ 'Content-Type': 'application/json' }
-    }).then(res => res.json())
-    .then(response => {resolve(response);})
+    })
+    .then(res => {
+      res.json()
+      .then(result => {
+        if(res.ok) resolve(result);
+        else reject(result);  
+      })
+      .catch(error => {reject(error);});
+    })
     .catch(error => {reject(error);});
   });
 }
@@ -276,7 +283,6 @@ const submitForm = () => {
   });
 }
 
-
 const closeAlert = () => {
   setAlertState({
     show: false,
@@ -286,7 +292,6 @@ const closeAlert = () => {
   if(success)
     window.location.href = '/makedonation' ;
 }
-  
 
 return (
   <Container component="main" maxWidth="xs">

@@ -214,10 +214,16 @@ export default function Transfer() {
           body: JSON.stringify(transferIt),
           headers:{'Content-Type': 'application/json'}
         })
-        .then(res => {console.log(transferIt);res.json();})
-        .then(response => {resolve(response);})
+        .then(res => {
+          res.json()
+          .then(result => {
+            if(res.ok) resolve(result);
+            else reject(result);  
+          })
+          .catch(error => {reject(error);});
+        })
         .catch(error => {reject(error);});
-      })
+      });
     }
 
     const submitForm = () => {
