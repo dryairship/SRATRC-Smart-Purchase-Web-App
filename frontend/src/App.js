@@ -27,6 +27,7 @@ import AddStock from './components/inventory/add-stock';
 import CreateUser from './components/createUser/createUser';
 import PreviousQuotations from './components/payment/quotation';
 import Cookies from 'js-cookie';
+import Help from './components/help/help';
 
 function App() {
   const [loggedIn, setLoggedIn] = React.useState(false);
@@ -67,7 +68,7 @@ function App() {
           <Route path="/addStock" component={AddStock} />
           <Route path="/logout" component={Logout} />
           <Route path="/checkout" component={Checkout}/>
-          <Route path="/help" component={HomePage}/>
+          <Route path="/help" component={Help}/>
         </div>
       </Router>
     );
