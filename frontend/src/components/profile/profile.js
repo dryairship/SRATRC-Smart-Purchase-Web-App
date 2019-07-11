@@ -54,16 +54,16 @@ export default function Profile(props) {
   });
   
   const [user, setUser] = React.useState({
-    username: sessionStorage.getItem('username'),
-    name: sessionStorage.getItem('name'),
-    phone: sessionStorage.getItem('phone'),
-    department: sessionStorage.getItem('department'),
+    username: localStorage.getItem('username'),
+    name: localStorage.getItem('name'),
+    phone: localStorage.getItem('phone'),
+    department: localStorage.getItem('department'),
     editable: false,
   });
   
   const saveInStorage = () => {
-    sessionStorage.setItem('name', document.getElementById('profile-name').value);
-    sessionStorage.setItem('phone', document.getElementById('profile-phone').value);
+    localStorage.setItem('name', document.getElementById('profile-name').value);
+    localStorage.setItem('phone', document.getElementById('profile-phone').value);
   }
   
   const toggleEditable = event => {

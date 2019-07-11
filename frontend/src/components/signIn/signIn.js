@@ -67,10 +67,10 @@ export default function SignIn(props) {
         });
         props.onLogin();
         res.json().then(userData => {
-          sessionStorage.setItem('username', userData.username);
-          sessionStorage.setItem('name', userData.name);
-          sessionStorage.setItem('department', userData.department);
-          sessionStorage.setItem('phone', userData.phone);
+          localStorage.setItem('username', userData.username);
+          localStorage.setItem('name', userData.name);
+          localStorage.setItem('department', userData.department);
+          localStorage.setItem('phone', userData.phone);
         });
       }else{
         res.json().then(errorMessage => {

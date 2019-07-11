@@ -150,7 +150,7 @@ export default function ContentsTable() {
   const [depts, setDepts] = React.useState([]);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const classes1 = useToolbarStyles();
-  const userdept = sessionStorage.getItem('department');
+  const userdept = localStorage.getItem('department');
   const [value, setValue] = React.useState('srec');
   const month = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
   const fetchDonations = (newDept) => {

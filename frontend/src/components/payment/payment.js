@@ -169,7 +169,7 @@ export default function ContentsTable() {
   const [labelWidth, setLabelWidth] = React.useState(0);
   
   const fetchPayments = () => {
-      fetch('/payment/department/'+sessionStorage.getItem("department"))
+      fetch('/payment/department/'+ localStorage.getItem("department"))
       .then(list => {
         return list.json();
       }).then(data => {
