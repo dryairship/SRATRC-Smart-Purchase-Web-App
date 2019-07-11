@@ -50,8 +50,12 @@ function findAllRequests(){
     return new Promise((resolve, reject) => {
         Request.find(
         null,
-        '-__v',
-        function(err, requests){
+        '-__v')
+        .populate({
+            path: 'productDetails',
+            select: '-__v'
+        })
+        .exec(function(err, requests){
             if(err || !requests || requests.length ==0)
                 reject({
                     status: 404,
