@@ -7,9 +7,14 @@ import ListItemText from '@material-ui/core/ListItemText';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import { NavLink } from "react-router-dom";
-import { ExpansionPanel, ExpansionPanelSummary, ExpansionPanelDetails, Typography, Divider } from '@material-ui/core';
+import { ExpansionPanel, ExpansionPanelSummary, ExpansionPanelDetails, Typography, Divider, ListItemIcon } from '@material-ui/core';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import Collapse from '@material-ui/core/Collapse';
+import InboxIcon from '@material-ui/icons/MoveToInbox';
+import ExpandLess from '@material-ui/icons/ExpandLess';
+import ExpandMore from '@material-ui/icons/ExpandMore';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
   list: {
     width: 250,
   },
@@ -27,14 +32,29 @@ const useStyles = makeStyles({
   detailChild: {
     textDecoration: 'none',
     color: 'inherit',
-  }
-});
+    // paddingLeft: theme.spacing(1)
+    // marginLeft: theme.spacing(2),
+  },
+}));
 
 export default function SideDrawer(props) {
   const classes = useStyles();
   const [state, setState] = React.useState({
     left: false,
   });
+  const [openInventory, setOpenInventory] = React.useState(false);
+  const [openPayments, setOpenPayments] = React.useState(false);
+  const [openDonations, setOpenDonations] = React.useState(false);
+
+  function handleClickInventory() {
+    setOpenInventory(!openInventory);
+  }
+  function handleClickPayments() {
+    setOpenPayments(!openPayments);
+  }
+  function handleClickDonations() {
+    setOpenDonations(!openDonations);
+  }
 
   const toggleDrawer = (side, open) => event => {
     if (event && event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -52,145 +72,135 @@ export default function SideDrawer(props) {
       onKeyDown={toggleDrawer(side, false)}
     >
       <List>
-            <ExpansionPanel>
-              <ExpansionPanelSummary>
-                <NavLink to="/" className={classes.link}>
-                  <Typography>
-                    Home
-                  </Typography>
-                </NavLink>                   
-              </ExpansionPanelSummary>
-            </ExpansionPanel>
+        <NavLink to="/" className={classes.link}>
+          <ListItem 
+          divider 
+          button key="home"
+          autoFocus="true">              
+            <ListItemText primary="Home" />
+          </ListItem>
+        </NavLink>
 
-            <ExpansionPanel>
-              <ExpansionPanelSummary>
-                <NavLink to="/inventory" className={classes.link}>
-                  <Typography>
-                    Inventory
-                  </Typography>
-                </NavLink>                   
-              </ExpansionPanelSummary>
-              <Divider />
-              <ExpansionPanelDetails className={classes.details}>                
-                <NavLink to="/departmentinventory" className={classes.link}>
-                  <ListItem 
-                  divider 
-                  button key="departmentinventory"
-                  autoFocus="true">
-                    Department Inventory
+        <NavLink to="/inventory" className={classes.link}>
+          <ListItem button onClick={handleClickInventory} className={classes.link} divider>
+            <ListItemText primary="Inventory" />
+            {openInventory ? <ExpandLess /> : <ExpandMore />}
+            </ListItem>
+            </NavLink>
+            <Collapse in={openInventory} timeout="auto" unmountOnExit>
+              <List component="div" disablePadding>                
+                <NavLink to="/departmentinventory" className={classes.detailChild} >
+                  <ListItem                   
+                    button key="departmentinventory"
+                    style={{paddingLeft: '2rem'}}
+                    autoFocus="true">
+                    <ListItemText primary="Department Inventory" />                        
                   </ListItem>
                 </NavLink>
                 <NavLink to="/productinventory" className={classes.detailChild}>
-                  <ListItem
-                  divider 
-                  button key="productinventory"
-                  autoFocus="true">
-                    Product Inventory
+                  <ListItem                   
+                    button key="productinventory"
+                    style={{paddingLeft: '2rem'}}
+                    autoFocus="true">                    
+                    <ListItemText primary="Product Inventory"/>
                   </ListItem>
                 </NavLink>
                 <NavLink to="/transfer" className={classes.detailChild}>
-                  <ListItem
-                  divider 
-                  button key="transfer"
-                  autoFocus="true">
-                    Transfer Items
+                  <ListItem                   
+                    button key="transfer"
+                    style={{paddingLeft: '2rem'}}
+                    autoFocus="true">                    
+                    <ListItemText primary="Transfer Items"/>
                   </ListItem>
                 </NavLink>
                 <NavLink to="/checkout" className={classes.detailChild}>
                   <ListItem
-                  divider 
                   button key="checkout"
-                  autoFocus="true">
-                    Checkout
+                    style={{paddingLeft: '2rem'}}
+                  autoFocus="true">                    
+                    <ListItemText primary="Checkout"/>                    
                   </ListItem>
                 </NavLink>
                 <NavLink to="/addStock" className={classes.detailChild}>
                   <ListItem
-                  divider 
-                  button key="addstock"
-                  autoFocus="true">
-                    Add to Stock
+                  button key="addStock"
+                  style={{paddingLeft: '2rem'}}
+                  autoFocus="true">                    
+                      <ListItemText primary="Add to Stock" />                    
                   </ListItem>
                 </NavLink>
-                <NavLink to="/addStock" className={classes.detailChild}>
+                <NavLink to="/requestproducts" className={classes.detailChild}>
                   <ListItem
-                  divider 
-                  button key="request"
-                  autoFocus="true">
-                    Request
+                  button key="requestproducts"
+                  style={{paddingLeft: '2rem'}}
+                  autoFocus="true">                    
+                    <ListItemText primary="Request Items" />                    
                   </ListItem>
                 </NavLink>
-              </ExpansionPanelDetails>
-            </ExpansionPanel>
+              </List>
+            </Collapse>
             
-            <ExpansionPanel>
-              <ExpansionPanelSummary>
-                <NavLink to="/payments" className={classes.link}>
-                  <Typography>
-                    Payments
-                  </Typography>
-                </NavLink>                   
-              </ExpansionPanelSummary>
-              <Divider />
-              <ExpansionPanelDetails className={classes.details}>                
-                <NavLink to="/paymentsSummary" className={classes.link}>
-                  <ListItem 
-                  divider 
-                  button key="paymentsSummary"
-                  autoFocus="true">
-                    Payments Summary
-                  </ListItem>
-                </NavLink>
-                <NavLink to="/previousQuotations" className={classes.detailChild}>
-                  <ListItem
-                  divider 
-                  button key="previousQuotations"
-                  autoFocus="true">
-                    Previous Quotations
-                  </ListItem>
-                </NavLink>
-              </ExpansionPanelDetails>
-            </ExpansionPanel>
+            
+            <NavLink to="/payments" className={classes.link}>
+              <ListItem button onClick={handleClickPayments} className={classes.link} divider>
+                <ListItemText primary="Payments" />
+                {openPayments ? <ExpandLess /> : <ExpandMore />}
+              </ListItem>
+            </NavLink>
+              <Collapse in={openPayments} timeout="auto" unmountOnExit>
+                <List component="div" disablePadding>                
+                  <NavLink to="/paymentsSummary" className={classes.detailChild} >
+                    <ListItem                   
+                      button key="paymentsSummary"
+                      style={{paddingLeft: '2rem'}}
+                      autoFocus="true">
+                      <ListItemText primary="Payments Summary" />
+                    </ListItem>
+                  </NavLink>
+                  <NavLink to="/previousQuotations" className={classes.detailChild}>
+                    <ListItem                   
+                      button key="previousQuotations"
+                      style={{paddingLeft: '2rem'}}
+                      autoFocus="true">                    
+                      <ListItemText primary="Previous Quotations"/>
+                    </ListItem>
+                  </NavLink>                  
+                </List>
+              </Collapse>
+            
+            <NavLink to="/purchase" className={classes.link}>
+              <ListItem button className={classes.link} divider>
+                <ListItemText primary="Purchase" />
+              </ListItem>
+            </NavLink>
 
-            <ExpansionPanel>
-              <ExpansionPanelSummary>
-                <NavLink to="/purchase" className={classes.link}>
-                  <Typography>
-                    Purchase
-                  </Typography>
-                </NavLink>                   
-              </ExpansionPanelSummary>
-            </ExpansionPanel>
-
-            <ExpansionPanel>
-              <ExpansionPanelSummary>
-                <NavLink to="/donation" className={classes.link}>
-                  <Typography>
-                    Donation
-                  </Typography>
-                </NavLink>                   
-              </ExpansionPanelSummary>
-              <Divider />
-              <ExpansionPanelDetails className={classes.details}>                
-                <NavLink to="/makedonation" className={classes.link}>
-                  <ListItem 
-                  divider 
-                  button key="makedonation"
-                  autoFocus="true">
-                    Make Donation
-                  </ListItem>
-                </NavLink>
-                <NavLink to="/donationhistory" className={classes.detailChild}>
-                  <ListItem
-                  divider 
-                  button key="donationhistory"
-                  autoFocus="true">
-                    Donation History
-                  </ListItem>
-                </NavLink>
-              </ExpansionPanelDetails>
-            </ExpansionPanel>
-      </List>
+            <NavLink to="/donation" className={classes.link}>
+              <ListItem button onClick={handleClickDonations} className={classes.link} divider>
+                <ListItemText primary="Donation" />
+                {openDonations ? <ExpandLess /> : <ExpandMore />}
+              </ListItem>
+            </NavLink>
+              <Collapse in={openDonations} timeout="auto" unmountOnExit>
+                <List component="div" disablePadding>                
+                  <NavLink to="/makedonation" className={classes.detailChild} >
+                    <ListItem                   
+                      button key="makedonation"
+                      style={{paddingLeft: '2rem'}}
+                      autoFocus="true">
+                      <ListItemText primary="Make Donation" />
+                    </ListItem>
+                  </NavLink>
+                  <NavLink to="/donationhistory" className={classes.detailChild}>
+                    <ListItem                   
+                      button key="donationhistory"
+                      style={{paddingLeft: '2rem'}}
+                      autoFocus="true">                    
+                      <ListItemText primary="Donation History"/>
+                    </ListItem>
+                  </NavLink>                  
+                </List>
+              </Collapse>
+        </List>
     </div>
   );
 
@@ -209,8 +219,7 @@ export default function SideDrawer(props) {
       <Drawer
         open={state.left}
         onClose={toggleDrawer('left', false)}
-        onOpen={toggleDrawer('left', true)}
-        
+        onOpen={toggleDrawer('left', true)}        
       >
         {sideList('left')}
       </Drawer>
