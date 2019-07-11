@@ -57,6 +57,7 @@ function App() {
           <Route path="/changePassword" component={ChangePassword} />
           <Route path="/purchase" component={Purchase} />
           <Route path="/profile" component={Profile} />
+          <Route path="/pendingrequests" component={HomePage} />
           <Route path="/addUser" component={CreateUser} />
           <Route path="/transfer" component={Transfer} />
           <Route path="/requestProduct" component={RequestProduct} />
