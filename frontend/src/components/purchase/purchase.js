@@ -300,8 +300,15 @@ export default function Purchase() {
           method: 'POST',
           body: JSON.stringify(product),
           headers:{ 'Content-Type': 'application/json' }
-        }).then(res => res.json())
-        .then(response => {resolve(response);})
+        })
+        .then(res => {
+          res.json()
+          .then(result => {
+            if(res.ok) resolve(result);
+            else reject(result);  
+          })
+          .catch(error => {reject(error);});
+        })
         .catch(error => {reject(error);});
       }else{
         resolve(state.product.id);
@@ -323,8 +330,15 @@ export default function Purchase() {
           method: 'POST',
           body: JSON.stringify(vendor),
           headers:{ 'Content-Type': 'application/json' }
-        }).then(res => res.json())
-        .then(response => {resolve(response);})
+        })
+        .then(res => {
+          res.json()
+          .then(result => {
+            if(res.ok) resolve(result);
+            else reject(result);  
+          })
+          .catch(error => {reject(error);});
+        })
         .catch(error => {reject(error);});
       }else{
         resolve(state.vendor.id);
@@ -349,8 +363,15 @@ export default function Purchase() {
         method: 'POST',
         body: JSON.stringify(purchase),
         headers:{ 'Content-Type': 'application/json' }
-      }).then(res => res.json())
-      .then(response => {resolve(response);})
+      })
+      .then(res => {
+        res.json()
+        .then(result => {
+          if(res.ok) resolve(result);
+          else reject(result);  
+        })
+        .catch(error => {reject(error);});
+      })
       .catch(error => {reject(error);});
     });
   }

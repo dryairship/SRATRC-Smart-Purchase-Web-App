@@ -214,8 +214,15 @@ export default function AddStock() {
           method: 'POST',
           body: JSON.stringify(product),
           headers:{ 'Content-Type': 'application/json' }
-        }).then(res => res.json())
-        .then(response => {resolve(response);})
+        })
+        .then(res => {
+          res.json()
+          .then(result => {
+            if(res.ok) resolve(result);
+            else reject(result);  
+          })
+          .catch(error => {reject(error);});
+        })
         .catch(error => {reject(error);});
       }else{
         resolve(state.product.id);

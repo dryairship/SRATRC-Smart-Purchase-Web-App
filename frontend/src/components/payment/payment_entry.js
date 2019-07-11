@@ -82,8 +82,15 @@ export default function PaymentForm(props) {
         method: 'POST',
         body: JSON.stringify(installment),
         headers:{ 'Content-Type': 'application/json' }
-      }).then(res => res.json())
-      .then(response => {resolve(response);})
+      })
+      .then(res => {
+        res.json()
+        .then(result => {
+          if(res.ok) resolve(result);
+          else reject(result);  
+        })
+        .catch(error => {reject(error);});
+      })
       .catch(error => {reject(error);});
     });
   }
