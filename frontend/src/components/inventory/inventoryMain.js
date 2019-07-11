@@ -4,7 +4,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { Grid, Avatar, Typography } from '@material-ui/core';
-import { ShoppingBasketOutlined, DomainOutlined, SwapHorizOutlined, UnarchiveOutlined, PlaylistAddOutlined } from '@material-ui/icons';
+import { ShoppingBasketOutlined, DomainOutlined, SwapHorizOutlined, UnarchiveOutlined, PlaylistAddOutlined, PlayForWorkOutlined } from '@material-ui/icons';
 
 const useStyles = makeStyles(theme => ({
   '@global': {
@@ -220,6 +220,39 @@ export default function InventoryMainPage(props) {
                 <Grid item>
                   <Typography align='center' className={classes.description}>
                     Add items to inventory without a payment
+                  </Typography>
+                </Grid>
+              </Grid>
+            </Button>
+          </Grid>
+          <Grid item xs={6}>
+            <Button
+              fullWidth
+              variant="contained"
+              color="primary"
+              size="large"
+              className={classes.btn}
+              href="/requestproducts"
+            >
+              <Grid
+              container
+              direction="column"
+              justify="center"
+              alignItems="center"
+              >
+                <Grid item>
+                  <Avatar className={classes.avatar}>
+                  <PlayForWorkOutlined fontSize='inherit'/>
+                </Avatar>
+                </Grid>
+                <Grid item>
+                <Typography component="h6" variant="h6" className={classes.btnName}>
+                    Request Products from others
+                  </Typography>
+                </Grid>
+                <Grid item>
+                  <Typography align='center' className={classes.description}>
+                    Ask for products from another department
                   </Typography>
                 </Grid>
               </Grid>
