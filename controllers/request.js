@@ -7,7 +7,7 @@ function handleRequestPost(req, res) {
             value: req.body.qValue,
             unit: req.body.qUnit
         },
-        timestamp: Date.parse(timestamp);
+        timestamp = Date.parse(timestamp);
     
     insertRequest(departmentID, productID, quantity, timestamp)
     .then(result => {

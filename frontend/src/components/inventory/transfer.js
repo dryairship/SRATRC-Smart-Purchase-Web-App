@@ -51,10 +51,9 @@ var productsList = [];
 var haveFetchedCategories = false;
 var haveFetchedProducts = false;
 var haveFetchedDepts = false;
-var haveFetchedDepartment = false;
 var productIsAvailable = false;
-
-
+var haveCheckedLocalStorage = false;
+var productAlreadyChosen = false;
 
 export default function Transfer() {
 
@@ -116,6 +115,7 @@ export default function Transfer() {
     }
 
     const fetchDepartments = () => {
+      haveFetchedDepts = true;
       fetch('/list/departments')
       .then(list => {
         return list.json();
@@ -123,16 +123,6 @@ export default function Transfer() {
         setFetchDepts({
           departments: data.items.filter(item => {return item.value!==sessionStorage.getItem('department')}),
         });
-        haveFetchedDepts = true
-      });
-    }
-
-    const fetchDepartment = () => {
-      haveFetchedDepartment = true;
-      fetch('/list/departments')
-      .then(list => {
-        return list.json();      
-      }).then(data => {
         data.items.unshift({value:'', label:''});
         var depts = data.items.reduce((map, dItem) => {
           map[dItem.value] = dItem.label;
@@ -141,11 +131,30 @@ export default function Transfer() {
         setDepartments(depts);
       });
     }
+    
+    const checkLocalStorage = () => {
+      haveCheckedLocalStorage = true;
+      var productForTransfer = JSON.parse(localStorage.getItem('productForTransfer'));
+      if(productForTransfer){
+        localStorage.removeItem('productForTransfer');
+        productAlreadyChosen = true;
+        setState({
+          category: productForTransfer.details.category,
+          product: {
+            id: productForTransfer.details._id,
+            name: productForTransfer.details.name,
+            description: productForTransfer.details.description,
+          }
+        });
+        setUnit(productForTransfer.quantity.unit);
+        setMax(productForTransfer.quantity.value);
+      }
+    }
 
+    haveCheckedLocalStorage || checkLocalStorage();
     haveFetchedCategories || fetchCategories();
     haveFetchedProducts || fetchProducts();
     haveFetchedDepts || fetchDepartments();
-    haveFetchedDepartment || fetchDepartment();
 
     const onChooseCategory = chosenCategory => {
         setState({
@@ -261,8 +270,15 @@ export default function Transfer() {
           </Typography>
           <form className={classes.form} noValidate >
               <OutlinedTextField id="from_dept" label="From Department" value={departments[department]} valueSetter={true} disabled={true}/>
-              <DropDownSelect id="product-category" label="Product Category" items={fetchedCategories.categories} onValueChange={onChooseCategory} />
-              <SuggestionSelect id="product-name" label="Product Name" category={state.category} items={selectedCategoryProducts.productsNameList} onValueChange={onChooseProductName} nonCreatable={true}/>
+              { !productAlreadyChosen ?
+              <React.Fragment>
+                <DropDownSelect id="product-category" label="Product Category" items={fetchedCategories.categories} onValueChange={onChooseCategory} />
+                <SuggestionSelect id="product-name" label="Product Name" category={state.category} items={selectedCategoryProducts.productsNameList} onValueChange={onChooseProductName} nonCreatable={true}/>
+              </React.Fragment> : <React.Fragment>
+                <OutlinedTextField id="product-category" label="Product Category" value={state.category} valueSetter={true} disabled={true}/> 
+                <OutlinedTextField id="product-name" label="Product Name" value={state.product.name} valueSetter={true} disabled={true}/> 
+              </React.Fragment>
+              }
               <Quantity id="quantity" sendQuantity={getQuantity} Max={Max} unit={unit}/>
               <DropDownSelect id="to_dept" label="To Department" items={fetchedDepts.departments} onValueChange={onChooseToDept}/>
               <Button

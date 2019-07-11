@@ -89,8 +89,11 @@ function updateRequest(id, fromDepartment, deltaQuantity){
             transferInventoryItem(request.productID, fromDepartment, request.departmentID, deltaQuantity)
             .then(() => {
                 var remainingQuantity = request.remainingQuantity;
-                deltaQuantity.value *= -1;
-                return addQuantities(remainingQuantity, deltaQuantity);
+                var newDeltaQuantity = {
+                    value: -deltaQuantity.value,
+                    unit: deltaQuantity.unit
+                }
+                return addQuantities(remainingQuantity, newDeltaQuantity);
             })
             .then(resultantQuantity => {
                 request.remainingQuantity = resultantQuantity;

@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { lighten, makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
+import Button from '@material-ui/core/Button';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
@@ -54,7 +55,7 @@ const headRows = [
   { id: 'name', numeric: false, disablePadding: false, label: 'Product Name' },
   { id: 'category', numeric: false, disablePadding: false, label: 'Category' },
   { id: 'quantity.value', numeric: true, disablePadding: false, label: 'Quantity' },
-  { id: 'quantity.unit', numeric: false, disablePadding: false, label: 'Unit' },
+  { id: 'action', numeric: false, center: true, disablePadding: false, label: 'Action' },
 ];
 
 function EnhancedTableHead(props) {
@@ -69,7 +70,7 @@ function EnhancedTableHead(props) {
         {headRows.map(row => (
           <TableCell
             key={row.id}
-            align={row.numeric ? 'right' : 'left'}
+            align={row.center? 'center' : (row.numeric ? 'right' : 'left')}
             padding={row.disablePadding ? 'none' : 'default'}
             sortDirection={orderBy === row.id ? order : false}
           >
@@ -212,6 +213,11 @@ export default function ContentsTable() {
     setRowsPerPage(+event.target.value);
   }
   
+  function transferProductByID(product){
+    localStorage.setItem('productForTransfer', JSON.stringify(product));
+    window.location.href='/transfer/';
+  }
+  
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
   const orderName = () => {
@@ -257,14 +263,35 @@ export default function ContentsTable() {
                     <TableRow
                       hover                      
                       tabIndex={-1}
-                      key={row.name}
+                      key={row.id}
                     >                      
                       <TableCell component="th" scope="row" padding="default">
                         {row.details.name}
                       </TableCell>
                       <TableCell>{row.details.category}</TableCell>
-                      <TableCell align="right">{row.quantity.value}</TableCell>
-                      <TableCell>{row.quantity.unit}</TableCell>
+                      <TableCell align="right">{row.quantity.value} {row.quantity.unit}</TableCell>
+                      <TableCell align="center">
+                          <Button 
+                              variant="contained"
+                              value={row.details._id}
+                              color="primary" 
+                              className={classes.button}
+                              href={value==userdept?"/checkout/"+row.details._id:"/request/"+row.details._id}
+                            >
+                            {value==userdept?"Checkout":"Request transfer"}
+                          </Button>
+                          &nbsp;&nbsp;&nbsp;
+                          {value==userdept?<Button 
+                              variant="contained"
+                              value={row.details._id}
+                              color="primary"
+                              className={classes.button}
+                              onClick={function(){transferProductByID(row);}}
+                            >
+                            Transfer
+                          </Button>
+                          :""}
+                      </TableCell>
                     </TableRow>
                   );
                 })}

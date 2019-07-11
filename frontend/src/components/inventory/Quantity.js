@@ -10,6 +10,7 @@ import OutlinedTextField from '../common/outlined-textfield.js';
 
 const useStyles = makeStyles(theme => ({
   root: {
+    width: '100%',
   },
   margin: {
     height: theme.spacing(3),
@@ -78,7 +79,7 @@ export default function Quantity(props) {
                 error={quantityState > 0 ? false : true}
                 helperText={quantityState > 0 ? "" : '*Must be greater than 0'}
         /></Grid>
-        <Grid item xs={2} sm={4}><OutlinedTextField  id="units" label={props.unit} onValueChange={onChooseUnit}/></Grid>
+        <Grid item xs={2} sm={4}><OutlinedTextField label="Unit" id="units" value={props.unit} onValueChange={onChooseUnit}  valueSetter={true} disabled={true}/></Grid>
     </Grid>
       <Slider
         id="slider-id"

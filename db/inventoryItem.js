@@ -92,8 +92,11 @@ function updateInventoryItem(productID, departmentID, deltaQuantity, multiplier)
                 return;
             }
             var originalQuantity = item.quantity;
-            deltaQuantity.value *= multiplier;
-            addQuantities(originalQuantity, deltaQuantity)
+            var newDeltaQuantity = {
+                value: deltaQuantity.value*multiplier,
+                unit: deltaQuantity.unit
+            }
+            addQuantities(originalQuantity, newDeltaQuantity)
             .then(resultantQuantity => {
                 item.quantity = resultantQuantity;
                 item.save((err, result) => {
