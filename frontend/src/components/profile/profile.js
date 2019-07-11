@@ -44,6 +44,8 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+var haveFetchedDepartments = false;
+
 export default function Profile(props) {
   const classes = useStyles();
   
@@ -61,6 +63,8 @@ export default function Profile(props) {
     editable: false,
   });
   
+  const [departments, setDepartments] = React.useState({});
+
   const saveInStorage = () => {
     localStorage.setItem('name', document.getElementById('profile-name').value);
     localStorage.setItem('phone', document.getElementById('profile-phone').value);
@@ -128,6 +132,26 @@ export default function Profile(props) {
     }
   }
 
+  const fetchDepartments = () => {
+    haveFetchedDepartments = true;
+    fetch('/list/departments')
+    .then(list => {
+      return list.json();      
+    }).then(data => {
+      data.items.unshift({value:'', label:''});
+      var depts = data.items.reduce((map, dItem) => {
+        map[dItem.value] = dItem.label;
+        return map;
+      });
+      setDepartments(depts);
+    });
+  }
+  haveFetchedDepartments || fetchDepartments();
+
+  console.log(departments);
+  console.log(user.department);
+  console.log(departments[user.department]);
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -150,7 +174,7 @@ export default function Profile(props) {
             {alertState.message}
           </Box>
           <OutlinedTextField label="Username" id="profile-username" value={user.username} disabled={true}/>
-          <OutlinedTextField label="Department" id="profile-department" value={user.department} disabled={true}/>
+          <OutlinedTextField label="Department" id="profile-department" value={departments[user.department]} disabled={true} valueSetter={true}/>
           <OutlinedTextField label="Name" id="profile-name" value={user.name} disabled={!user.editable}/>
           <OutlinedTextField label="Phone" id="profile-phone" value={user.phone} disabled={!user.editable} />
           <Button
