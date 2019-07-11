@@ -13,16 +13,18 @@ const useStyles = makeStyles(theme => ({
     },
   },
   paper: {
-    marginTop: theme.spacing(8),
+    marginTop: theme.spacing(4),
+    marginBottom: theme.spacing(4),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
   },
   btn: {
-    marginLeft: theme.spacing(3),
-    marginRight: theme.spacing(10),
-    height: "18em",
-    width: "14em",
+    margin: theme.spacing(0),
+    // marginLeft: theme.spacing(3),
+    // marginRight: theme.spacing(10),
+    height: "250px",
+    // width: "14em",
     fontSize: "16px",
     textDecoration: "none", 
     display: 'flex',
@@ -35,6 +37,7 @@ const useStyles = makeStyles(theme => ({
   },
   avatar: {
     margin: theme.spacing(1),
+    marginTop: theme.spacing(0),
     fontSize:'4rem',
     width: 'auto',
     height:'auto',
@@ -43,6 +46,9 @@ const useStyles = makeStyles(theme => ({
   description: {
     fontSize: '0.8rem',
     marginTop: theme.spacing(1),
+  },
+  btnName: {
+    fontSize: '1.1rem'
   }
 }));
 
@@ -53,13 +59,13 @@ export default function InventoryMainPage(props) {
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
-        <Grid container spacing={4}>
+        <Grid container spacing={2}>
           <Grid item xs={6}>
             <Button
               fullWidth
               variant="contained"
               color="primary"
-              size="large"
+              size="medium"
               className={classes.btn}
               href="/departmentinventory"
             >
@@ -75,7 +81,7 @@ export default function InventoryMainPage(props) {
                 </Avatar>
                 </Grid>
                 <Grid item>
-                  <Typography component="h6" variant="h6">
+                  <Typography component="h6" variant="h6" className={classes.btnName}>
                     Departmentwise Inventory
                   </Typography>
                 </Grid>
@@ -92,7 +98,7 @@ export default function InventoryMainPage(props) {
               fullWidth
               variant="contained"
               color="primary"
-              size="large"
+              size="medium"
               className={classes.btn}
               href="/productinventory"
             >
@@ -108,7 +114,7 @@ export default function InventoryMainPage(props) {
                 </Avatar>
                 </Grid>
                 <Grid item>
-                  <Typography component="h6" variant="h6">
+                <Typography component="h6" variant="h6" className={classes.btnName}>
                     Productwise Inventory
                   </Typography>
                 </Grid>
@@ -141,7 +147,7 @@ export default function InventoryMainPage(props) {
                 </Avatar>
                 </Grid>
                 <Grid item>
-                  <Typography component="h6" variant="h6">
+                <Typography component="h6" variant="h6" className={classes.btnName}>
                     Transfer Items
                   </Typography>
                 </Grid>
@@ -174,7 +180,7 @@ export default function InventoryMainPage(props) {
                 </Avatar>
                 </Grid>
                 <Grid item>
-                  <Typography component="h6" variant="h6">
+                <Typography component="h6" variant="h6" className={classes.btnName}>
                     Checkout Items
                   </Typography>
                 </Grid>
@@ -207,7 +213,7 @@ export default function InventoryMainPage(props) {
                 </Avatar>
                 </Grid>
                 <Grid item>
-                  <Typography component="h6" variant="h6">
+                <Typography component="h6" variant="h6" className={classes.btnName}>
                     Add to current stock
                   </Typography>
                 </Grid>

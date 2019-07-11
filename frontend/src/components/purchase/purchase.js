@@ -425,7 +425,7 @@ export default function Purchase() {
           <OutlinedTextField id="quantity-value" label="Quantity Purchased" disabled={false} halfWidth={true} />
           <a>&nbsp;&nbsp;&nbsp;</a>
           <DropDownSelect id="quantity-unit" label="Unit" items={selectedTypeUnits.units} halfWidth={true} onValueChange={onChooseQuantityUnit}/>
-          <h3>Purchased @</h3>
+          <h3>Purchased at</h3>
           <OutlinedTextField id="rate-value" label="Rate" disabled={false} halfWidth={true} />
           <a>&nbsp;&nbsp;&nbsp;</a>
           <DropDownSelect id="rate-unit" label="per unit" items={selectedTypeUnits.units} halfWidth={true} onValueChange={onChooseRateUnit}/>

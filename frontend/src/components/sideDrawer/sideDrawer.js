@@ -91,9 +91,33 @@ export default function SideDrawer(props) {
                 <NavLink to="/transfer" className={classes.detailChild}>
                   <ListItem
                   divider 
-                  button key="departmentinventory"
+                  button key="transfer"
                   autoFocus="true">
-                    Transfer an Item
+                    Transfer Items
+                  </ListItem>
+                </NavLink>
+                <NavLink to="/checkout" className={classes.detailChild}>
+                  <ListItem
+                  divider 
+                  button key="checkout"
+                  autoFocus="true">
+                    Checkout
+                  </ListItem>
+                </NavLink>
+                <NavLink to="/addStock" className={classes.detailChild}>
+                  <ListItem
+                  divider 
+                  button key="addstock"
+                  autoFocus="true">
+                    Add to Stock
+                  </ListItem>
+                </NavLink>
+                <NavLink to="/addStock" className={classes.detailChild}>
+                  <ListItem
+                  divider 
+                  button key="request"
+                  autoFocus="true">
+                    Request
                   </ListItem>
                 </NavLink>
               </ExpansionPanelDetails>

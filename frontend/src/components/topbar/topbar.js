@@ -9,8 +9,9 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import SideDrawer from '../sideDrawer/sideDrawer';
 import { NavLink } from "react-router-dom";
-import { ListItem } from '@material-ui/core';
+import { ListItem, Badge, Chip } from '@material-ui/core';
 import Cookies from 'js-cookie';
+import NotificationsIcon from '@material-ui/icons/Notifications';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -72,8 +73,8 @@ function MenuAppBar(props) {
             <NavLink to="/" className={classes.link}>
               Centralized Inventory and Purchasing
             </NavLink>
-          </Typography>          
-            <div>
+          </Typography> 
+            <div>          
                 <IconButton
                 aria-label="Account of current user"
                 aria-controls="menu-appbar"
@@ -98,18 +99,23 @@ function MenuAppBar(props) {
                 open={openright}
                 onClose={handleCloseright}
                 >
-                <NavLink to="/profile" className={classes.link}>
-                  <MenuItem>Profile</MenuItem>
-                </NavLink>
-                <NavLink to="/changePassword" className={classes.link}>
-                  <MenuItem>Change Password</MenuItem>
-                </NavLink>
-                <NavLink to="/logout" className={classes.link}>
-                  <MenuItem>Log Out</MenuItem>
-                </NavLink>
-                
+                  <NavLink to="/pendingrequests" className={classes.link}>
+                    <MenuItem>
+                      Requests 
+                      <Chip color="secondary" size="small" label="NEW!" style={{marginLeft: '5px'}}/>
+                    </MenuItem>
+                  </NavLink>
+                  <NavLink to="/profile" className={classes.link}>
+                    <MenuItem>Profile</MenuItem>
+                  </NavLink>
+                  <NavLink to="/changePassword" className={classes.link}>
+                    <MenuItem>Change Password</MenuItem>
+                  </NavLink>
+                  <NavLink to="/logout" className={classes.link}>
+                    <MenuItem>Log Out</MenuItem>
+                  </NavLink>                
                 </Menu>
-            </div>          
+            </div>
         </Toolbar>
       </AppBar>
     </div>   
@@ -123,8 +129,7 @@ function MenuAppBar(props) {
           </Typography> 
         </Toolbar>
       </AppBar>
-    </div>   
-
+    </div>
   )
 }
 
