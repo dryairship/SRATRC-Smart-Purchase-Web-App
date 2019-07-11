@@ -157,9 +157,9 @@ export default function ContentsTable() {
   const [depts, setDepts] = React.useState(storedlist);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const classes1 = useToolbarStyles();
-  const userdept = sessionStorage.getItem('department');
+  const userdept = localStorage.getItem('department');
   // const [value, setValue] = React.useState(userdept);
-  const [value, setValue] = React.useState(sessionStorage.getItem('department'));
+  const [value, setValue] = React.useState(localStorage.getItem('department'));
   
   // const [rows, setRows] = React.useState([]);
   

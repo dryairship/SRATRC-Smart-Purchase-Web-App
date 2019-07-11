@@ -94,7 +94,7 @@ export default function Request() {
     const [Max, setMax] = React.useState(100);
     const [alertState, setAlertState] = React.useState({show: false, message:'', title:''});
     const [departments, setDepartments] = React.useState({});
-    const department = sessionStorage.getItem('department');
+    const department = localStorage.getItem('department');
     const [requestState, setRequestState] = React.useState(false);
 
     const fetchCategories = () => {
@@ -127,7 +127,7 @@ export default function Request() {
         return list.json();
       }).then(data => {
         setFetchDepts({
-          departments: data.items.filter(item => {return item.value!==sessionStorage.getItem('department')}),
+          departments: data.items.filter(item => {return item.value!==localStorage.getItem('department')}),
         });
         data.items.unshift({value:'', label:''});
         var depts = data.items.reduce((map, dItem) => {

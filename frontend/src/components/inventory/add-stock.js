@@ -232,7 +232,7 @@ export default function AddStock() {
     return new Promise((resolve, reject) => {
       var newStock = {
         productID: productId,
-        departmentID: sessionStorage.getItem('department'),
+        departmentID: localStorage.getItem('department'),
         quantity: parseInt(document.getElementById('quantity-value').value),
         unit: document.getElementById('quantity-unit').value,
       };

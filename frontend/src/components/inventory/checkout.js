@@ -83,7 +83,7 @@ export default function Checkout() {
     const [alertState, setAlertState] = React.useState({show: false, message:'', title:''});
     const [departments, setDepartments] = React.useState({});
     const [checkoutState, setCheckoutState] = React.useState(false);
-    const department = sessionStorage.getItem('department');
+    const department = localStorage.getItem('department');
 
     const fetchCategories = () => {
       fetch('/list/categories')
@@ -98,7 +98,7 @@ export default function Checkout() {
     }
     
     const fetchProducts = () => {
-      fetch('/inventory/department/' + sessionStorage.getItem('department'))
+      fetch('/inventory/department/' + localStorage.getItem('department'))
       .then(list => {
         return list.json();
       }).then(data => {
