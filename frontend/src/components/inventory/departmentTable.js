@@ -20,6 +20,7 @@ import {
 
 var haveFetchedProducts = false;
 var haveFetchedDepartments = false;
+var haveFetchedCategories = false;
 localStorage.setItem('fetchedDeptLists',false);
 localStorage.setItem('deptList',{}.stringify);
 
@@ -157,6 +158,7 @@ export default function ContentsTable() {
   const userdept = localStorage.getItem('department');
   // const [value, setValue] = React.useState(userdept);
   const [value, setValue] = React.useState(localStorage.getItem('department'));
+  const [fetchedCategories, setFetchedCategories] = React.useState({});
   
   // const [rows, setRows] = React.useState([]);
   
@@ -182,8 +184,24 @@ export default function ContentsTable() {
     });
   }  
 
+  const fetchCategories = () => {
+    haveFetchedCategories = true;
+    fetch('/list/categories')
+    .then(list => {
+      return list.json();
+    }).then(data => {
+      data.items.unshift({value:'', label:''});
+      var cats = data.items.reduce((map, cItem) => {
+        map[cItem.value] = cItem.label;
+        return map;
+      });
+      setFetchedCategories(cats);
+    });
+  }  
+
   haveFetchedProducts || fetchProducts(value);
   haveFetchedDepartments || fetchDepartments();
+  haveFetchedCategories || fetchCategories();
   //setDepts(localStorage.getItem('deptList'));
   
   function handleChange(event) {
@@ -275,7 +293,7 @@ export default function ContentsTable() {
                       <TableCell component="th" scope="row" padding="default">
                         {row.details.name}
                       </TableCell>
-                      <TableCell>{row.details.category}</TableCell>
+                      <TableCell>{fetchedCategories[row.details.category]}</TableCell>
                       <TableCell align="right">{row.quantity.value} {row.quantity.unit}</TableCell>
                       <TableCell align="center">
                           <Button 
