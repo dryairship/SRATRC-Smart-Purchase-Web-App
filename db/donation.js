@@ -40,7 +40,8 @@ function findAllDonationsByDepartmentId(departmentID){
             if(!donations){
                 reject({
                     status: 404,
-                    response: "No donations found for this department"
+                    response: [],
+                    message: "No donations found for this department"
                 });
             }else{
                 resolve({

@@ -51,7 +51,8 @@ function findAllProducts(){
             if(err || !products || products.length ==0)
                 reject({
                     status: 404,
-                    response: "No products found"
+                    message: "No products found",
+                    response: []
                 });
             else
                 resolve({

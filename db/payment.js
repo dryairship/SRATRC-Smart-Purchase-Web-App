@@ -103,7 +103,7 @@ function findPaymentByPurchaseID(id){
             if(err || !payments)
                 reject({
                     status: 404,
-                    response: "Payments not found"
+                    response: "Payment not found"
                 });
             else
                 resolve({
@@ -124,7 +124,8 @@ function findPaymentByVendorID(id){
             if(err || !payments)
                 reject({
                     status: 404,
-                    response: "Payments not found"
+                    response: [],
+                    message: "Payments not found"
                 });
             else
                 resolve({
@@ -167,7 +168,8 @@ function findPaymentByDepartmentID(id){
             if(err || !payments)
                 reject({
                     status: 404,
-                    response: "Payments not found"
+                    message: "Payments not found",
+                    response: []
                 });
             else
                 resolve({
@@ -206,7 +208,8 @@ function findPaymentByProductID(id){
             if(err || !payments)
                 reject({
                     status: 404,
-                    response: "Payments not found"
+                    message: "Payments not found",
+                    response: []
                 });
             else
                 resolve({
@@ -226,10 +229,11 @@ function findPendingPayment(){
         },
         '-__v',
         function(err, pendings){
-            if(err || !pendings || pendings.length == 0 )
+            if(err || !pendings)
                 reject({
                     status: 404,
-                    response: "No pending payments"
+                    message: "No pending payments",
+                    response: []
                 });
             else
                 resolve({
@@ -250,10 +254,11 @@ function findPaymentInDateRange(begin, finish){
         },
         '-__v',
         function(err, onDates){
-            if(err || !onDates || onDates.length == 0 )
+            if(err || !onDates)
                 reject({
                     status: 404,
-                    response: "No payments made in between given dates"
+                    response: [],
+                    message: "No payments made in between given dates"
                 });
             else
                 resolve({

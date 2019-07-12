@@ -104,7 +104,8 @@ function findAllVendors(){
             if(err || !vendors || vendors.length ==0)
                 reject({
                     status: 404,
-                    response: "No vendors found"
+                    response: [],
+                    message: "No vendors found"
                 });
             else
                 resolve({

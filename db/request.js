@@ -59,7 +59,8 @@ function findAllRequests(){
             if(err || !requests || requests.length ==0)
                 reject({
                     status: 404,
-                    response: "No requests found"
+                    response: [],
+                    message: "No requests found"
                 });
             else
                 resolve({

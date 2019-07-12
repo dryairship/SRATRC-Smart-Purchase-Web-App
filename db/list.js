@@ -10,7 +10,11 @@ function findList(listID){
             if(err || !list)
                 reject({
                     status: 404,
-                    response: "List not found"
+                    message: "List not found",
+                    response: {
+                      _id: 'null',
+                      items: []
+                    }
                 });
             else
                 resolve({

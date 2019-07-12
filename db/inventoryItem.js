@@ -131,7 +131,8 @@ function findAllInventoryItemsByProductId(productID){
                 if(err || !inventoryItems )
                     reject({
                         status: 404,
-                        response: "No item found in inventory"
+                        response: [],
+                        message: "No item found in inventory"
                     });
                 else
                     resolve({
@@ -213,7 +214,8 @@ function findAllInventoryItemsByDepartmentId(departmentID){
             if(!items){
                 reject({
                     status: 404,
-                    response: "No items found in the inventory of this department"
+                    response: [],
+                    message: "No items found in the inventory of this department"
                 });
             }else{
                 resolve({
