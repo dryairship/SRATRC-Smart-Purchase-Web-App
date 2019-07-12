@@ -165,8 +165,11 @@ export default function ContentsTable() {
   const fetchProducts = (newDept) => {
     fetch('/inventory/department/'+newDept)
     .then(list => {
-      return list.json();      
+      return list.json(); 
+      console.log(list.json());     
     }).then(data => {
+      console.log("lol");
+      console.log(data);
       setRows(data);
       haveFetchedProducts = true;
     });
@@ -252,6 +255,8 @@ export default function ContentsTable() {
   const orderAsc = () => {firstB=true; setOrder('asc');}
   firstA || orderName();
   firstB || orderAsc();
+
+  console.log(rows);
 
   return (    
     <Container component="main" maxWidth="md">

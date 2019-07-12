@@ -209,6 +209,8 @@ function handleRequestSort(event, property) {
   firstA || orderName();
   firstB || orderAsc();
 
+  //console.log("lol");
+  //console.log((selectedInstallment.installments && selectedInstallment.installments.length>0 ? selectedInstallment.installments[0].installments : []).length);
   
   return(
     <Container component="main" maxWidth="md">
@@ -258,7 +260,7 @@ function handleRequestSort(event, property) {
             <TablePagination
               rowsPerPageOptions={[5, 10, 25]}
               component="div"
-              count={selectedInstallment.installments.length}
+              count={(selectedInstallment.installments && selectedInstallment.installments.length>0 ? selectedInstallment.installments[0].installments : []).length}
               rowsPerPage={rowsPerPage}
               page={page}
               backIconButtonProps={{
