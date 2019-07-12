@@ -5,14 +5,17 @@ function handlePayPost(req, res){
     var paidBy = req.user.username;
     var remarks = req.body.remarks;
     var timestamp = Date.parse(req.body.timestamp);
-
-    updatePayment(req.params.purchaseID, amount, paidBy, remarks, timestamp)
-    .then(result => {
-        res.status(result.status).json(result.response);
-    })
-    .catch(error => {
-        res.status(error.status).json(error.response);
-    });
+    if(!amount || !remarks || !timestamp)
+        res.status(422).json("A required field is empty");
+    else{
+        updatePayment(req.params.purchaseID, amount, paidBy, remarks, timestamp)
+        .then(result => {
+            res.status(result.status).json(result.response);
+        })
+        .catch(error => {
+            res.status(error.status).json(error.response);
+        });
+    }
 }
 
 function handlePaymentGetByPurchaseID(req, res){

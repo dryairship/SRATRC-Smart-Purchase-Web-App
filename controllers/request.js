@@ -8,14 +8,17 @@ function handleRequestPost(req, res) {
             unit: req.body.qUnit
         },
         timestamp = Date.now();
-    
-    insertRequest(departmentID, productID, quantity, timestamp)
-    .then(result => {
-        res.status(result.status).json(result.response);
-    })
-    .catch(error => {
-        res.status(error.status).json(error.response);
-    });
+    if(!productID || !quantity.value || !quantity.unit || !timestamp)
+        res.status(422).json("A required field is empty");
+    else {
+        insertRequest(departmentID, productID, quantity, timestamp)
+        .then(result => {
+            res.status(result.status).json(result.response);
+        })
+        .catch(error => {
+            res.status(error.status).json(error.response);
+        });
+    }
 }
 
 function handleRequestGetById(req, res) {

@@ -48,7 +48,7 @@ function findAllProducts(){
         null,
         '-__v',
         function(err, products){
-            if(err || !products || products.length ==0)
+            if(err || !products)
                 reject({
                     status: 404,
                     message: "No products found",

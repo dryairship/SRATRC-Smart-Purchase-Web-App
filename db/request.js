@@ -56,7 +56,7 @@ function findAllRequests(){
             select: '-__v'
         })
         .exec(function(err, requests){
-            if(err || !requests || requests.length ==0)
+            if(err || !requests )
                 reject({
                     status: 404,
                     response: [],
