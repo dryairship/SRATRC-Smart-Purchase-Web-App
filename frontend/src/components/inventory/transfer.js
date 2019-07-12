@@ -73,6 +73,7 @@ export default function Transfer() {
     };
 
     const [fetchedCategories, setFetchedCategories] = React.useState({categories: []});
+    const [JSONCategories, setJSONCategories] = React.useState({});
     const [selectedCategoryProducts, setSelectedCategoryProducts] = React.useState({productsNameList: [], productsValueList: []});
     const [fetchedDepts, setFetchDepts] = React.useState({departments: []});
     const [quantity , setQuantity] = React.useState(1);
@@ -85,6 +86,7 @@ export default function Transfer() {
     const [transferState, setTransferState] = React.useState(false);
 
     const fetchCategories = () => {
+        haveFetchedCategories = true;
       fetch('/list/categories')
       .then(list => {
         return list.json();
@@ -92,7 +94,12 @@ export default function Transfer() {
         setFetchedCategories({
           categories: data.items,
         });
-        haveFetchedCategories = true;
+        data.items.unshift({value:'', label:''});
+        var cats = data.items.reduce((map, cItem) => {
+          map[cItem.value] = cItem.label;
+          return map;
+        });
+        setJSONCategories(cats);
       });
     }
     
@@ -273,7 +280,7 @@ export default function Transfer() {
                 <DropDownSelect id="product-category" label="Product Category" items={fetchedCategories.categories} onValueChange={onChooseCategory} />
                 <SuggestionSelect id="product-name" label="Product Name" category={state.category} items={selectedCategoryProducts.productsNameList} onValueChange={onChooseProductName} nonCreatable={true}/>
               </React.Fragment> : <React.Fragment>
-                <OutlinedTextField id="product-category" label="Product Category" value={state.category} valueSetter={true} disabled={true}/> 
+                <OutlinedTextField id="product-category" label="Product Category" value={JSONCategories[state.category]} valueSetter={true} disabled={true}/> 
                 <OutlinedTextField id="product-name" label="Product Name" value={state.product.name} valueSetter={true} disabled={true}/> 
               </React.Fragment>
               }

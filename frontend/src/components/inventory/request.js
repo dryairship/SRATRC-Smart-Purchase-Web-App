@@ -186,8 +186,6 @@ export default function Request() {
               description: productForRequest.description,
             }
           });
-        }else{
-          window.location.href='/inventory';
         }
       }
     }
@@ -319,7 +317,7 @@ export default function Request() {
         message: "",
         title: "",
       });
-      if(requestState) window.location.href = '/departmentinventory';
+      if(requestState) window.location.href = '/pendingRequests';
     }
   
     return (

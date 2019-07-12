@@ -309,6 +309,7 @@ export default function ContentsTable(props) {
               {stableSort(rows, getSorting(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => { 
+                  if(row.quantity.value>0)
                   return (
                     <TableRow
                       hover                      
@@ -322,6 +323,7 @@ export default function ContentsTable(props) {
                       <TableCell>{row.quantity.unit}</TableCell>
                     </TableRow>
                   );
+                  else return "";
                 })
               }
               {emptyRows > 0 && (

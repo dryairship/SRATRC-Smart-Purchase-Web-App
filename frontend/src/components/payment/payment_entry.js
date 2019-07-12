@@ -114,7 +114,6 @@ export default function PaymentForm(props) {
         message: error,
         title: "Payment failed",
       });
-      setSuccess(true);
     });
   }
   return (
