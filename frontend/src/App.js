@@ -34,7 +34,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
   fab: {
-    position: 'absolute',
+    position: 'relative',
     bottom: theme.spacing(2),
     right: theme.spacing(2),
     color: 'primary',
@@ -83,9 +83,7 @@ function App() {
           <Route path="/checkout" component={Checkout}/>
           <Route path="/help" component={Help}/>
         </div>
-        <Fab className={classes.fab} color='secondary' href="/help">
-          <HelpOutline />
-        </Fab>
+        
       </Router>
     );
   }else{
