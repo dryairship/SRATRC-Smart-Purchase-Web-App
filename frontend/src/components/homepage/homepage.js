@@ -194,9 +194,7 @@ export default function HomePage(props) {
           </Grid>
         </Grid>
       </div>
-      <Fab className={classes.fab} color='secondary' href="/help">
-        <HelpOutline />
-      </Fab>
+      
     </Container>
   );
 }

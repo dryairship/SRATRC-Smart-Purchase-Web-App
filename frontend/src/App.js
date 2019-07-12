@@ -28,8 +28,21 @@ import CreateUser from './components/createUser/createUser';
 import PreviousQuotations from './components/payment/quotation';
 import Cookies from 'js-cookie';
 import Help from './components/help/help';
+import { Fab } from '@material-ui/core';
+import { HelpOutline } from '@material-ui/icons';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles(theme => ({
+  fab: {
+    position: 'absolute',
+    bottom: theme.spacing(2),
+    right: theme.spacing(2),
+    color: 'primary',
+  }
+}));
 
 function App() {
+  const classes = useStyles();
   const [loggedIn, setLoggedIn] = React.useState(false);
 
   const loginSuccessful = () => {
@@ -70,6 +83,9 @@ function App() {
           <Route path="/checkout" component={Checkout}/>
           <Route path="/help" component={Help}/>
         </div>
+        <Fab className={classes.fab} color='secondary' href="/help">
+          <HelpOutline />
+        </Fab>
       </Router>
     );
   }else{
