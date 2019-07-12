@@ -4,7 +4,7 @@ import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import AssignmentOutlinedIcon from '@material-ui/icons/AssignmentOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
@@ -22,6 +22,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Grid from '@material-ui/core/Grid';
 import ToysIconOutlined from '@material-ui/icons/ToysOutlined';
 import SendIcon from '@material-ui/icons/Send';
+import StarIcon from '@material-ui/icons/Star';
 
 const useStyles = makeStyles(theme => ({
   '@global': {
@@ -65,6 +66,7 @@ const useStyles = makeStyles(theme => ({
     flexDirection: 'column',
     display: 'flex',
     flexWrap: 'wrap',
+    paddingRight: theme.spacing(4),
   },
   deptTitle: {
     fontSize: '1.2em',
@@ -77,7 +79,13 @@ const useStyles = makeStyles(theme => ({
     margin: theme.spacing(2),
     backgroundColor: '#14a37f',
     borderRadius: '10px',
-  }
+  },
+  actionButton: {
+    marginLeft: theme.spacing(3),
+    marginRight: 0,
+    paddingRight: 0,
+    paddingLeft: theme.spacing(3),
+  },
 }));
 
 var onlyPending = true;
@@ -90,6 +98,7 @@ export default function PendingRequests(props) {
 
   const [fetchedRequests, setFetchedRequests] = React.useState([]);
   const [departments, setDepartments] = React.useState({});
+  const userdept = localStorage.getItem('department');
 
   const fetchRequests = () => {
     haveFetchedRequests = true;
@@ -149,37 +158,42 @@ export default function PendingRequests(props) {
 */
 
   return (
-    <Container component="main" maxWidth="sm">
+    <Container component="main" maxWidth="md">
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
+          <AssignmentOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5" className={classes.heading}>
           {onlyPending? "Pending Product Requests" : "Product Requests"}
         </Typography>
           <div className={classes.demo}>
             <List dense={false} className={classes.list}>
-              {parseData(fetchedRequests).map(req => {
+              {fetchedRequests.map(req => {
+                if(req.quantityRemaining.value>0)
                 return (<ListItem className={classes.listItem}>
-                  <ListItemAvatar >
-                    <Avatar className={classes.preAvatar}>
-                      <ToysIconOutlined color="primary"/>
-                    </Avatar>
-                  </ListItemAvatar>
                   <div>
                     <a className={classes.deptTitle}>{getDepartmentNameFromID(req.departmentID)}</a> has requested <a className={classes.productTitle}>{req.productDetails.name}</a><br/>
                     Quantity Requested : <a className={classes.deptTitle}>{req.quantity.value+" "+req.quantity.unit}</a><br/>
                     Quantity Supplied : <a className={classes.deptTitle}>{(req.quantity.value-req.quantityRemaining.value)+" "+req.quantity.unit}</a><br/>
                     Quantity Remaining : <a className={classes.deptTitle}>{req.quantityRemaining.value+" "+req.quantity.unit}</a><br/>
                   </div>
-                  <ListItemSecondaryAction>
-                    <IconButton edge="end" aria-label="Delete" onClick={function(){acceptRequest(req);}}>
+                  <ListItemSecondaryAction className={classes.actionButton}>
+                    {
+                    req.departmentID==userdept?
+                    <IconButton edge="end" aria-label="Cannot transfer item" disabled>
+                      <StarIcon color="action"/>
+                    </IconButton>
+                     :
+                    <IconButton edge="end" aria-label="Transfer Items" onClick={function(){acceptRequest(req);}}>
                       <SendIcon color="action"/>
                     </IconButton>
+                    }
                   </ListItemSecondaryAction>
                 </ListItem>
-              )})}
+              );
+              else return "";
+              })}
             </List>
           </div>
       </div>

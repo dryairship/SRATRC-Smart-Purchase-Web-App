@@ -19,6 +19,7 @@ import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import OutlinedTextField from '../common/outlined-textfield';
+import convert from 'convert-units';
 
 const useStyles = makeStyles(theme => ({
   '@global': {
@@ -142,8 +143,20 @@ export default function Transfer() {
       });
     }
     
-    const fetchThisProduct = productID => {
-      fetch('/inventory/'+department+'/'+productID)
+    const setProperMax = (request, pDetails) => {
+      if(!request.quantityRemaining || !pDetails.quantity){
+        console.log("NOREQUEST");
+        console.log(thisRequest);
+        return;
+      }
+      console.log("SETTINGPROPERMAX");
+      var convertedRequestedValue = request.quantityRemaining.unit!=pDetails.quantity.unit?convert(request.quantityRemaining.value).from(''+request.quantityRemaining.unit).to(''+pDetails.quantity.unit):request.quantityRemaining.value;
+      console.log(convertedRequestedValue);
+      setMax(Math.min(convertedRequestedValue, pDetails.quantity.value));
+    }
+    
+    const fetchThisProduct = request => {
+      fetch('/inventory/'+department+'/'+request.productID)
       .then(res => {
         if(res.ok){
           return res.json();
@@ -155,7 +168,7 @@ export default function Transfer() {
         console.log(pDetails);
         setThisProduct(pDetails);
         setUnit(pDetails.quantity.unit);
-        setMax(pDetails.quantity.value);
+        setProperMax(request, pDetails);
       })
     }
     
@@ -164,8 +177,10 @@ export default function Transfer() {
       var requestToAccept = JSON.parse(localStorage.getItem('requestToAccept'));
       if(requestToAccept){
         localStorage.removeItem('requestToAccept');
+        console.log("REQTOACC");
+        console.log(requestToAccept);
         setThisRequest(requestToAccept);
-        fetchThisProduct(requestToAccept.productID);
+        fetchThisProduct(requestToAccept);
       }else{
         window.location.href='/pendingRequests';
       }
