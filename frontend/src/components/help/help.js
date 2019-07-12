@@ -13,7 +13,12 @@ import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import StarBorder from '@material-ui/icons/StarBorder';
 import Purchase from '../purchase/purchase';
-
+import{
+  StorageOutlined, AttachMoneyOutlined, ShoppingCartOutlined, SentimentSatisfiedAltOutlined, HelpOutline,
+  ShoppingBasketOutlined, DomainOutlined, SwapHorizOutlined, UnarchiveOutlined, PlaylistAddOutlined, PlayForWorkOutlined,
+  HistoryOutlined, 
+} from '@material-ui/icons';
+import { Container, Typography } from '@material-ui/core';
 const useStyles = makeStyles(theme => ({
   root: {
     width: '100%',
@@ -30,7 +35,7 @@ const useStyles = makeStyles(theme => ({
       alignSelf: 'left',
   },
 }));
-
+ 
 export default function Help() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
@@ -51,23 +56,23 @@ export default function Help() {
   const [openInventoryDesc, setOpenInventoryDesc] = React.useState(false);
   const [openDonationDesc, setOpenDonationDesc] = React.useState(false);
   const [openPaymentsDesc, setOpenPaymentsDesc] = React.useState(false);
-
+ 
   function handleClick() {
     setOpen(!open);
   }
-
+ 
   function handleInventoryClick() {
       setOpenInventory(!openInventory);
   }
-
+ 
   function handleDepartmentInventory() {
       setOpenDepartmentInventory(!openDepartmentInventory);
   }
-
+ 
   function handleProductInventory() {
       setOpenProductInventory(!openProductInventory);
   }
-
+ 
   function handleTransfer() {
     setOpenTransfer(!openTransfer);
   }
@@ -110,21 +115,20 @@ export default function Help() {
   function handlePaymentsDesc() {
       setOpenPaymentsDesc(!setOpenPaymentsDesc);
   }
-
+ 
   return (
-    <List
+    <Container component="main" maxWidth="lg">
+      <Typography variant="h6" style={{marginTop: '1rem'}}>
+        Help
+      </Typography>
+      <List
       component="nav"
       aria-labelledby="nested-list-subheader"
-      subheader={
-        <ListSubheader component="div" id="nested-list-subheader">
-          Help
-        </ListSubheader>
-      }
       className={classes.root}
     >
-      <ListItem button onClick={handleInventoryClick}>
+      <ListItem button onClick={handleInventoryClick} divider>
         <ListItemIcon>
-          <SendIcon />
+          <StorageOutlined />
         </ListItemIcon>
         <ListItemText primary="Inventory" />
         {openInventory ? <ExpandLess /> : <ExpandMore />}
@@ -132,14 +136,11 @@ export default function Help() {
       <Collapse in={openInventory} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
             <ListItem button className={classes.nested} onClick={handleOpenInventoryDesc}>
-                <ListItemIcon>
-                <StarBorder />
-                </ListItemIcon>
                 <ListItemText primary="The inventory feature facilitates the user to track the items stored in the inventory of every department and insert, request or transfer items from the user’s department to some other departments." />
             </ListItem>
           <ListItem button className={classes.nested} onClick={handleDepartmentInventory}>
             <ListItemIcon>
-              <StarBorder />
+              <DomainOutlined />
             </ListItemIcon>
             <ListItemText primary="Department Inventory" />
             {openDepartmentInventory ? <ExpandLess /> : <ExpandMore />}
@@ -147,16 +148,13 @@ export default function Help() {
             <Collapse in={openDepartmentInventory} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
                 <ListItem button className={classes.twiceNested}>
-                    <ListItemIcon>
-                    <StarBorder />
-                    </ListItemIcon>
                     <ListItemText primary="Section where a user can view inventory items department wise and can checkout, transfer or request items from other departments." />
                 </ListItem>
             </List>
             </Collapse>
             <ListItem button className={classes.nested} onClick={handleProductInventory}>
             <ListItemIcon>
-              <StarBorder />
+              <ShoppingBasketOutlined />
             </ListItemIcon>
             <ListItemText primary="Product Inventory" />
             {openProductInventory ? <ExpandLess /> : <ExpandMore />}
@@ -164,26 +162,20 @@ export default function Help() {
             <Collapse in={openProductInventory} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
                 <ListItem button className={classes.twiceNested}>
-                    <ListItemIcon>
-                    <StarBorder />
-                    </ListItemIcon>
                     <ListItemText primary="This section allows a user to keep track of a particular product in every department and request that particular product." />
                 </ListItem>
             </List>
             </Collapse>
             <ListItem button className={classes.nested} onClick={handleTransfer}>
             <ListItemIcon>
-              <StarBorder />
+              <SwapHorizOutlined />
             </ListItemIcon>
             <ListItemText primary="Transfer" />
             {openTransfer ? <ExpandLess /> : <ExpandMore />}
-         </ListItem>
+            </ListItem>
             <Collapse in={openTransfer} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
                 <ListItem button className={classes.twiceNested}>
-                    <ListItemIcon>
-                    <StarBorder />
-                    </ListItemIcon>
                     <ListItemText primary=" This is the section where a user can transfer items to some other department from his department’s inventory." />
                 </ListItem>
             </List>
@@ -192,7 +184,7 @@ export default function Help() {
             <List component="div" disablePadding>
                 <ListItem button className={classes.nested} onClick={handleAddInStock}>
                     <ListItemIcon>
-                    <StarBorder />
+                    <PlaylistAddOutlined />
                     </ListItemIcon>
                     <ListItemText primary="Add In Stock" />
                     {openAddInStock ? <ExpandLess /> : <ExpandMore />}
@@ -202,16 +194,13 @@ export default function Help() {
             <Collapse in={openAddInStock} timeout="auto" unmountOnExit>
 	            <List component="div" disablePadding>
 	                <ListItem button className={classes.twiceNested}>
-	                    <ListItemIcon>
-	                    <StarBorder />
-	                    </ListItemIcon>
 	                    <ListItemText primary=" This section allows a user to add items to his department’s inventory." />
 	                </ListItem>
 	            </List>
             </Collapse>
             <ListItem button className={classes.nested} onClick={handleCheckout}>
 	            <ListItemIcon>
-	              <StarBorder />
+	              <UnarchiveOutlined />
 	            </ListItemIcon>
 	            <ListItemText primary="Checkout" />
 	            {openCheckout ? <ExpandLess /> : <ExpandMore />}
@@ -219,16 +208,13 @@ export default function Help() {
             <Collapse in={openCheckout} timeout="auto" unmountOnExit>
 	            <List component="div" disablePadding>
 	                <ListItem button className={classes.twiceNested}>
-	                    <ListItemIcon>
-	                    <StarBorder />
-	                    </ListItemIcon>
 	                    <ListItemText primary="User can checkout items for use in this section." />
 	                </ListItem>
 	            </List>
             </Collapse>
             <ListItem button className={classes.nested} onClick={handleMakeRequest}>
 	            <ListItemIcon>
-	              <StarBorder />
+	              <PlayForWorkOutlined />
 	            </ListItemIcon>
 	            <ListItemText primary="Make Request" />
 	            {openMakeRequest ? <ExpandLess /> : <ExpandMore />}
@@ -236,21 +222,18 @@ export default function Help() {
             <Collapse in={openMakeRequest} timeout="auto" unmountOnExit>
 	            <List component="div" disablePadding>
 	                <ListItem button className={classes.twiceNested}>
-	                    <ListItemIcon>
-	                    <StarBorder />
-	                    </ListItemIcon>
-	                    <ListItemText primary=" A user can request items for his department, and the list will be visible to every other user." />
+	                      <ListItemText primary=" A user can request items for his department, and the list will be visible to every other user." />
 	                </ListItem>
 	            </List>
             </Collapse>       
-
+ 
         </List>
       </Collapse>
-
-
-      <ListItem button onClick={handlePayments}>
+ 
+ 
+      <ListItem button onClick={handlePayments} divider>
         <ListItemIcon>
-          <SendIcon />
+          <AttachMoneyOutlined />
         </ListItemIcon>
         <ListItemText primary="Payments" />
         {openPayments ? <ExpandLess /> : <ExpandMore />}
@@ -258,14 +241,11 @@ export default function Help() {
       <Collapse in={openPayments} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
             <ListItem button className={classes.nested} onClick={handleOpenInventoryDesc}>
-                <ListItemIcon>
-                <StarBorder />
-                </ListItemIcon>
                 <ListItemText primary="The payments feature facilitates the user to view all payments made by his department, as well as add logs of the installments of every payment." />
             </ListItem>
           <ListItem button className={classes.nested} onClick={handlePaymentsSummary}>
             <ListItemIcon>
-              <StarBorder />
+              <HistoryOutlined />
             </ListItemIcon>
             <ListItemText primary="Payments Summary" />
             {openPaymentsSummary ? <ExpandLess /> : <ExpandMore />}
@@ -273,9 +253,6 @@ export default function Help() {
             <Collapse in={openPaymentsSummary} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
                 <ListItem button className={classes.twiceNested}>
-                    <ListItemIcon>
-                    <StarBorder />
-                    </ListItemIcon>
                     <ListItemText primary="This section displays a brief summary of the
 payment details for all the purchases made by the department, and allows the user to pay pending amounts and view payment history. " />
                 </ListItem>
@@ -283,7 +260,7 @@ payment details for all the purchases made by the department, and allows the use
             </Collapse>
             <ListItem button className={classes.nested} onClick={handlePreviousQuotations}>
             <ListItemIcon>
-              <StarBorder />
+              <AttachMoneyOutlined />
             </ListItemIcon>
             <ListItemText primary="Previous Quotations" />
             {openPreviousQuotations ? <ExpandLess /> : <ExpandMore />}
@@ -291,19 +268,17 @@ payment details for all the purchases made by the department, and allows the use
             <Collapse in={openPreviousQuotations} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
                 <ListItem button className={classes.twiceNested}>
-                    <ListItemIcon>
-                    <StarBorder />
-                    </ListItemIcon>
                     <ListItemText primary=" This section displays details of all purchases made by all the departments thus far." />
                 </ListItem>
             </List>
             </Collapse>       
-
+ 
         </List>
       </Collapse>
-      <ListItem button onClick={handlePurchase}>
+
+      <ListItem button onClick={handlePurchase} divider>
         <ListItemIcon>
-          <SendIcon />
+          <ShoppingCartOutlined/>
         </ListItemIcon>
         <ListItemText primary="Purchase" />
         {openPurchase ? <ExpandLess /> : <ExpandMore />}
@@ -311,17 +286,14 @@ payment details for all the purchases made by the department, and allows the use
       <Collapse in={openPurchase} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
           <ListItem button className={classes.nested}>
-            <ListItemIcon>
-              <StarBorder />
-            </ListItemIcon>
             <ListItemText primary="This section allows the user to Make a Purchase and register it into the database." />
           </ListItem>
         </List>
       </Collapse>
-
-      <ListItem button onClick={handleDonation}>
+ 
+      <ListItem button onClick={handleDonation} divider>
         <ListItemIcon>
-          <SendIcon />
+          <SentimentSatisfiedAltOutlined />
         </ListItemIcon>
         <ListItemText primary="Donations" />
         {openDonation ? <ExpandLess /> : <ExpandMore />}
@@ -329,14 +301,11 @@ payment details for all the purchases made by the department, and allows the use
       <Collapse in={openDonation} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
           <ListItem button className={classes.nested} onClick={handleOpenInventoryDesc}>
-                <ListItemIcon>
-                <StarBorder />
-                </ListItemIcon>
                 <ListItemText primary="This section facilitates the user to make a donation and view the history of donations made." />
             </ListItem>          
           <ListItem button className={classes.nested} onClick={handleMakeDonation}>
             <ListItemIcon>
-              <StarBorder />
+              <SentimentSatisfiedAltOutlined />
             </ListItemIcon>
             <ListItemText primary="Make A Donation" />
             {openMakeDonation ? <ExpandLess /> : <ExpandMore />}
@@ -344,16 +313,13 @@ payment details for all the purchases made by the department, and allows the use
             <Collapse in={openMakeDonation} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
                 <ListItem button className={classes.twiceNested}>
-                    <ListItemIcon>
-                    <StarBorder />
-                    </ListItemIcon>
                     <ListItemText primary=" In this section a user can make or register a donation made by some donor, and items donated are inserted into his department’s inventory." />
                 </ListItem>
             </List>
             </Collapse>
             <ListItem button className={classes.nested} onClick={handleDonationHistory}>
             <ListItemIcon>
-              <StarBorder />
+              <HistoryOutlined />
             </ListItemIcon>
             <ListItemText primary="Donations History" />
             {openDonationHistory ? <ExpandLess /> : <ExpandMore />}
@@ -361,20 +327,14 @@ payment details for all the purchases made by the department, and allows the use
             <Collapse in={openDonationHistory} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
                 <ListItem button className={classes.twiceNested}>
-                    <ListItemIcon>
-                    <StarBorder />
-                    </ListItemIcon>
                     <ListItemText primary="This section allows the user to view the history of donations made to his department." />
                 </ListItem>
             </List>
-            </Collapse>       
-
+            </Collapse>
         </List>
       </Collapse>
-
-
-
-
     </List>
-  );
+  
+    </Container>
+   ); 
 }
