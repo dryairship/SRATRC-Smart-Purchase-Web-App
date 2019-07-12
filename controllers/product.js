@@ -4,14 +4,17 @@ function handleProductPost(req, res) {
     var name = req.body.name,
         category = req.body.category,
         description = req.body.description;
-    
-    insertProduct(name, category, description)
-    .then(result => {
-        res.status(result.status).json(result.response);
-    })
-    .catch(error => {
-        res.status(error.status).json(error.response);
-    });
+    if(!name || !category || !description)
+        res.status(422).json("A required field is empty");
+    else {
+        insertProduct(name, category, description)
+        .then(result => {
+            res.status(result.status).json(result.response);
+        })
+        .catch(error => {
+            res.status(error.status).json(error.response);
+        });
+    }
 }
 
 function handleProductGetById(req, res) {

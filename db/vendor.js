@@ -101,7 +101,7 @@ function findAllVendors(){
         null,
         '-__v',
         function(err, vendors){
-            if(err || !vendors || vendors.length ==0)
+            if(err || !vendors )
                 reject({
                     status: 404,
                     response: [],

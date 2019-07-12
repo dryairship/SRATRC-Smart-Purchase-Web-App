@@ -6,14 +6,17 @@ function handleVendorPost(req, res){
         address = req.body.address,
         phone = req.body.phone,
         email = req.body.email
-
-    insertVendor(name,contactPerson,address,phone,email)
-    .then(result => {
-        res.status(result.status).json(result.response);
-    })
-    .catch(error => {
-        res.status(error.status).json(error.response);
-    });
+    if(!name || !address || !contactPerson || !phone || !email)
+        res.status(422).json("A required field is empty");
+    else{
+        insertVendor(name,contactPerson,address,phone,email)
+        .then(result => {
+            res.status(result.status).json(result.response);
+        })
+        .catch(error => {
+            res.status(error.status).json(error.response);
+        });
+    }
 }
 
 function handleVendorGetById(req, res){

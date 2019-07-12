@@ -12,37 +12,40 @@ function handleDonationPost(req, res) {
         timestamp = Date.parse(req.body.timestamp),
         remarks = req.body.remarks,
         amount;
-    
-    var donationResult;
-    insertDonation(departmentID, productID, donor, quantity, timestamp, remarks)
-    .then(result => {
-        donationResult = result;
-        if(productID == 'money'){
-            res.status(donationResult.status).json(donationResult.response);
-            return;
-        }
-        updateInventoryItem(productID, departmentID, quantity, 1)
+    if(!productID || !donor || !quantity.value || !quantity.unit || !remarks || !timestamp)
+        res.status(422).json("A required field is empty");
+    else {
+        var donationResult;
+        insertDonation(departmentID, productID, donor, quantity, timestamp, remarks)
         .then(result => {
-            res.status(donationResult.status).json(donationResult.response);
-            return;
-        })
-        .catch(error => {
-            if(error.status==404){
-                insertInventoryItem(productID, departmentID, quantity)
-                .then(result => {
-                    res.status(donationResult.status).json(donationResult.response);
-                    return;
-                })
-                .catch(error => {
-                    res.status(error.status).json(error.response);    
-                    return;
-                })
-            }else{
-                res.status(error.status).json(error.response);
+            donationResult = result;
+            if(productID == 'money'){
+                res.status(donationResult.status).json(donationResult.response);
                 return;
             }
-        });
-    })
+            updateInventoryItem(productID, departmentID, quantity, 1)
+            .then(result => {
+                res.status(donationResult.status).json(donationResult.response);
+                return;
+            })
+            .catch(error => {
+                if(error.status==404){
+                    insertInventoryItem(productID, departmentID, quantity)
+                    .then(result => {
+                        res.status(donationResult.status).json(donationResult.response);
+                        return;
+                    })
+                    .catch(error => {
+                        res.status(error.status).json(error.response);    
+                        return;
+                    })
+                }else{
+                    res.status(error.status).json(error.response);
+                    return;
+                }
+            });
+        })
+    }
 }
 
 

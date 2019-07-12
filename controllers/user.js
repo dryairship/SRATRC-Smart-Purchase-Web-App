@@ -8,17 +8,20 @@ function handleUserPost(req, res) {
         password = req.body.password,
         department = req.body.department,
         phone = req.body.phone;
-    
-    encryptPassword(password)
-    .then(passwordHash => {
-        return insertUser(username, name, passwordHash, department, phone)
-    })
-    .then(result => {
-        res.status(result.status).json(result.response);
-    })
-    .catch(error => {
-        res.status(error.status).json(error.response);
-    });
+    if(!username || !name || !password || !phone || !department)
+        res.status(422).json("A required field is empty");
+    else{
+        encryptPassword(password)
+        .then(passwordHash => {
+            return insertUser(username, name, passwordHash, department, phone)
+        })
+        .then(result => {
+            res.status(result.status).json(result.response);
+        })
+        .catch(error => {
+            res.status(error.status).json(error.response);
+        });
+    }
 }
 
 function handleUserGet(req, res) {
