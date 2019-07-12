@@ -117,7 +117,7 @@ export default function Help() {
       aria-labelledby="nested-list-subheader"
       subheader={
         <ListSubheader component="div" id="nested-list-subheader">
-          Nested List Items
+          Help
         </ListSubheader>
       }
       className={classes.root}
@@ -301,15 +301,9 @@ payment details for all the purchases made by the department, and allows the use
 
         </List>
       </Collapse>
-
-
-
-
-
-
       <ListItem button onClick={handlePurchase}>
         <ListItemIcon>
-          <InboxIcon />
+          <SendIcon />
         </ListItemIcon>
         <ListItemText primary="Purchase" />
         {openPurchase ? <ExpandLess /> : <ExpandMore />}
@@ -324,7 +318,6 @@ payment details for all the purchases made by the department, and allows the use
           </ListItem>
         </List>
       </Collapse>
-
 
       <ListItem button onClick={handleDonation}>
         <ListItemIcon>

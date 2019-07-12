@@ -101,7 +101,7 @@ export default function SideDrawer(props) {
                   </ListItem>
                 </NavLink>
                 <NavLink to="/transfer" className={classes.detailChild}>
-                  <ListItem                   
+                  <ListItem
                     button key="transfer"
                     style={{paddingLeft: '2rem'}}
                     autoFocus="true">                    
@@ -124,7 +124,7 @@ export default function SideDrawer(props) {
                       <ListItemText primary="Add to Stock" />                    
                   </ListItem>
                 </NavLink>
-                <NavLink to="/requestproducts" className={classes.detailChild}>
+                <NavLink to="/requestProduct" className={classes.detailChild}>
                   <ListItem
                   button key="requestproducts"
                   style={{paddingLeft: '2rem'}}

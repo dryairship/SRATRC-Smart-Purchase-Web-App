@@ -232,7 +232,7 @@ export default function InventoryMainPage(props) {
               color="primary"
               size="large"
               className={classes.btn}
-              href="/requestproducts"
+              href="/requestProduct"
             >
               <Grid
               container

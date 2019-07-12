@@ -258,7 +258,7 @@ function handleRequestSort(event, property) {
             <TablePagination
               rowsPerPageOptions={[5, 10, 25]}
               component="div"
-              count={rows.length}
+              count={selectedInstallment.installments.length}
               rowsPerPage={rowsPerPage}
               page={page}
               backIconButtonProps={{
