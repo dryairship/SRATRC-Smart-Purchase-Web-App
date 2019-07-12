@@ -195,6 +195,12 @@ export default function SideDrawer(props) {
                   </NavLink>                  
                 </List>
               </Collapse>
+
+              <NavLink to="/help" className={classes.link}>
+              <ListItem button className={classes.link} divider>
+                <ListItemText primary="Help" />
+              </ListItem>
+            </NavLink>
         </List>
     </div>
   );

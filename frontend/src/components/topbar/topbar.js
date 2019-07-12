@@ -31,6 +31,13 @@ const useStyles = makeStyles(theme => ({
   link: {
     textDecoration: 'none',
     color: 'inherit',
+  },
+  fab: {
+    position: 'fixed',
+    bottom: theme.spacing(2),
+    right: theme.spacing(2),
+    color: 'primary',
+    zIndex: 10000
   }
 }));
 
