@@ -37,7 +37,7 @@ function findAllDonationsByDepartmentId(departmentID){
             select: '-__v'
         })
         .exec(function(err, donations){
-            if(!donations || donations.length==0){
+            if(!donations){
                 reject({
                     status: 404,
                     response: "No donations found for this department"

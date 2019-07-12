@@ -128,7 +128,7 @@ function findAllInventoryItemsByProductId(productID){
             },
             '-__v', 
             function(err, inventoryItems){
-                if(err || !inventoryItems || inventoryItems.length == 0 )
+                if(err || !inventoryItems )
                     reject({
                         status: 404,
                         response: "No item found in inventory"
@@ -210,7 +210,7 @@ function findAllInventoryItemsByDepartmentId(departmentID){
             select: '-__v'
         })
         .exec(function(err, items){
-            if(!items || items.length==0){
+            if(!items){
                 reject({
                     status: 404,
                     response: "No items found in the inventory of this department"

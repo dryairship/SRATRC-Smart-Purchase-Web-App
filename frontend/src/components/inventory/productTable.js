@@ -277,6 +277,8 @@ export default function ContentsTable(props) {
     window.location.href = '/requestProduct';
   }
 
+  console.log(rows);
+  
   return (    
     <Container component="main" maxWidth="md">
       <Paper className={classes.paper}>
