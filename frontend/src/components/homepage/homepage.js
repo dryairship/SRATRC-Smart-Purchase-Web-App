@@ -5,7 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { Grid, Avatar, Typography, Fab } from '@material-ui/core';
 import StorageOutlinedIcon from '@material-ui/icons/StorageSharp';
-import { AttachMoneyOutlined, ShoppingCartOutlined, SentimentSatisfiedAltOutlined, HelpOutline } from '@material-ui/icons';
+import { PersonAddOutlined, AttachMoneyOutlined, ShoppingCartOutlined, SentimentSatisfiedAltOutlined, HelpOutline } from '@material-ui/icons';
 
 const useStyles = makeStyles(theme => ({
   '@global': {
@@ -51,8 +51,18 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+var checkedAdmin = false;
+
 export default function HomePage(props) {
   const classes = useStyles();
+  
+  const [isAdmin, setAdmin] = React.useState(false);
+  
+  if(!props.adminArray[0]){
+    if(props.isAdmin)
+      setAdmin(true);
+    props.adminArray[0] = true;
+  }
 
   return (
     <Container component="main" maxWidth="lg">
@@ -192,6 +202,39 @@ export default function HomePage(props) {
               </Grid>                                    
           </Button>
           </Grid>
+          {isAdmin?<Grid item xs={6} sm={3}>
+            <Button
+              fullWidth
+              variant="contained"
+              color="primary"
+              size="large"
+              className={classes.btn}
+              href="/addUser"
+          >          
+              <Grid
+              container
+              direction="column"
+              justify="center"
+              alignItems="center"
+              >
+                <Grid item>
+                  <Avatar className={classes.avatar}>
+                  <PersonAddOutlined fontSize='inherit'/>
+                </Avatar>
+                </Grid>
+                <Grid item>
+                  <Typography component="h6" variant="h6">              
+                    Add user
+                  </Typography>
+                </Grid>
+                <Grid item>
+                  <Typography align='center' className={classes.description}>              
+                    Enter the details of a new user
+                  </Typography>
+                </Grid>
+              </Grid>                                    
+          </Button>
+          </Grid>:""}
         </Grid>
       </div>
       

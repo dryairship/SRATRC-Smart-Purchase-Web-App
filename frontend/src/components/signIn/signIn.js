@@ -65,8 +65,8 @@ export default function SignIn(props) {
           status: false,
           message: '',
         });
-        props.onLogin();
         res.json().then(userData => {
+          props.onLogin(userData.username);
           localStorage.setItem('username', userData.username);
           localStorage.setItem('name', userData.name);
           localStorage.setItem('department', userData.department);

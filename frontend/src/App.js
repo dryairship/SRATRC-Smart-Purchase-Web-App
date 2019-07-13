@@ -41,11 +41,15 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+var isAdmin = false;
+
 function App() {
   const classes = useStyles();
   const [loggedIn, setLoggedIn] = React.useState(false);
 
-  const loginSuccessful = () => {
+  const loginSuccessful = (username) => {
+    if(username=='admin') isAdmin = true;
+    else isAdmin = false;
     setLoggedIn(true);
   }
 
@@ -58,7 +62,7 @@ function App() {
       <Router>
         <div className="App">
           <MenuAppBar/>
-          <Route exact path="/" component={HomePage} />
+          <Route exact path="/" render={()=><HomePage adminArray={[0]} isAdmin={isAdmin}/>} />
           <Route path="/inventory" component={InventoryMainPage} />
           <Route path="/departmentinventory" component={DepartmentInventory} />
           <Route path="/productinventory" component={ProductInventory} />
