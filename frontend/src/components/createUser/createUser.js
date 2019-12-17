@@ -49,13 +49,18 @@ var fetchedDepartments = false;
 
 export default function Profile(props) {
   const classes = useStyles();
-  
+  const userdept = localStorage.getItem('department');
+
+  if(userdept!="admin"){
+    window.location.href='/';
+  }
+
   const [alertState, setAlertState] = React.useState({
     status: false,
     message: '',
     type: 'normal'
   });
-  
+
   const [departmentState, setDepartmentState] = React.useState({
     departments: []
   });
@@ -76,13 +81,13 @@ export default function Profile(props) {
       });
     });
   }
-  
+
   const departmentSelected = chosenValue => {
     console.log(chosenValue);
   }
 
   fetchedDepartments || fetchDepartments();
-  
+
   const createUser = event => {
     event.preventDefault();
     if(document.getElementById('create-user-password').value != document.getElementById('create-user-confirm-password').value){
@@ -100,7 +105,7 @@ export default function Profile(props) {
       department: document.getElementById('create-user-department').value,
       phone: document.getElementById('create-user-phone').value,
     };
-    
+
     fetch('/user', {
       method: 'POST',
       body: JSON.stringify(newUser),
@@ -157,7 +162,7 @@ export default function Profile(props) {
           Add User
         </Typography>
         <form className={classes.form} noValidate onSubmit={createUser}>
-          <Box 
+          <Box
             id="create-user-alert-box"
             bgcolor={alertState.type=='normal' ? "primary.main" : "error.main"}
             color={alertState.type=='normal' ? "primary.contrastText" : "error.contrastText"}
