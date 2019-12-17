@@ -23,7 +23,7 @@ const useStyles = makeStyles(theme => ({
     marginBottom: theme.spacing(0),
     height: "250px",
     fontSize: "16px",
-    textDecoration: "none", 
+    textDecoration: "none",
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -52,23 +52,34 @@ const useStyles = makeStyles(theme => ({
 }));
 
 var checkedAdmin = false;
+var confirmedNotAdmin = false;
+
 
 export default function HomePage(props) {
   const classes = useStyles();
-  
+
   const [isAdmin, setAdmin] = React.useState(false);
-  
+
   if(!props.adminArray[0]){
     if(props.isAdmin)
       setAdmin(true);
     props.adminArray[0] = true;
   }
 
+  if(!isAdmin & !confirmedNotAdmin){
+    var dept = localStorage.getItem('department');
+    if(dept=='admin'){
+      setAdmin(true);
+    }else{
+      confirmedNotAdmin = true;
+    }
+  }
+
   return (
     <Container component="main" maxWidth="lg">
       <CssBaseline />
       <div className={classes.paper}>
-              
+
         <Grid container spacing={2}>
           <Grid item xs={6} sm={3}>
             <Button
@@ -78,7 +89,7 @@ export default function HomePage(props) {
               size="large"
               className={classes.btn}
               href="/inventory"
-          >          
+          >
               <Grid
               container
               direction="column"
@@ -91,16 +102,16 @@ export default function HomePage(props) {
                 </Avatar>
                 </Grid>
                 <Grid item>
-                  <Typography component="h6" variant="h6">              
+                  <Typography component="h6" variant="h6">
                     Inventory
                   </Typography>
                 </Grid>
                 <Grid item>
-                  <Typography align='center' className={classes.description}>              
+                  <Typography align='center' className={classes.description}>
                     Track inventory and transfer products
                   </Typography>
                 </Grid>
-              </Grid>                                    
+              </Grid>
           </Button>
           </Grid>
           <Grid item xs={6} sm={3}>
@@ -111,7 +122,7 @@ export default function HomePage(props) {
               size="large"
               className={classes.btn}
               href="/payments"
-          >          
+          >
               <Grid
               container
               direction="column"
@@ -124,16 +135,16 @@ export default function HomePage(props) {
                 </Avatar>
                 </Grid>
                 <Grid item>
-                  <Typography component="h6" variant="h6">              
+                  <Typography component="h6" variant="h6">
                     Payments
                   </Typography>
                 </Grid>
                 <Grid item>
-                  <Typography align='center' className={classes.description}>              
+                  <Typography align='center' className={classes.description}>
                     Track installments and payments history
                   </Typography>
                 </Grid>
-              </Grid>                                    
+              </Grid>
           </Button>
           </Grid>
           <Grid item xs={6} sm={3}>
@@ -144,7 +155,7 @@ export default function HomePage(props) {
               size="large"
               className={classes.btn}
               href="/purchase"
-          >          
+          >
               <Grid
               container
               direction="column"
@@ -157,16 +168,16 @@ export default function HomePage(props) {
                 </Avatar>
                 </Grid>
                 <Grid item>
-                  <Typography component="h6" variant="h6">              
+                  <Typography component="h6" variant="h6">
                     Purchase
                   </Typography>
                 </Grid>
                 <Grid item>
-                  <Typography align='center' className={classes.description}>              
+                  <Typography align='center' className={classes.description}>
                     Update details of a new purchase
                   </Typography>
                 </Grid>
-              </Grid>                                    
+              </Grid>
           </Button>
           </Grid>
           <Grid item xs={6} sm={3}>
@@ -177,7 +188,7 @@ export default function HomePage(props) {
               size="large"
               className={classes.btn}
               href="/donation"
-          >          
+          >
               <Grid
               container
               direction="column"
@@ -190,16 +201,16 @@ export default function HomePage(props) {
                 </Avatar>
                 </Grid>
                 <Grid item>
-                  <Typography component="h6" variant="h6">              
+                  <Typography component="h6" variant="h6">
                     Donation
                   </Typography>
                 </Grid>
                 <Grid item>
-                  <Typography align='center' className={classes.description}>              
+                  <Typography align='center' className={classes.description}>
                     Update details of a donation
                   </Typography>
                 </Grid>
-              </Grid>                                    
+              </Grid>
           </Button>
           </Grid>
           {isAdmin?<Grid item xs={6} sm={3}>
@@ -210,7 +221,7 @@ export default function HomePage(props) {
               size="large"
               className={classes.btn}
               href="/addUser"
-          >          
+          >
               <Grid
               container
               direction="column"
@@ -223,21 +234,21 @@ export default function HomePage(props) {
                 </Avatar>
                 </Grid>
                 <Grid item>
-                  <Typography component="h6" variant="h6">              
+                  <Typography component="h6" variant="h6">
                     Add user
                   </Typography>
                 </Grid>
                 <Grid item>
-                  <Typography align='center' className={classes.description}>              
+                  <Typography align='center' className={classes.description}>
                     Enter the details of a new user
                   </Typography>
                 </Grid>
-              </Grid>                                    
+              </Grid>
           </Button>
           </Grid>:""}
         </Grid>
       </div>
-      
+
       <Fab className={classes.fab} color='secondary' href="/help">
           <HelpOutline />
         </Fab>
