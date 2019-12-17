@@ -5,7 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { Grid, Avatar, Typography, Fab } from '@material-ui/core';
 import StorageOutlinedIcon from '@material-ui/icons/StorageSharp';
-import { PersonAddOutlined, AttachMoneyOutlined, ShoppingCartOutlined, SentimentSatisfiedAltOutlined, HelpOutline } from '@material-ui/icons';
+import { PersonAddOutlined, AttachMoneyOutlined, ShoppingCartOutlined, SentimentSatisfiedAltOutlined, HelpOutline, DomainOutlined } from '@material-ui/icons';
 
 const useStyles = makeStyles(theme => ({
   '@global': {
@@ -241,6 +241,40 @@ export default function HomePage(props) {
                 <Grid item>
                   <Typography align='center' className={classes.description}>
                     Enter the details of a new user
+                  </Typography>
+                </Grid>
+              </Grid>
+          </Button>
+          </Grid>:""}
+
+          {isAdmin?<Grid item xs={6} sm={3}>
+            <Button
+              fullWidth
+              variant="contained"
+              color="primary"
+              size="large"
+              className={classes.btn}
+              href="/addDepartment"
+          >
+              <Grid
+              container
+              direction="column"
+              justify="center"
+              alignItems="center"
+              >
+                <Grid item>
+                  <Avatar className={classes.avatar}>
+                  <DomainOutlined fontSize='inherit'/>
+                </Avatar>
+                </Grid>
+                <Grid item>
+                  <Typography component="h6" variant="h6">
+                    Add department
+                  </Typography>
+                </Grid>
+                <Grid item>
+                  <Typography align='center' className={classes.description}>
+                    Enter the name of a new department
                   </Typography>
                 </Grid>
               </Grid>

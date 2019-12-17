@@ -26,6 +26,7 @@ import Checkout from './components/inventory/checkout';
 import AddStock from './components/inventory/add-stock';
 import CreateUser from './components/createUser/createUser';
 import PreviousQuotations from './components/payment/quotation';
+import AddDepartment from './components/addDepartment/addDepartment';
 import Cookies from 'js-cookie';
 import Help from './components/help/help';
 import { Fab } from '@material-ui/core';
@@ -83,11 +84,12 @@ function App() {
           <Route path="/transfer" component={Transfer} />
           <Route path="/requestProduct" component={RequestProduct} />
           <Route path="/addStock" component={AddStock} />
+          <Route path="/addDepartment" component={AddDepartment} />
           <Route path="/logout" component={Logout} />
           <Route path="/checkout" component={Checkout}/>
           <Route path="/help" component={Help}/>
         </div>
-        
+
       </Router>
     );
   }else{
