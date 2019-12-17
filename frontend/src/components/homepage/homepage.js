@@ -60,12 +60,6 @@ export default function HomePage(props) {
 
   const [isAdmin, setAdmin] = React.useState(false);
 
-  if(!props.adminArray[0]){
-    if(props.isAdmin)
-      setAdmin(true);
-    props.adminArray[0] = true;
-  }
-
   if(!isAdmin & !confirmedNotAdmin){
     var dept = localStorage.getItem('department');
     if(dept=='admin'){
@@ -74,6 +68,12 @@ export default function HomePage(props) {
       confirmedNotAdmin = true;
     }
   }
+  if(!props.adminArray[0]){
+    if(props.isAdmin)
+      setAdmin(true);
+    props.adminArray[0] = true;
+  }
+
 
   return (
     <Container component="main" maxWidth="lg">

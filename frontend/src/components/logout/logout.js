@@ -39,7 +39,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function Logout(props) {
   const classes = useStyles();
-  
+
   const [errorState, setErrorState] = React.useState({
     status: false,
     message: '',
@@ -52,6 +52,10 @@ export default function Logout(props) {
     .then(res => {
       if(res.ok){
         console.log("LOGGED OUT");
+        localStorage.removeItem('username');
+        localStorage.removeItem('name');
+        localStorage.removeItem('department');
+        localStorage.removeItem('phone');
         window.location.href='/';
       }else{
          console.log(res);
@@ -59,7 +63,7 @@ export default function Logout(props) {
     })
     .catch(error => console.log(error));
   }
-  
+
   React.useEffect(() => {
     logout();
   });
